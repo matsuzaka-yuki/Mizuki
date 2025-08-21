@@ -112,6 +112,8 @@ export type ProfileConfig = {
 	};
 	icp?: string;
 	icpEnable?: boolean;
+	gongan?: string;
+	gonganEnable?: boolean;
 };
 
 export type LicenseConfig = {

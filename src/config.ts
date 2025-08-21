@@ -175,7 +175,9 @@ export const profileConfig: ProfileConfig = {
 		region: "eu", //Umami有两个区域，按需选择即可  比如：https://eu.umami.is 你就填入eu
 	},
 	icp: "粤ICP备12345678号",
-	icpEnable: false,
+	icpEnable: false, // 是否启用ICP备案号
+	gongan: "粤公网安备12345678号", //公安备案号
+	gonganEnable: false, //是否启用公安备案号
 };
 
 export const licenseConfig: LicenseConfig = {

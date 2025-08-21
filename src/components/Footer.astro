@@ -13,7 +13,13 @@ const currentYear = new Date().getFullYear();
     <div class="transition text-50 text-sm text-center">
         {profileConfig.icpEnable && profileConfig.icp && (
             <>
-                <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://beian.miit.gov.cn/#/Integrated/index">{profileConfig.icp}</a><br>
+                <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://beian.miit.gov.cn/#/Integrated/index">{profileConfig.icp}</a>
+            </>
+        )}
+        {profileConfig.gonganEnable && profileConfig.gongan && (
+            <>
+                <img src="https://beian.mps.gov.cn/fileservice/file/downloadbytype?filetype=badge&_t=1755788221211" alt="备案图标" style="display:inline;vertical-align:middle;margin-right:4px;width:16px;height:16px;position:relative;top:-2px;" />
+                <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://beian.mps.gov.cn/#/query/webSearch?code={profileConfig.gongan}">{profileConfig.gongan}</a><br>
             </>
         )}
         &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
