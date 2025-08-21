@@ -1,7 +1,7 @@
 {
 	"name": "Mizuki",
 	"type": "module",
-	"version": "3.2.2",
+	"version": "3.3.0",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",

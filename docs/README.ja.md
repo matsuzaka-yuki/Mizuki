@@ -9,14 +9,17 @@
 
 [Astro](https://astro.build)で構築された、高度な機能と美しいデザインを備えたモダンで機能豊富な静的ブログテンプレートです。
 
-[**🖥️ ライブデモ**](https://blog.mysqil.com/)
+[**🖥️ ライブデモ**](https://mizuki.mysqil.com/)
+[**🔧 Mizuki公式ユーザー文書**](https://docs.mizuki.mysqil.com/)
 
 🌏 README言語
 [**中文**](../README.md) /
 [**English**](../README.en.md) /
 [**日本語**](./README.ja.md)
 
-## 🆕 v3.0の新機能
+## 🆕 v3.3の新機能
+- **Mermaid構文のサポート：** Mermaid図の構文サポートを追加し、フローチャート、シーケンス図、ガントチャートなどをMarkdownに直接埋め込むことができます。
+- **Umamiアクセス統計：** Umamiアクセス統計のサポートを追加し、ウェブサイトのトラフィックデータ分析を簡単に統合できるようにしました。
 
 ![Configuration](configuration.svg)
 
@@ -129,6 +132,8 @@
 - **Cloudflare Pages:** リポジトリを接続
 
 デプロイ前に、`astro.config.mjs`の`site` URLを更新してください。
+
+
 
 ## 📝 投稿フロントマター
 

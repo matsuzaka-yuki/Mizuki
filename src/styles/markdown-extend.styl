@@ -243,3 +243,56 @@ a.card-github.fetch-error
   transition-property: all
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
   transition-duration: 0.15s
+
+// Mermaid 图表样式
+.mermaid-diagram-container
+  margin: 1rem 0
+  border-radius: 0.75rem
+  overflow: hidden
+  background: var(--card-bg)
+  transition: all 0.3s ease
+
+  &:hover
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
+
+.mermaid-wrapper
+  padding: 1.5rem
+  text-align: center
+
+.mermaid
+  display: flex
+  justify-content: center
+  align-items: center
+  min-height: 100px
+  font-family: inherit
+
+  svg
+    max-width: 100%
+    height: auto
+    border-radius: 0.5rem
+
+.mermaid-error
+  color: var(--admonitions-color-warning)
+  background: var(--admonitions-color-warning)
+  background: rgba(239, 68, 68, 0.1)
+  border: 1px solid var(--admonitions-color-warning)
+  border-radius: 0.5rem
+  padding: 1rem
+  margin: 1rem 0
+  text-align: center
+  font-weight: 500
+
+// 深色模式下的 Mermaid 样式
+.dark .mermaid-diagram-container
+  background: var(--card-bg)
+
+  svg
+    filter: brightness(0.9) contrast(1.1)
+
+// 响应式设计
+@media (max-width: 768px)
+  .mermaid-wrapper
+    padding: 1rem
+
+  .mermaid svg
+    max-height: 400px

@@ -9,14 +9,17 @@
 
 Eine moderne, funktionsreiche statische Blog-Vorlage mit erweiterten Funktionen und schönem Design, erstellt mit [Astro](https://astro.build).
 
-[**🖥️ Live-Demo**](https://blog.mysqil.com/)
+[**🖥️ Live-Demo**](https://mizuki.mysqil.com/)
+[**🔧 Offizielle Mizuki-Benutzerdokumentation**](https://docs.mizuki.mysqil.com/)
 
 🌏 README-Sprachen
 [**中文**](../README.md) /
 [**English**](../README.en.md) /
 [**Deutsch**](./README.de.md)
 
-## 🆕 Neues in v3.0
+## 🆕 Neues in v3.3
+- **Mermaid Syntax-Unterstützung:** Unterstützung für die Mermaid-Diagrammsyntax hinzugefügt, die das direkte Einbetten von Flussdiagrammen, Sequenzdiagrammen, Gantt-Diagrammen usw. in Markdown.
+- **Umami Zugriffsstatistik:** Unterstützung für Umami Zugriffsstatistik hinzugefügt, die eine einfache Integration der Website-Verkehrsdatenanalyse ermöglicht.
 
 ![Configuration](configuration.svg)
 
@@ -130,11 +133,13 @@ Stellen Sie Ihren Blog auf statischen Hosting-Plattformen bereit:
 
 Vergessen Sie nicht, die `site`-URL in `astro.config.mjs` vor der Bereitstellung zu aktualisieren.
 
+
+
 ## 📝 Beitrags-Frontmatter
 
 ```yaml
 ---
-title: Mein Erster Blog-Beitrag
+```title: Mein Erster Blog-Beitrag
 published: 2023-09-09
 description: Dies ist der erste Beitrag meines neuen Astro-Blogs.
 image: ./cover.jpg

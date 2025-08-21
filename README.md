@@ -9,7 +9,8 @@
 
 一个现代化、功能丰富的静态博客模板，基于 [Astro](https://astro.build) 构建，具有先进的功能和精美的设计。
 
-[**🖥️ 在线演示**](https://blog.mysqil.com/)
+[**🖥️ 在线演示**](https://mizuki.mysqil.com/)
+[**🔧 Mizuki官方用户文档**](https://docs.mizuki.mysqil.com/)
 
 🌏 README 语言
 [**中文**](./README.md) /
@@ -21,7 +22,9 @@
 [**Español**](./docs/README.es.md) /
 [**Русский**](./docs/README.ru.md)
 
-## 🆕 v3.0 版本更新
+## 🆕 v3.3 版本更新
+- **Mermaid 语法支持：** 添加了对 Mermaid 图表语法的支持，现在可以在 Markdown 中直接嵌入流程图、序列图、甘特图等。
+- **Umami 访问统计：** 添加了对 Umami 访问统计的支持，可以轻松集成网站访问数据分析。
 
 ![Configuration](configuration.svg)
 
@@ -117,6 +120,10 @@
    ```
    博客将在 `http://localhost:4321` 可用
 
+
+
+
+
 ### 📝 内容管理
 
 - **创建新文章：** `pnpm new-post <文件名>`
@@ -134,6 +141,9 @@
 - **Cloudflare Pages：** 连接您的仓库
 
 部署前，请在 `astro.config.mjs` 中更新 `site` URL。
+
+
+
 
 ## 📝 文章前言格式
 

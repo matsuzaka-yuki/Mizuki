@@ -9,14 +9,17 @@
 
 Una plantilla de blog estático moderna y rica en características con funcionalidades avanzadas y hermoso diseño, construida con [Astro](https://astro.build).
 
-[**🖥️ Demo en vivo**](https://blog.mysqil.com/)
+[**🖥️ Demo en vivo**](https://mizuki.mysqil.com/)
+[**🔧 Documentación oficial de usuario de Mizuki**](https://docs.mizuki.mysqil.com/)
 
 🌏 Idiomas README
 [**中文**](../README.md) /
 [**English**](../README.en.md) /
 [**Español**](./README.es.md)
 
-## 🆕 Novedades en v3.0
+## 🆕 Novedades en v3.3
+- **Soporte de sintaxis de Mermaid:** Se añadió soporte para la sintaxis de diagramas de Mermaid, permitiendo la incrustación directa de diagramas de flujo, diagramas de secuencia, diagramas de Gantt, etc., en Markdown.
+- **Estadísticas de Umami:** Se añadió soporte para estadísticas de Umami, permitiendo la fácil integración del análisis de tráfico del sitio web.
 
 ![Configuration](configuration.svg)
 
@@ -129,6 +132,8 @@ Despliega tu blog en plataformas de hosting estático:
 - **Cloudflare Pages:** Conecta tu repositorio
 
 Recuerda actualizar la URL `site` en `astro.config.mjs` antes del despliegue.
+
+
 
 ## 📝 Frontmatter de Publicaciones
 
