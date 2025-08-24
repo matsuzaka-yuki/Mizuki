@@ -3,7 +3,7 @@ import {
 	DARK_MODE,
 	DEFAULT_THEME,
 	LIGHT_MODE,
-} from "@constants/constants.ts";
+} from "@constants/constants";
 import { expressiveCodeConfig } from "@/config";
 import type { LIGHT_DARK_MODE } from "@/types/config";
 
@@ -28,27 +28,38 @@ export function setHue(hue: number): void {
 }
 
 export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
-	switch (theme) {
-		case LIGHT_MODE:
-			document.documentElement.classList.remove("dark");
-			break;
-		case DARK_MODE:
-			document.documentElement.classList.add("dark");
-			break;
-		case AUTO_MODE:
-			if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-				document.documentElement.classList.add("dark");
-			} else {
+	// 添加防闪烁类，禁用所有过渡
+	document.documentElement.classList.add('theme-changing');
+	
+	// 使用 requestAnimationFrame 确保 DOM 更新的时序
+	requestAnimationFrame(() => {
+		switch (theme) {
+			case LIGHT_MODE:
 				document.documentElement.classList.remove("dark");
-			}
-			break;
-	}
+				break;
+			case DARK_MODE:
+				document.documentElement.classList.add("dark");
+				break;
+			case AUTO_MODE:
+				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					document.documentElement.classList.add("dark");
+				} else {
+					document.documentElement.classList.remove("dark");
+				}
+				break;
+		}
 
-	// Set the theme for Expressive Code
-	document.documentElement.setAttribute(
-		"data-theme",
-		expressiveCodeConfig.theme,
-	);
+		// Set the theme for Expressive Code
+		document.documentElement.setAttribute(
+			"data-theme",
+			expressiveCodeConfig.theme,
+		);
+		
+		// 在下一帧移除防闪烁类，恢复过渡效果
+		requestAnimationFrame(() => {
+			document.documentElement.classList.remove('theme-changing');
+		});
+	});
 }
 
 export function setTheme(theme: LIGHT_DARK_MODE): void {

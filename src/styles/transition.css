@@ -1,6 +1,6 @@
 /* Page transition animations with Swup */
 html.is-changing .transition-swup-fade {
-    @apply transition-all duration-200
+    @apply transition-all duration-150
 }
 html.is-animating .transition-swup-fade {
     @apply opacity-0 translate-y-4
@@ -18,36 +18,35 @@ html.is-animating .transition-swup-fade {
     }
 }
 
-/* Main components - 减少动画延迟提升性能 */
+/* Main components - 统一动画时长为150ms，与主题切换保持一致 */
 .onload-animation {
     opacity: 0;
     animation: 150ms fade-in-up;
     animation-fill-mode: forwards;
 }
 #navbar {
-    animation-delay: 0ms
+    animation-delay: 20ms
 }
 #sidebar {
-    animation-delay: 0ms
+    animation-delay: 40ms
 }
 #swup-container {
     outline: none;
 }
 #content-wrapper {
-    animation-delay: 0ms;
+    animation-delay: 60ms;
 }
 .footer {
-    animation-delay: 0ms;
+    animation-delay: 80ms;
 }
 #banner-credit {
-    animation-delay: 0ms;
+    animation-delay: 100ms;
 }
 
-/* Post content - 简化动画延迟 */
+/* Post content - 优化动画层次，提升视觉体验 */
 #post-container :nth-child(1) { animation-delay: 0ms }
-#post-container :nth-child(2) { animation-delay: 0ms }
-#post-container :nth-child(3) { animation-delay: 0ms }
-#post-container :nth-child(4) { animation-delay: 0ms }
-#post-container :nth-child(5) { animation-delay: 0ms }
-#post-container :nth-child(6) { animation-delay: 0ms }
-
+#post-container :nth-child(2) { animation-delay: 20ms }
+#post-container :nth-child(3) { animation-delay: 40ms }
+#post-container :nth-child(4) { animation-delay: 60ms }
+#post-container :nth-child(5) { animation-delay: 80ms }
+#post-container :nth-child(6) { animation-delay: 100ms }
