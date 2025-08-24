@@ -16,6 +16,15 @@ html {
         animation-duration: 0s !important;
     }
     
+    /* 特别保护波浪效果SVG填充色 */
+    .theme-changing svg,
+    .theme-changing svg *,
+    .theme-changing .waves,
+    .theme-changing .waves * {
+        transition: none !important;
+        animation-duration: 0s !important;
+    }
+    
     .card-base {
         @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition-colors duration-150;
     }
