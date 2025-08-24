@@ -154,9 +154,10 @@ onDestroy(() => {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-10px);
+    transition: all 0.2s ease-out;
 }
 
-.float-panel-closed:not(.float-panel-closed) {
+#translate-panel:not(.float-panel-closed) {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
