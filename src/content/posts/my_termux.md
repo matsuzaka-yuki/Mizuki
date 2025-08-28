@@ -1,7 +1,7 @@
 ---
 title: "Termux 完全上手：从零到进阶的 Android 终端之旅"
 description: "无需 Root，在 Android 手机里搭建完整的 Linux 开发环境：包管理、SSH、代码运行、定时任务一站式教程。"
-date: 2024-06-02
+published: 2024-06-02
 tags: ["termux", "android", "linux", "cli", "教程"]
 cover: ./cover-termux.png
 ---
