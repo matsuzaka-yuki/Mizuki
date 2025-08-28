@@ -22,3 +22,4 @@ cover: ./cover-termux.png
 ```bash
 pkg update && pkg upgrade -y
 pkg install git curl wget -y
+jhgff
