@@ -1,5 +1,4 @@
 ---
-import ImageWrapper from "../components/misc/ImageWrapper.astro";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
@@ -58,21 +57,22 @@ function formatTime(dateString: string): string {
 				<!-- 短文列表 -->
 				<div class="moments-timeline">
 					<div class="timeline-list space-y-4">
-						{moments.map(moment => (
-							<div class="moment-item card-base p-4 md:p-6 lg:p-8 hover:shadow-lg transition-all" key={moment.id}>
+					{moments.map(moment => (
+						<div class="moment-item card-base p-4 md:p-6 lg:p-8 hover:shadow-lg transition-all">
 								<div class="moment-content">
 									<p class="moment-text text-sm md:text-base lg:text-lg text-90 leading-relaxed mb-3 md:mb-4">{moment.content}</p>
 									
 									{moment.images && moment.images.length > 0 && (
 				<div class="moment-images grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mb-3 md:mb-4">
 					{moment.images.map((image, index) => (
-						<div class="image-item relative rounded-md overflow-hidden aspect-square cursor-pointer hover:scale-105 transition-transform" key={index}>
-							<ImageWrapper 
-								src={image} 
-								alt={i18n(I18nKey.diaryImage)}
-								class="w-full h-full object-cover"
-							/>
-						</div>
+					<div class="image-item relative rounded-md overflow-hidden aspect-square cursor-pointer hover:scale-105 transition-transform">
+						<img 
+							src={image} 
+							alt={i18n(I18nKey.diaryImage)}
+							class="w-full h-full object-cover"
+							loading="lazy"
+						/>
+					</div>
 					))}
 				</div>
 			)}
@@ -87,11 +87,7 @@ function formatTime(dateString: string): string {
 											{formatTime(moment.date)}
 										</time>
 									</div>
-									<div class="moment-actions">
-										<button class="action-btn reply-btn p-1.5 md:p-2 lg:p-3 rounded-md hover:bg-[var(--btn-regular-bg)] transition-colors" title={i18n(I18nKey.diaryReply)}>
-											<i class="reply-icon text-xs md:text-sm lg:text-base">💬</i>
-										</button>
-									</div>
+									
 								</div>
 							</div>
 						))}
@@ -261,15 +257,4 @@ function formatTime(dateString: string): string {
 	}
 </style>
 
-<script>
-	// 回复按钮功能
-	document.addEventListener('DOMContentLoaded', function() {
-		const replyBtns = document.querySelectorAll('.reply-btn');
-		replyBtns.forEach(btn => {
-			btn.addEventListener('click', function() {
-				// 这里可以添加回复功能
-				console.log('回复功能待实现');
-			});
-		});
-	});
-</script>
+

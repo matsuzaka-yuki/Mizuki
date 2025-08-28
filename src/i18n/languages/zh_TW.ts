@@ -6,6 +6,7 @@ export const zh_TW: Translation = {
 	[Key.about]: "關於我們",
 	[Key.archive]: "彙整",
 	[Key.search]: "搜尋",
+	[Key.other]: "其他",
 
 	[Key.tags]: "標籤",
 	[Key.categories]: "分類",
@@ -14,6 +15,10 @@ export const zh_TW: Translation = {
 	[Key.tableOfContents]: "目錄",
 
 	[Key.comments]: "評論",
+
+	// 公告栏
+	[Key.announcement]: "公告",
+	[Key.announcementClose]: "關閉",
 
 	[Key.untitled]: "無標題",
 	[Key.uncategorized]: "未分類",
@@ -41,12 +46,19 @@ export const zh_TW: Translation = {
 	[Key.anime]: "追番",
 	[Key.diary]: "即刻短文",
 
-	// 追番統計
+	// 番劇頁面
+	[Key.animeTitle]: "我的追番記錄",
+	[Key.animeSubtitle]: "記錄我的二次元之旅",
+	[Key.animeList]: "追番列表",
 	[Key.animeTotal]: "總數",
 	[Key.animeWatching]: "追番中",
 	[Key.animeCompleted]: "已追完",
+	[Key.animeAvgRating]: "平均評分",
 	[Key.animeStatusWatching]: "追番中",
 	[Key.animeStatusCompleted]: "已追完",
+	[Key.animeStatusPlanned]: "計劃中",
+	[Key.animeYear]: "年份",
+	[Key.animeStudio]: "製作",
 
 	// 短文頁面
 	[Key.diarySubtitle]: "隨時隨地，分享生活",
@@ -66,6 +78,15 @@ export const zh_TW: Translation = {
 
 	// 音樂播放器
 	[Key.playlist]: "播放清單",
+
+	// 相冊頁面
+	[Key.albums]: "相冊",
+	[Key.albumsSubtitle]: "記錄生活中的美好瞬間",
+	[Key.albumsEmpty]: "暫無相冊",
+	[Key.albumsEmptyDesc]: "還沒有創建任何相冊，快去添加一些美好的回憶吧！",
+	[Key.albumsBackToList]: "返回相冊",
+	[Key.albumsPhotoCount]: "張照片",
+	[Key.albumsPhotosCount]: "張照片",
 
 	// 專案頁面
 	[Key.projects]: "專案",

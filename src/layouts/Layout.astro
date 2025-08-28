@@ -187,6 +187,7 @@ const bannerOffset =
 		}}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
 
 
+
 		<slot name="head"></slot>
 
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
@@ -1344,12 +1345,11 @@ import PhotoSwipeLightbox from "photoswipe/lightbox"
 import "photoswipe/style.css"
 
 let lightbox: PhotoSwipeLightbox
-let pswp = import("photoswipe")
 
 function createPhotoSwipe() {
 	lightbox = new PhotoSwipeLightbox({
 		gallery: ".custom-md img, #post-cover img, .moment-images img",
-		pswpModule: () => pswp,
+		pswpModule: () => import("photoswipe"),
 		closeSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 11-28t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>',
 		zoomSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M340-540h-40q-17 0-28.5-11.5T260-580q0-17 11.5-28.5T300-620h40v-40q0-17 11.5-28.5T380-700q17 0 28.5 11.5T420-660v40h40q17 0 28.5 11.5T500-580q0 17-11.5 28.5T460-540h-40v40q0 17-11.5 28.5T380-460q-17 0-28.5-11.5T340-500v-40Zm40 220q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>',
 		padding: { top: 20, bottom: 20, left: 20, right: 20 },
@@ -1413,6 +1413,13 @@ class GalleryManager {
 
 	init() {
 		console.log('GalleryManager init called');
+		
+		// 防止重复初始化
+		if (this.isInitialized) {
+			console.log('GalleryManager already initialized, skipping');
+			return;
+		}
+		
 		// 检查是否在相册页面
 		const galleryGroups = document.querySelectorAll('.gallery-group');
 		console.log('Found gallery groups:', galleryGroups.length);
@@ -1429,6 +1436,7 @@ class GalleryManager {
 		this.clickHandler = (e) => this.handleClick(e);
 		document.addEventListener('click', this.clickHandler);
 		this.isInitialized = true;
+		console.log('GalleryManager initialized successfully');
 	}
 
 	cleanup() {
@@ -1497,9 +1505,12 @@ class GalleryManager {
 		modal.className = 'gallery-modal fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4';
 		modal.style.opacity = '0';
 		modal.style.transition = 'opacity 0.3s ease';
+		modal.style.borderRadius = '12px';
 		
 		const modalContent = document.createElement('div');
 		modalContent.className = 'relative max-w-full max-h-full';
+		modalContent.style.borderRadius = '12px';
+		modalContent.style.overflow = 'hidden';
 		
 		const img = document.createElement('img');
 		img.src = imageSrc;
@@ -1507,6 +1518,7 @@ class GalleryManager {
 		img.className = 'max-w-full max-h-full object-contain rounded-lg';
 		img.style.transform = 'scale(0.9)';
 		img.style.transition = 'transform 0.3s ease';
+		img.style.borderRadius = '12px';
 		
 		const closeBtn = document.createElement('button');
 		closeBtn.className = 'close-btn absolute top-4 right-4 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-colors';
@@ -1558,24 +1570,38 @@ window.galleryManager = new GalleryManager();
 
 // 相册初始化函数
 const initGallery = () => {
+	console.log('initGallery called');
+	// 在页面切换时，需要重置初始化状态以允许重新初始化
+	if (window.location.pathname.includes('/gallery')) {
+		window.galleryManager.isInitialized = false;
+	}
 	window.galleryManager.init();
 };
 
 // Swup集成
+let isGallerySetupComplete = false;
 const setupGalleryWithSwup = () => {
+	if (isGallerySetupComplete) return;
+	
 	initGallery();
 	
 	if (window.swup) {
 		window.swup.hooks.on("page:view", () => {
-			// 页面切换后重新初始化
-			setTimeout(initGallery, 50);
+			// 页面切换后重新初始化，增加延迟确保DOM完全加载
+			setTimeout(() => {
+				console.log('Layout: Swup page:view - reinitializing gallery');
+				initGallery();
+			}, 200);
 		});
 		
 		window.swup.hooks.on("content:replace", () => {
 			// 页面内容替换前清理
+			console.log('Layout: Swup content:replace - cleaning up gallery');
 			window.galleryManager.cleanup();
 		}, { before: true });
 	}
+	
+	isGallerySetupComplete = true;
 };
 
 // 初始化

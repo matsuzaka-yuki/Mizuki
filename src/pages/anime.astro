@@ -13,136 +13,261 @@ const animeList = [
 		cover: "assets/anime/lkls.webp",
 		description: "少女枪战，瑕不掩瑜",
 		episodes: "12 episodes",
-		year: "2013-2023",
+		year: "2022",
+		genre: ["动作", "日常"],
+		studio: "A-1 Pictures",
 		link: "https://www.bilibili.com/bangumi/media/md28338623",
+		progress: 12,
+		totalEpisodes: 12,
+		startDate: "2022-07",
+		endDate: "2022-09",
 	},
 	{
 		title: "若叶女孩",
 		status: "watching",
 		rating: 9.5,
 		cover: "assets/anime/rynh.webp",
-		description: "少女日常，清甜治愈。",
+		description: "少女日常，清甜治愈",
 		episodes: "12 episodes",
-		year: "2019-2023",
+		year: "2015",
+		genre: ["日常", "治愈"],
+		studio: "Nexus",
 		link: "https://www.bilibili.com/bangumi/media/md2590",
+		progress: 8,
+		totalEpisodes: 12,
+		startDate: "2015-07",
+		endDate: "2015-09",
 	},
 	{
 		title: "恋爱小行星",
 		status: "watching",
 		rating: 9.2,
 		cover: "assets/anime/laxxx.webp",
-		description: "星遇少女，纯爱治愈。",
-		episodes: "24 episodes",
-		year: "2020-2024",
+		description: "星遇少女，纯爱治愈",
+		episodes: "12 episodes",
+		year: "2020",
+		genre: ["恋爱", "治愈"],
+		studio: "Doga Kobo",
 		link: "https://www.bilibili.com/bangumi/media/md28224128",
+		progress: 5,
+		totalEpisodes: 12,
+		startDate: "2020-01",
+		endDate: "2020-03",
 	},
 	{
-		title: "请问您今天要来点兔子吗？？",
+		title: "请问您今天要来点兔子吗？",
 		status: "completed",
 		rating: 9.0,
 		cover: "assets/anime/tz1.webp",
 		description: "一群少女的温馨日常",
 		episodes: "12 episodes",
-		year: "2022-2023",
+		year: "2014",
+		genre: ["日常", "治愈"],
+		studio: "White Fox",
 		link: "https://www.bilibili.com/bangumi/media/md2762",
+		progress: 12,
+		totalEpisodes: 12,
+		startDate: "2014-04",
+		endDate: "2014-06",
+	},
+	{
+		title: "沉默魔女的秘密 ",
+		status: "watching",
+		rating: 9.0,
+		cover: "assets/anime/cmmn.webp",
+		description: "木理,木理!",
+		episodes: "12 episodes",
+		year: "2024",
+		genre: ["日常", "治愈", "魔法"],
+		studio: "C2C",
+		link: "https://www.bilibili.com/bangumi/media/md26625039",
+		progress: 8,
+		totalEpisodes: 12,
+		startDate: "2025-07",
+		endDate: "2025-10",
 	},
 ];
 
-// 获取状态的翻译文本
-function getStatusText(status: string): string {
+// 获取状态的翻译文本和样式
+function getStatusInfo(status: string) {
 	switch (status) {
 		case "watching":
-			return i18n(I18nKey.animeStatusWatching);
+			return {
+				text: i18n(I18nKey.animeStatusWatching),
+				class:
+					"bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+				icon: "▶",
+			};
 		case "completed":
-			return i18n(I18nKey.animeStatusCompleted);
+			return {
+				text: i18n(I18nKey.animeStatusCompleted),
+				class:
+					"bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+				icon: "✓",
+			};
+		case "planned":
+			return {
+				text: i18n(I18nKey.animeStatusPlanned),
+				class:
+					"bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+				icon: "⏰",
+			};
 		default:
-			return status;
+			return {
+				text: status,
+				class: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
+				icon: "?",
+			};
 	}
 }
+
+// 计算统计数据
+const stats = {
+	total: animeList.length,
+	watching: animeList.filter((anime) => anime.status === "watching").length,
+	completed: animeList.filter((anime) => anime.status === "completed").length,
+	avgRating: (
+		animeList.reduce((sum, anime) => sum + anime.rating, 0) / animeList.length
+	).toFixed(1),
+};
 ---
 
-<MainGridLayout title={i18n(I18nKey.anime)} description="我的追番记录">
+<MainGridLayout title={i18n(I18nKey.anime)} description={i18n(I18nKey.animeSubtitle)}>
 	<div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
 		<div class="card-base z-10 px-9 py-6 relative w-full">
-			<div class="relative">
-				<div class="flex flex-row items-center text-lg font-bold mb-6 text-90">
-					<div class="flex flex-row items-center">
-						<svg class="w-6 h-6 mr-2 text-90" fill="currentColor" viewBox="0 0 24 24">
-							<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-						</svg>
-						<span>{i18n(I18nKey.anime)}</span>
+			<!-- 页面标题 -->
+			<div class="relative w-full mb-8">
+				<div class="mb-6">
+					<h1 class="text-4xl font-bold text-black/90 dark:text-white/90 mb-2">{i18n(I18nKey.animeTitle)}</h1>
+					<p class="text-black/75 dark:text-white/75">{i18n(I18nKey.animeSubtitle)}</p>
+				</div>
+				
+				<!-- 统计卡片 -->
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+					<div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-4">
+						<div class="flex items-center gap-3">
+							<div class="text-2xl">📊</div>
+							<div>
+								<div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{stats.total}</div>
+								<div class="text-sm text-blue-600/70 dark:text-blue-400/70">{i18n(I18nKey.animeTotal)}</div>
+							</div>
+						</div>
+					</div>
+					<div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-4">
+						<div class="flex items-center gap-3">
+							<div class="text-2xl">▶️</div>
+							<div>
+								<div class="text-2xl font-bold text-green-600 dark:text-green-400">{stats.watching}</div>
+								<div class="text-sm text-green-600/70 dark:text-green-400/70">{i18n(I18nKey.animeWatching)}</div>
+							</div>
+						</div>
+					</div>
+					<div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-4">
+						<div class="flex items-center gap-3">
+							<div class="text-2xl">✅</div>
+							<div>
+								<div class="text-2xl font-bold text-purple-600 dark:text-purple-400">{stats.completed}</div>
+								<div class="text-sm text-purple-600/70 dark:text-purple-400/70">{i18n(I18nKey.animeCompleted)}</div>
+							</div>
+						</div>
+					</div>
+					<div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-lg p-4">
+						<div class="flex items-center gap-3">
+							<div class="text-2xl">⭐</div>
+							<div>
+								<div class="text-2xl font-bold text-orange-600 dark:text-orange-400">{stats.avgRating}</div>
+								<div class="text-sm text-orange-600/70 dark:text-orange-400/70">{i18n(I18nKey.animeAvgRating)}</div>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
 
-				<!-- 统计信息 -->
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-					<div class="card-base p-4 text-center">
-						<div class="text-2xl font-bold text-[var(--primary)]">{animeList.length}</div>
-						<div class="text-sm text-75">{i18n(I18nKey.animeTotal)}</div>
-					</div>
-					<div class="card-base p-4 text-center">
-						<div class="text-2xl font-bold text-[oklch(0.65_0.15_140)] dark:text-[oklch(0.75_0.15_140)]">{animeList.filter(anime => anime.status === 'watching').length}</div>
-						<div class="text-sm text-75">{i18n(I18nKey.animeWatching)}</div>
-					</div>
-					<div class="card-base p-4 text-center">
-						<div class="text-2xl font-bold text-[oklch(0.65_0.15_240)] dark:text-[oklch(0.75_0.15_240)]">{animeList.filter(anime => anime.status === 'completed').length}</div>
-						<div class="text-sm text-75">{i18n(I18nKey.animeCompleted)}</div>
-					</div>
-				</div>
-
-				<!-- 动漫列表 -->
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{animeList.map(anime => (
-						<div class="card-base p-4 hover:shadow-lg transition-shadow">
-							<div class="flex items-start gap-3">
-								<a href={anime.link} target="_blank" rel="noopener noreferrer" class="w-16 h-20 rounded flex-shrink-0 overflow-hidden hover:opacity-80 transition-opacity cursor-pointer">
-									<ImageWrapper 
-										src={anime.cover} 
-										alt={anime.title}
-										class="w-16 h-20 rounded"
-									/>
-								</a>
-								<div class="flex-1">
-									<h3 class="font-bold text-lg mb-2 text-90">{anime.title}</h3>
-									<p class="text-sm text-75 mb-3">{anime.description}</p>
-									
-									<div class="flex items-center gap-4 text-sm mb-2">
-										<div class="flex items-center gap-1">
-											<span class="text-50">评分:</span>
-											<div class="flex items-center">
-												{Array.from({length: 5}, (_, i) => (
-													<svg class={`w-4 h-4 ${i < anime.rating ? 'text-[oklch(0.75_0.15_80)] dark:text-[oklch(0.85_0.15_80)]' : 'text-30'}`} fill="currentColor" viewBox="0 0 20 20">
-														<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+			<!-- 动漫列表 -->
+			<div class="mb-8">
+				<h2 class="text-2xl font-bold text-black/90 dark:text-white/90 mb-4">
+					{i18n(I18nKey.animeList)}
+				</h2>
+				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+					{animeList.map(anime => {
+						const statusInfo = getStatusInfo(anime.status);
+						const progressPercent = (anime.progress / anime.totalEpisodes) * 100;
+						
+						return (
+							<div class="group relative bg-[var(--card-bg)] border border-[var(--line-divider)] rounded-[var(--radius-large)] overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+								<!-- 封面区域 - 竖屏比例 -->
+								<div class="relative aspect-[2/3] overflow-hidden">
+									<a href={anime.link} target="_blank" rel="noopener noreferrer" class="block w-full h-full">
+										<ImageWrapper 
+											src={anime.cover} 
+											alt={anime.title}
+											class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+										/>
+										<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+											<div class="absolute inset-0 flex items-center justify-center">
+												<div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center">
+													<svg class="w-6 h-6 text-gray-800 ml-1" fill="currentColor" viewBox="0 0 24 24">
+														<path d="M8 5v14l11-7z"/>
 													</svg>
-												))}
+												</div>
 											</div>
 										</div>
+									</a>
+									
+									<!-- 状态标签 -->
+									<div class={`absolute top-2 left-2 px-2 py-1 rounded-md text-xs font-medium ${statusInfo.class}`}>
+										<span class="mr-1">{statusInfo.icon}</span>
+										<span>{statusInfo.text}</span>
 									</div>
 									
-									<div class="flex items-center justify-between">
-										<span class={`px-2 py-1 rounded-full text-xs font-medium ${
-											anime.status === 'watching' ? 'bg-[oklch(0.85_0.1_140)] text-[oklch(0.35_0.15_140)] dark:bg-[oklch(0.25_0.1_140)] dark:text-[oklch(0.75_0.15_140)]' :
-											anime.status === 'completed' ? 'bg-[oklch(0.85_0.1_240)] text-[oklch(0.35_0.15_240)] dark:bg-[oklch(0.25_0.1_240)] dark:text-[oklch(0.75_0.15_240)]' :
-											'bg-[var(--btn-regular-bg)] text-75'
-										}`}>
-											{getStatusText(anime.status)}
-										</span>
+									<!-- 评分 -->
+									<div class="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded-md text-xs font-medium flex items-center gap-1">
+										<svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+											<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+										</svg>
+										<span>{anime.rating}</span>
+									</div>
+									
+									<!-- 进度条 - 在封面底部 -->
+									{anime.status === 'watching' && (
+										<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+											<div class="w-full bg-white/20 rounded-full h-1.5 mb-1">
+												<div class="bg-gradient-to-r from-emerald-400 to-teal-400 h-1.5 rounded-full transition-all duration-300" style={`width: ${progressPercent}%`}></div>
+											</div>
+											<div class="text-white text-xs font-medium">
+												{anime.progress}/{anime.totalEpisodes} ({Math.round(progressPercent)}%)
+											</div>
+										</div>
+									)}
+								</div>
+								
+								<!-- 内容区域 - 紧凑设计 -->
+								<div class="p-3">
+									<h3 class="text-sm font-bold text-black/90 dark:text-white/90 mb-1 line-clamp-2 leading-tight">{anime.title}</h3>
+									<p class="text-black/60 dark:text-white/60 text-xs mb-2 line-clamp-2">{anime.description}</p>
+									
+									<!-- 详细信息 - 更紧凑 -->
+									<div class="space-y-1 text-xs">
+										<div class="flex justify-between">
+												<span class="text-black/50 dark:text-white/50">{i18n(I18nKey.animeYear)}</span>
+											<span class="text-black/70 dark:text-white/70">{anime.year}</span>
+										</div>
+										<div class="flex justify-between">
+												<span class="text-black/50 dark:text-white/50">{i18n(I18nKey.animeStudio)}</span>
+											<span class="text-black/70 dark:text-white/70 truncate ml-2">{anime.studio}</span>
+										</div>
+										<div class="flex flex-wrap gap-1 mt-2">
+											{anime.genre.map(g => (
+												<span class="px-1.5 py-0.5 bg-[var(--btn-regular-bg)] text-black/70 dark:text-white/70 rounded text-xs">{g}</span>
+											))}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					))}
+						);
+					})}
 				</div>
-
-
 			</div>
 		</div>
 	</div>
 </MainGridLayout>
-
-<style>
-	.card-base {
-		background: var(--card-bg);
-		border: 1px solid var(--line-divider);
-	}
-</style>

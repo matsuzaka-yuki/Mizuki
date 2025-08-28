@@ -1,0 +1,188 @@
+---
+import type { GetStaticPaths } from "astro";
+import type { AlbumGroup } from "../../../data/albums";
+import I18nKey from "../../../i18n/i18nKey";
+import { i18n } from "../../../i18n/translation";
+import MainGridLayout from "../../../layouts/MainGridLayout.astro";
+import { scanAlbums } from "../../../utils/album-scanner";
+
+export const getStaticPaths = async () => {
+	const albumsData = await scanAlbums();
+	return albumsData.map((album) => ({
+		params: { id: album.id },
+		props: { album },
+	}));
+};
+
+interface Props {
+	album: AlbumGroup;
+}
+
+const { album } = Astro.props;
+
+if (!album) {
+	return Astro.redirect("/404");
+}
+---
+
+<MainGridLayout title={album.title} description={album.description || album.title}>
+  <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      
+      <!-- 返回按钮 -->
+      <div class="mb-6">
+        <a 
+          href="/albums/" 
+          class="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-[var(--primary)] transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          {i18n(I18nKey.albumsBackToList)}
+        </a>
+      </div>
+
+      <!-- 相册标题信息 -->
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">
+          {album.title}
+        </h1>
+        
+        {album.description && (
+          <p class="text-neutral-600 dark:text-neutral-400 mb-4">
+            {album.description}
+          </p>
+        )}
+        
+        <!-- 相册元数据 -->
+        <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-500">
+          <span>{album.photos.length} {album.photos.length > 1 ? i18n(I18nKey.albumsPhotosCount) : i18n(I18nKey.albumsPhotoCount)}</span>
+          <time>{new Date(album.date).toLocaleDateString('zh-CN')}</time>
+          {album.location && (
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+              </svg>
+              {album.location}
+            </span>
+          )}
+        </div>
+        
+        <!-- 标签 -->
+        {album.tags && album.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mt-4">
+            {album.tags.map(tag => (
+              <span class="btn-regular h-8 text-sm px-3 rounded-lg">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <!-- 照片网格 -->
+      <div 
+        class={`photo-gallery moment-images ${album.layout === 'masonry' ? 'masonry-layout' : 'grid-layout'}`}
+        data-layout={album.layout || 'grid'}
+        data-columns={album.columns || 3}
+      >
+        {album.photos.map((photo, index) => (
+          <figure class="photo-item group relative overflow-hidden rounded-lg">
+            <a 
+              href={photo.src}
+              data-pswp-width={photo.width || 1200}
+              data-pswp-height={photo.height || 800}
+              target="_blank"
+              class="block"
+            >
+              <img 
+                src={photo.src}
+                alt={photo.alt}
+                class="photo-image w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                loading="lazy"
+              />
+            </a>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </div>
+
+</MainGridLayout>
+
+<script>
+  // 确保PhotoSwipe正确处理相册图片
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('=== 相册页面加载完成 ===');
+    
+    // 检查页面中的图片元素
+    const albumImages = document.querySelectorAll('.moment-images img, .photo-gallery img');
+    console.log('相册图片数量:', albumImages.length);
+    
+    // 预加载图片以确保正确显示
+    albumImages.forEach((img) => {
+      if (img instanceof HTMLImageElement) {
+        const preloadImg = new Image();
+        preloadImg.src = img.src;
+      }
+    });
+    
+    // 修复相册图片链接，确保它们可以被PhotoSwipe正确处理
+    document.querySelectorAll('.photo-gallery a').forEach(link => {
+      if (link instanceof HTMLAnchorElement) {
+        // 阻止默认的新窗口打开行为
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          // 不需要额外操作，PhotoSwipe会处理点击事件
+        });
+      }
+    });
+  });
+</script>
+
+<style>
+  .grid-layout {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .grid-layout[data-columns="2"] {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .grid-layout[data-columns="3"] {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .grid-layout[data-columns="4"] {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .masonry-layout {
+    columns: 2;
+    column-gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .masonry-layout {
+      columns: 3;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .masonry-layout[data-columns="4"] {
+      columns: 4;
+    }
+  }
+  
+  .masonry-layout .photo-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+  
+  .grid-layout .photo-container {
+    aspect-ratio: 1;
+  }
+  
+</style>
+

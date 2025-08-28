@@ -6,6 +6,7 @@ export const ja: Translation = {
 	[Key.about]: "私たちについて",
 	[Key.archive]: "Archive",
 	[Key.search]: "検索",
+	[Key.other]: "その他",
 
 	[Key.tags]: "タグ",
 	[Key.categories]: "カテゴリ",
@@ -45,12 +46,19 @@ export const ja: Translation = {
 	[Key.anime]: "アニメ",
 	[Key.diary]: "つぶやき",
 
-	// 追番统计
+	// 番剧页面
+	[Key.animeTitle]: "アニメコレクション",
+	[Key.animeSubtitle]: "私のアニメ旅行記録",
+	[Key.animeList]: "アニメリスト",
 	[Key.animeTotal]: "合計",
 	[Key.animeWatching]: "視聴中",
 	[Key.animeCompleted]: "視聴済み",
+	[Key.animeAvgRating]: "平均評価",
 	[Key.animeStatusWatching]: "視聴中",
 	[Key.animeStatusCompleted]: "視聴済み",
+	[Key.animeStatusPlanned]: "予定",
+	[Key.animeYear]: "年",
+	[Key.animeStudio]: "制作会社",
 
 	// 短文页面
 	[Key.diarySubtitle]: "いつでもどこでも、生活をシェア",
@@ -71,6 +79,16 @@ export const ja: Translation = {
 
 	// 音楽プレーヤー
 	[Key.playlist]: "プレイリスト",
+
+	// 相册页面
+	[Key.albums]: "アルバム",
+	[Key.albumsSubtitle]: "人生の美しい瞬間を記録する",
+	[Key.albumsEmpty]: "アルバムなし",
+	[Key.albumsEmptyDesc]:
+		"まだアルバムがありません。美しい思い出を追加しましょう！",
+	[Key.albumsBackToList]: "アルバムに戻る",
+	[Key.albumsPhotoCount]: "枚の写真",
+	[Key.albumsPhotosCount]: "枚の写真",
 
 	// プロジェクトページ
 	[Key.projects]: "プロジェクト",

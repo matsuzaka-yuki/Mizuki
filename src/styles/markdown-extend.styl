@@ -271,9 +271,32 @@ a.card-github.fetch-error
     height: auto
     border-radius: 0.5rem
 
+.mermaid-loading
+  display: flex
+  align-items: center
+  justify-content: center
+  padding: 2rem
+  color: var(--text-color-secondary)
+  font-style: italic
+  
+  &::before
+    content: ""
+    width: 20px
+    height: 20px
+    border: 2px solid var(--primary)
+    border-top: 2px solid transparent
+    border-radius: 50%
+    animation: spin 1s linear infinite
+    margin-right: 0.5rem
+
+@keyframes spin
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
 .mermaid-error
   color: var(--admonitions-color-warning)
-  background: var(--admonitions-color-warning)
   background: rgba(239, 68, 68, 0.1)
   border: 1px solid var(--admonitions-color-warning)
   border-radius: 0.5rem
@@ -281,6 +304,16 @@ a.card-github.fetch-error
   margin: 1rem 0
   text-align: center
   font-weight: 500
+  
+  p
+    margin: 0 0 0.5rem 0
+    
+  button
+    transition: all 0.2s ease
+    
+    &:hover
+      background: var(--primary-hover) !important
+      transform: translateY(-1px)
 
 // 深色模式下的 Mermaid 样式
 .dark .mermaid-diagram-container

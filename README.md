@@ -6,6 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![Mizuki 预览](./README.webp)
+![Mizuki 预览](./README2.webp)
 
 一个现代化、功能丰富的静态博客模板，基于 [Astro](https://astro.build) 构建，具有先进的功能和精美的设计。
 
@@ -16,19 +17,11 @@
 [**中文**](./README.md) /
 [**English**](./README.en.md) /
 [**日本語**](./docs/README.ja.md) /
-[**한국어**](./docs/README.ko.md) /
-[**Français**](./docs/README.fr.md) /
-[**Deutsch**](./docs/README.de.md) /
-[**Español**](./docs/README.es.md) /
-[**Русский**](./docs/README.ru.md)
+[**中文繁体**](./docs/README.tw.md) /
 
-## 🆕 v4.0 版本更新
-- **全屏背景图片功能：** 新增非Banner模式下的全屏背景图片支持，提供沉浸式的视觉体验。支持轮播切换、透明度调节和模糊效果配置。
-- **资源路径优化：** 修复了Banner模式和全屏壁纸模式下的图片资源调用问题，确保能正确从public目录获取资源。
-- **导航栏透明效果：** 优化了全屏壁纸模式下导航栏的半透明圆角效果，提升视觉一致性。
-- **手机端Banner优化：** 支持调用外部链接
-
-![Mizuki v4.0 功能展示](./README2.webp)
+## 🆕 v4.3 版本更新
+- **番剧页面：** 重构了更可爱好看的番剧页面，包括番剧列表、番剧详情和番剧时间轴。
+- **相册页面：** 重构了相册页面,使用分页+文件夹数据索引方案
 
 ## 🆕 v3.4 版本更新
 - **新增页面：** 添加了项目展示、技能展示和时间线专属页面，用于展示您的工作、专业技能和成长历程。

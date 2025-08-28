@@ -6,118 +6,111 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![Mizuki Preview](./README.webp)
+![Mizuki Preview](./README2.webp)
 
-A modern, feature-rich static blog template built with [Astro](https://astro.build), enhanced with advanced functionality and beautiful design.
+A modern, feature-rich static blog template built with [Astro](https://astro.build), featuring advanced functionality and beautiful design.
 
 [**🖥️ Live Demo**](https://mizuki.mysqil.com/)
-[**📖 User Docs**](https://docs.mizuki.mysqil.com/)
+[**📝 Documentation**](https://docs.mizuki.mysqil.com/)
 
 🌏 README Languages
 [**中文**](./README.md) /
 [**English**](./README.en.md) /
 [**日本語**](./docs/README.ja.md) /
-[**한국어**](./docs/README.ko.md) /
-[**Français**](./docs/README.fr.md) /
-[**Deutsch**](./docs/README.de.md) /
-[**Español**](./docs/README.es.md) /
-[**Русский**](./docs/README.ru.md)
+[**中文繁体**](./docs/README.tw.md) /
 
-## 🆕 What's New in v4.0
-- **Full-screen Background Image Feature:** Added support for full-screen background images in non-Banner mode, providing an immersive visual experience. Supports carousel switching, transparency adjustment, and blur effect configuration.
-- **Resource Path Optimization:** Fixed image resource loading issues in both Banner mode and full-screen wallpaper mode, ensuring correct resource loading from the public directory.
-- **Navigation Bar Transparency Effect:** Optimized the semi-transparent rounded corner effect of the navigation bar in full-screen wallpaper mode, improving visual consistency.
-- **Mobile Banner Optimization:** Supports calling external links
+## 🆕 v4.3 Update
+- **Anime Page:** Redesigned a cuter and more attractive anime page, including anime list, details, and timeline.
+- **Album Page:** Restructured the album page using pagination + folder data indexing solution.
 
-![Mizuki v4.0 Feature Showcase](/README2.webp)
+## 🆕 v3.4 Update
+- **New Pages:** Added project showcase, skills showcase, and timeline pages to display your work, professional skills, and growth journey.
+- **Dropdown Menu Fix:** Resolved the issue of border outlines appearing when clicking dropdown menus, improving interface consistency.
+- **Search Optimization:** Enhanced search functionality performance and accuracy.
+- **Footer HTML Injection:** Introduced a new feature allowing custom HTML content injection at the bottom of pages, providing greater flexibility.
 
-## 🆕 What's New in v3.4
-- **New Pages:** Added dedicated pages for Projects, Skills, and Timeline to showcase your work, expertise, and journey.
-- **Dropdown Menu Bug Fix:** Resolved an issue with the dropdown menu that caused an outline border to appear on click, improving UI consistency.
-- **Search Functionality Optimization:** Enhanced the search feature for better performance and accuracy.
-- **Bottom HTML Injection:** Introduced a new feature allowing custom HTML content to be injected at the bottom of pages for greater flexibility.
-
-## 🆕 What's New in v3.3
-- **Mermaid Syntax Support:** Added support for Mermaid diagram syntax, allowing direct embedding of flowcharts, sequence diagrams, Gantt charts, etc., in Markdown.
-- **Umami Analytics:** Added support for Umami analytics, enabling easy integration of website traffic data analysis.
+## 🆕 v3.3 Update
+- **Mermaid Syntax Support:** Added support for Mermaid chart syntax, now you can embed flowcharts, sequence diagrams, Gantt charts, etc. directly in Markdown.
+- **Umami Analytics:** Added support for Umami analytics, making it easy to integrate website visit data analysis.
 
 ![Configuration](configuration.svg)
 
-### 🔧 Component Configuration System Refactor
-- **Unified Configuration Architecture:** Brand new modular component configuration system with dynamic component management and order configuration
-- **Configuration-Driven Component Loading:** Refactored SideBar component to implement fully configuration-based component loading mechanism
+### 🔧 Component Configuration System Restructuring
+- **Unified Configuration Architecture:** Brand new modular component configuration system, supporting dynamic component management and order configuration
+- **Configuration-Driven Component Loading:** Restructured SideBar component, implementing fully configuration-based component loading mechanism
 - **Unified Control Switches:** Removed independent enable switches for music player and announcement components, unified control through sidebarLayoutConfig
-- **Responsive Layout Adaptation:** Components support responsive layout, automatically adjusting display based on device type
+- **Responsive Layout Adaptation:** Components support responsive layouts, automatically adjusting display based on device type
 
 ### 📐 Layout System Optimization
-- **Dynamic Sidebar Position Adjustment:** Support for left/right sidebar switching with automatic layout adaptation
-- **Smart Article Navigation Positioning:** When sidebar is on the right, article navigation automatically moves to the left for better reading experience
-- **Grid Layout Improvements:** Optimized CSS Grid layout, resolved container width anomaly issues
+- **Dynamic Sidebar Position Adjustment:** Support for left/right sidebar switching, with automatic layout adaptation
+- **Intelligent Article Directory Positioning:** When sidebar is on the right, article navigation automatically moves to the left, providing a better reading experience
+- **Grid Layout Improvements:** Optimized CSS Grid layout, resolving container width anomaly issues
 
-### 🎛️ Configuration File Format Standards
+### 🎛️ Configuration File Format Standardization
 - **Standardized Configuration Format:** Created unified component configuration file format specifications
 - **Type Safety:** Comprehensive TypeScript type definitions ensuring configuration type safety
 - **Extensibility:** Support for custom component types and configuration options
 
 ### 🧹 Code Optimization
 - **Test File Cleanup:** Removed unused test configurations and dependencies, reducing project size
-- **Code Structure Optimization:** Improved component architecture, enhanced code maintainability
-- **Performance Improvements:** Optimized component loading logic, improved page rendering performance
+- **Code Structure Optimization:** Improved component architecture, enhancing code maintainability
+- **Performance Improvement:** Optimized component loading logic, improving page rendering performance
 
 ---
 
 ## ✨ Features
 
-### 🎨 Design & UI
+### 🎨 Design & Interface
 - [x] Built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com)
-- [x] Smooth animations and page transitions with [Swup](https://swup.js.org/)
-- [x] Light / dark mode with system preference detection
-- [x] Customizable theme colors & dynamic banner carousel
-- [x] Full-screen background images with carousel, transparency, and blur effects
+- [x] Smooth animations and page transitions using [Swup](https://swup.js.org/)
+- [x] Light/dark theme switching with system preference detection
+- [x] Customizable theme colors and dynamic banner carousel
+- [x] Fullscreen background images with carousel, opacity, and blur effects
 - [x] Fully responsive design for all devices
 - [x] Beautiful typography with JetBrains Mono font
 
 ### 🔍 Content & Search
-- [x] Advanced search functionality with [Pagefind](https://pagefind.app/)
-- [x] [Enhanced Markdown features](#-markdown-extended-syntax) with syntax highlighting
-- [x] Interactive table of contents with auto-scroll
+- [x] Advanced search functionality based on [Pagefind](https://pagefind.app/)
+- [x] [Enhanced Markdown features](#-markdown-extensions) with syntax highlighting
+- [x] Interactive table of contents with auto-scrolling
 - [x] RSS feed generation
 - [x] Reading time estimation
-- [x] Post categorization and tagging
+- [x] Article categorization and tagging system
 
 ### 🌐 Internationalization
 - [x] **Multi-language support** with real-time translation
-- [x] **Auto language detection** based on user preferences
+- [x] **Automatic language detection** based on user preferences
 - [x] **Client-side translation** powered by Edge Translate
-- [x] Support for 10+ languages (EN, ZH-CN, ZH-TW, JA, KO, ES, TH, VI, ID, TR)
+- [x] Support for 10+ languages (Chinese, English, Japanese, Korean, Spanish, etc.)
 
 ### 📱 Special Pages
-- [x] **Anime Tracking Page** - Track your anime watching progress with ratings
-- [x] **Friends Links Page** - Showcase your friend's websites with beautiful cards
-- [x] **Diary/Moments Page** - Share life moments like social media posts
-- [x] **Archive Page** - Organized post timeline view
+- [x] **Anime Tracking Page** - Track anime watching progress and ratings
+- [x] **Friends Page** - Beautiful cards showcasing friend websites
+- [x] **Diary Page** - Share life moments, similar to social media
+- [x] **Archive Page** - Organized timeline view of articles
 - [x] **About Page** - Customizable personal introduction
 
 ### 🛠 Technical Features
-- [x] **Enhanced Code Blocks** with [Expressive Code](https://expressive-code.com/)
-- [x] **Math Support** with KaTeX rendering
-- [x] **Image Optimization** with PhotoSwipe gallery
-- [x] **SEO Optimized** with sitemap and meta tags
-- [x] **Performance Optimized** with lazy loading and caching
-- [x] **Comment System** integration ready (Twikoo)
+- [x] **Enhanced code blocks** based on [Expressive Code](https://expressive-code.com/)
+- [x] **Math formula support** with KaTeX rendering
+- [x] **Image optimization** with PhotoSwipe gallery integration
+- [x] **SEO optimization** including sitemaps and meta tags
+- [x] **Performance optimization** with lazy loading and caching
+- [x] **Comment system** with Twikoo integration
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### 📦 Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/mizuki.git
+   git clone https://github.com/matsuzaka-yuki/mizuki.git
    cd mizuki
    ```
 
 2. **Install dependencies:**
    ```bash
-   # Install pnpm if you haven't
+   # Install pnpm if not already installed
    npm install -g pnpm
    
    # Install project dependencies
@@ -125,11 +118,11 @@ A modern, feature-rich static blog template built with [Astro](https://astro.bui
    ```
 
 3. **Configure your blog:**
-   - Edit `src/config.ts` to customize your blog settings
+   - Edit `src/config.ts` to customize blog settings
    - Update site information, theme colors, banner images, and social links
-   - Configure translation settings and special page features
+   - Configure translation settings and feature page functionality
 
-4. **Start development server:**
+4. **Start the development server:**
    ```bash
    pnpm dev
    ```
@@ -137,9 +130,9 @@ A modern, feature-rich static blog template built with [Astro](https://astro.bui
 
 ### 📝 Content Management
 
-- **Create a new post:** `pnpm new-post <filename>`
+- **Create new posts:** `pnpm new-post <filename>`
 - **Edit posts:** Modify files in `src/content/posts/`
-- **Customize pages:** Edit special pages in `src/content/spec/`
+- **Customize special pages:** Edit files in `src/content/spec/`
 - **Add images:** Place images in `src/assets/` or `public/`
 
 ### 🚀 Deployment
@@ -153,84 +146,83 @@ Deploy your blog to any static hosting platform:
 
 Before deployment, update the `site` URL in `astro.config.mjs`.
 
-## 📝 Post Frontmatter
+## 📝 Post Frontmatter Format
 
 ```yaml
 ---
 title: My First Blog Post
 published: 2023-09-09
-description: This is the first post of my new Astro blog.
+description: This is the first post of my new blog.
 image: ./cover.jpg
-tags: [Foo, Bar]
-category: Front-end
+tags: [tag1, tag2]
+category: Frontend
 draft: false
 pinned: false
+lang: en      # Only set when article language differs from site language in config.ts
 ---
 ```
 
-### Frontmatter Fields
+### Frontmatter Field Descriptions
 
-- **title**: Post title (required)
+- **title**: Article title (required)
 - **published**: Publication date (required)
-- **description**: Post description for SEO and previews
-- **image**: Cover image path (relative to post file)
+- **description**: Article description for SEO and previews
+- **image**: Cover image path (relative to article file)
 - **tags**: Array of tags for categorization
-- **category**: Post category
-- **draft**: Set to `true` to hide post in production
-- **pinned**: Set to `true` to pin post to top of the list
+- **category**: Article category
+- **draft**: Set to `true` to hide article in production
+- **pinned**: Set to `true` to pin article to top
+- **lang**: Article language (only set when different from site default)
 
-### Pinned Posts
+### Pinned Articles Feature
 
-The `pinned` field allows you to pin important posts to the top of your blog. Pinned posts will always appear before regular posts, regardless of their publication date.
+The `pinned` field allows you to pin important articles to the top of your blog list. Pinned articles will always appear before regular articles regardless of their publication date.
 
 **Usage:**
 ```yaml
-pinned: true  # Pin this post to the top
-pinned: false # Regular post (default)
+pinned: true  # Pin this article to the top
+pinned: false # Regular article (default)
 ```
 
-**Sorting behavior:**
-1. Pinned posts appear first, sorted by publication date (newest first)
-2. Regular posts follow, sorted by publication date (newest first)
-lang: jp      # Set only if the post's language differs from the site's language in `config.ts`
----
-```
+**Sorting Rules:**
+1. Pinned articles appear first, sorted by publication date (newest first)
+2. Regular articles follow, sorted by publication date (newest first)
 
-## 🧩 Markdown Extended Syntax
+## 🧩 Markdown Extensions
 
-Mizuki supports enhanced Markdown features beyond standard GitHub Flavored Markdown:
+Mizuki supports enhanced features beyond standard GitHub Flavored Markdown:
 
 ### 📝 Enhanced Writing
-- **Admonitions:** Create beautiful callout boxes with `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`, etc.
-- **Math Equations:** Write LaTeX math with `$inline$` and `$$block$$` syntax
+- **Callouts:** Create beautiful annotation boxes using `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`, etc.
+- **Math Formulas:** Write LaTeX math formulas using `$inline$` and `$$block$$` syntax
 - **Code Highlighting:** Advanced syntax highlighting with line numbers and copy buttons
-- **GitHub Cards:** Embed repository cards with `::github{repo="user/repo"}`
+- **GitHub Cards:** Embed repository cards using `::github{repo="user/repo"}`
 
 ### 🎨 Visual Elements
-- **Image Galleries:** Automatic PhotoSwipe integration for image viewing
+- **Image Gallery:** Automatic PhotoSwipe integration for image viewing
 - **Collapsible Sections:** Create expandable content blocks
-- **Custom Components:** Use special directives for enhanced content
+- **Custom Components:** Enhance content with special directives
 
 ### 📊 Content Organization
-- **Table of Contents:** Auto-generated from headings with smooth scrolling
-- **Reading Time:** Automatic calculation and display
-- **Post Metadata:** Rich frontmatter support with categories and tags
+- **Table of Contents:** Automatically generated from headings with smooth scrolling
+- **Reading Time:** Automatically calculated and displayed
+- **Article Metadata:** Rich frontmatter support with categories and tags
 
 ## ⚡ Commands
 
-All commands are run from the root of the project:
+All commands are run from the project root:
 
-| Command                    | Action                                              |
-|:---------------------------|:----------------------------------------------------|
-| `pnpm install`             | Install dependencies                                |
-| `pnpm dev`                 | Start local dev server at `localhost:4321`         |
-| `pnpm build`               | Build production site to `./dist/`                 |
-| `pnpm preview`             | Preview build locally before deploying             |
-| `pnpm check`               | Run Astro checks for errors                        |
-| `pnpm format`              | Format code using Biome                            |
-| `pnpm lint`                | Lint and fix code issues                           |
-| `pnpm new-post <filename>` | Create a new blog post                             |
-| `pnpm astro ...`           | Run Astro CLI commands                             |
+| Command                    | Action                                   |
+|:---------------------------|:-----------------------------------------|
+| `pnpm install`             | Install dependencies                     |
+| `pnpm dev`                 | Start local dev server at `localhost:4321` |
+| `pnpm build`               | Build production site to `./dist/`       |
+| `pnpm preview`             | Preview build locally before deployment  |
+| `pnpm check`               | Run Astro error checking                 |
+| `pnpm format`              | Format code with Biome                   |
+| `pnpm lint`                | Check and fix code issues                |
+| `pnpm new-post <filename>` | Create a new blog post                   |
+| `pnpm astro ...`           | Run Astro CLI commands                   |
 
 ## 🎯 Configuration Guide
 
@@ -244,17 +236,17 @@ export const siteConfig: SiteConfig = {
   subtitle: "Your Blog Description",
   lang: "en", // or "zh-CN", "ja", etc.
   themeColor: {
-    hue: 210, // 0-360, theme color hue
-    fixed: false, // hide theme color picker
+    hue: 210, // 0-360, theme hue
+    fixed: false, // Hide theme color picker
   },
   translate: {
-    enable: true, // enable translation feature
-    service: "client.edge", // translation service
-    defaultLanguage: "chinese_simplified",
+    enable: true, // Enable translation
+    service: "client.edge", // Translation service
+    defaultLanguage: "english",
   },
   banner: {
     enable: true,
-    src: ["assets/banner/1.webp"], // banner images
+    src: ["assets/banner/1.webp"], // Banner images
     carousel: {
       enable: true,
       interval: 0.8, // seconds
@@ -263,19 +255,19 @@ export const siteConfig: SiteConfig = {
 };
 ```
 
-### 📱 Special Pages Configuration
+### 📱 Feature Page Configuration
 
 - **Anime Page:** Edit anime list in `src/pages/anime.astro`
-- **Friends Page:** Edit friends data in `src/content/spec/friends.md`
+- **Friends Page:** Edit friend data in `src/content/spec/friends.md`
 - **Diary Page:** Edit moments in `src/pages/diary.astro`
 - **About Page:** Edit content in `src/content/spec/about.md`
 
 ## ✏️ Contributing
 
-We welcome contributions! Please feel free to submit issues and pull requests.
+Contributions are welcome! Feel free to submit issues and pull requests.
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
@@ -284,20 +276,19 @@ We welcome contributions! Please feel free to submit issues and pull requests.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🙏 Acknowledgements
 
 - Based on the original [Fuwari](https://github.com/saicaca/fuwari) template
 - Built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com)
-- Inspired by [Yukina](https://github.com/WhitePaper233/yukina) - A beautiful and elegant blog template
-- Translation powered by [translate](https://gitee.com/mail_osc/translate) - AI i18n solution for automatic HTML translation
+- Inspired by [Yukina](https://github.com/WhitePaper233/yukina) - a beautiful and elegant blog template
+- Translation functionality powered by [translate](https://gitee.com/mail_osc/translate) - AI i18n automatic HTML translation solution
 - Icons from [Iconify](https://iconify.design/)
 
 ### Special Thanks
 
-- **[Yukina](https://github.com/WhitePaper233/yukina)** - For providing inspiration and design ideas that helped shape this project. Yukina is an elegant blog template that demonstrates excellent design principles and user experience.
-- **[translate](https://gitee.com/mail_osc/translate)** - For providing an innovative AI-powered i18n solution that enables automatic HTML translation with just two lines of JavaScript. This open-source tool makes multi-language support incredibly simple and efficient.
+- **[Yukina](https://github.com/WhitePaper233/yukina)** - Thanks for providing design inspiration and creativity that helped shape this project. Yukina is an elegant blog template that demonstrates excellent design principles and user experience.
+- **[translate](https://gitee.com/mail_osc/translate)** - Thanks for providing an innovative AI-driven i18n solution that enables automatic HTML translation with just two lines of JavaScript code. This open-source tool makes multilingual support extremely simple and efficient.
 
 ---
 
 ⭐ If you find this project helpful, please consider giving it a star!
-

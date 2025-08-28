@@ -1,3 +1,8 @@
+/* 导入相册样式 */
+@import './albums.css';
+/* 导入追番页面样式 */
+@import './anime.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -321,4 +326,23 @@ html {
 
 .collapsed {
     height: var(--collapsedHeight);
+}
+
+/*剧透效果*/
+.custom-md spoiler {
+  --_spoiler-mask: var(--primary);
+  @apply hover:bg-transparent px-1 py-0.5 overflow-hidden rounded-md transition-all duration-150;
+  background-color: var(--_spoiler-mask);
+
+  &:not(:hover) {
+    color: var(--_spoiler-mask);
+    * {
+        color: var(--_spoiler-mask);
+    }
+  }
+}
+
+/* 浅色模式：使用更浅的主题色且完全不透明 */
+:root:not(.dark) .custom-md spoiler {
+  --_spoiler-mask: color-mix(in oklch, var(--primary) 55%, white 45%);
 }

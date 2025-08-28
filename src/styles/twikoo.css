@@ -101,7 +101,7 @@ html.dark {
   }
 
   a {
-    @apply link link-underline text-[var(--primary)] font-medium;
+    @apply underline text-[var(--primary)] font-medium;
   }
 
   .tk-ruser {
@@ -113,7 +113,7 @@ html.dark {
   }
 
   li {
-    @apply before:content-['•'] before:text-[var(--primary)];
+    @apply before:content-["•"] before:text-[var(--primary)];
   }
 }
 
