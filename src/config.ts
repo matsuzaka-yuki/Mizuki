@@ -113,6 +113,7 @@ export const siteConfig: SiteConfig = {
 		// }
 	],
 };
+
 export const fullscreenWallpaperConfig: FullscreenWallpaperConfig = {
 	enable: true, // 启用全屏壁纸功能,非Banner模式下生效
 	src: {

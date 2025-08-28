@@ -210,7 +210,8 @@ const bannerOffset =
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
 
 		<!-- 域名检测脚本 -->
-		<script is:inline define:vars={{officialSites: [defineConfig.site]}}>
+		<script is:inline define:vars={{officialSites: [defineConfig.server?.allowedHosts || '']}}>
+			// 官方域名列表，从配置中获取
 			// 域名检测功能
 			function checkDomain() {
 				try {
@@ -260,10 +261,12 @@ const bannerOffset =
 			}
 			
 			// 页面加载完成后执行域名检测
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', checkDomain);
-			} else {
-				checkDomain();
+			if (defineConfig.server?.allowedHosts !== true){
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', checkDomain);
+				} else {
+					checkDomain();
+				}
 			}
 		</script>
 

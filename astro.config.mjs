@@ -15,7 +15,7 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
-import { expressiveCodeConfig } from "./src/config.ts";
+import { expressiveCodeConfig, siteConfig } from "./src/config.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
@@ -28,7 +28,12 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 // https://astro.build/config
 export default defineConfig({
 	site: "https://mizuki.mysqil.com/",
-	allowedHosts: true,
+	server: {
+		host: false, // 让 dev/preview 监听 0.0.0.0
+		// @ts-expect-error  astro 类型定义缺失
+		allowedHosts: ["https://mizuki.mysqil.com/"], // 允许任何主机名
+	},
+
 	base: "/",
 	trailingSlash: "always",
 	integrations: [
