@@ -42,17 +42,63 @@ export async function GET(context: APIContext) {
 				if (src.startsWith('./')) {
 					// Path relative to the post file directory
 					const prefixRemoved = src.slice(2);
-					importPath = `/src/content/posts/${prefixRemoved}`;
+					// Handle posts in subdirectories like bestimageapi/index.md
+					if (post.slug.includes('/')) {
+						// For posts like bestimageapi/index.md, the images are in the same folder
+						const postDir = post.slug.split('/')[0];
+						importPath = `/src/content/posts/${postDir}/${prefixRemoved}`;
+					} else {
+						// For posts like post.md directly in posts folder
+						importPath = `/src/content/posts/${prefixRemoved}`;
+					}
 				} else {
 					// Path like ../assets/images/xxx -> relative to /src/content/
-					const cleaned = src.replace(/^\.\.\//, '');
+					let cleaned = src;
+					// Remove ../ prefixes and build correct path
+					while (cleaned.startsWith('../')) {
+						cleaned = cleaned.slice(3);
+					}
 					importPath = `/src/content/${cleaned}`;
 				}
 
-				const imageMod = await imagesGlob[importPath]?.()?.then((res) => res.default);
+				// Try to find the image in the glob
+				let imageMod = null;
+				if (importPath && imagesGlob[importPath]) {
+					try {
+						const moduleResult = await imagesGlob[importPath]();
+						imageMod = moduleResult.default;
+					} catch (error) {
+						console.warn(`Failed to load image: ${importPath}`, error);
+					}
+				}
+
+				// If direct path didn't work, try to find it in available images
+				if (!imageMod) {
+					// Extract just the filename to search for
+					const filename = src.split('/').pop();
+					if (filename) {
+						// Search through all available image paths
+						for (const [path, loader] of Object.entries(imagesGlob)) {
+							if (path.includes(filename)) {
+								try {
+									const moduleResult = await loader();
+									imageMod = moduleResult.default;
+									break;
+								} catch (error) {
+									console.warn(`Failed to load image: ${path}`, error);
+								}
+							}
+						}
+					}
+				}
+
 				if (imageMod) {
-					const optimizedImg = await getImage({ src: imageMod });
-					img.setAttribute('src', new URL(optimizedImg.src, context.site).href);
+					try {
+						const optimizedImg = await getImage({ src: imageMod });
+						img.setAttribute('src', new URL(optimizedImg.src, context.site).href);
+					} catch (error) {
+						console.warn('Failed to optimize image:', error);
+					}
 				}
 			} else if (src.startsWith('/')) {
 				// images starting with `/` are in public dir
@@ -77,6 +123,10 @@ export async function GET(context: APIContext) {
 		description: siteConfig.subtitle || 'No description',
 		site: context.site,
 		items: feed,
-		customData: `<language>${siteConfig.lang}</language>`,
+		customData: `<language>${siteConfig.lang}</language>
+		<follow_challenge>
+			<feedId>184100848287736832</feedId>
+			<userId>177556222102647808</userId>
+		</follow_challenge>`,
 	});
 }
