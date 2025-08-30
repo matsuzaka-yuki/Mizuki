@@ -28,11 +28,6 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 // https://astro.build/config
 export default defineConfig({
 	site: "https://mizuki.mysqil.com/",
-	server: {
-		host: false, // 让 dev/preview 监听 0.0.0.0
-		// @ts-expect-error  astro 类型定义缺失
-		allowedHosts: ["https://mizuki.mysqil.com/"], // 允许任何主机名
-	},
 
 	base: "/",
 	trailingSlash: "always",

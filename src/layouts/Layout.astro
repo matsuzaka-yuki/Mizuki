@@ -23,7 +23,6 @@ import { pathsEqual, url } from "../utils/url-utils";
 import "katex/dist/katex.css";
 import "../styles/mobile-navbar.css";
 import "../styles/wallpaper-navbar-transparent.css";
-import defineConfig from "../../astro.config.mjs";
 
 interface Props {
 	title?: string;
@@ -155,6 +154,8 @@ const bannerOffset =
 
 		<!-- Set the theme before the page is rendered to avoid a flash -->
 		<script is:inline define:vars={{DEFAULT_THEME, LIGHT_MODE, DARK_MODE, AUTO_MODE, BANNER_HEIGHT_EXTEND, PAGE_WIDTH, configHue}}>
+import { siteConfig } from "@/config";
+
 			// Load the theme from local storage
 			const theme = localStorage.getItem('theme') || DEFAULT_THEME;
 			switch (theme) {
@@ -210,7 +211,7 @@ const bannerOffset =
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
 
 		<!-- 域名检测脚本 -->
-		<script is:inline define:vars={{officialSites: [defineConfig.server?.allowedHosts || '']}}>
+		<script is:inline define:vars={{enable: siteConfig.linkWarning.enable, officialSites: siteConfig.linkWarning.allowedHosts}}>
 			// 官方域名列表，从配置中获取
 			// 域名检测功能
 			function checkDomain() {
@@ -261,7 +262,7 @@ const bannerOffset =
 			}
 			
 			// 页面加载完成后执行域名检测
-			if (defineConfig.server?.allowedHosts !== true){
+			if (enable == true){
 				if (document.readyState === 'loading') {
 					document.addEventListener('DOMContentLoaded', checkDomain);
 				} else {

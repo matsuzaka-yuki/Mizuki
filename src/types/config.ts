@@ -16,6 +16,11 @@ export type SiteConfig = {
 		| "tr"
 		| "id";
 
+	linkWarning: {
+		enable: boolean; // 是否启用外部链接警告
+		allowedHosts: string[]; // 填入允许的主机名列表
+	};
+
 	themeColor: {
 		hue: number;
 		fixed: boolean;
