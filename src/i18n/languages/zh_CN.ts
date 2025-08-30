@@ -112,6 +112,24 @@ export const zh_CN: Translation = {
 	[Key.projectsDemo]: "在线演示",
 	[Key.projectsSource]: "源代码",
 
+	// RSS页面
+	[Key.rss]: "RSS 订阅",
+	[Key.rssDescription]: "订阅获取最新更新",
+	[Key.rssSubtitle]: "通过 RSS 订阅，第一时间获取最新文章和动态",
+	[Key.rssLink]: "RSS 链接",
+	[Key.rssCopyToReader]: "复制链接到你的 RSS 阅读器",
+	[Key.rssCopyLink]: "复制链接",
+	[Key.rssLatestPosts]: "最新文章",
+	[Key.rssWhatIsRSS]: "什么是 RSS？",
+	[Key.rssWhatIsRSSDescription]: "RSS（Really Simple Syndication）是一种用于发布经常更新内容的标准格式。通过 RSS，你可以：",
+	[Key.rssBenefit1]: "及时获取网站最新内容，无需手动访问",
+	[Key.rssBenefit2]: "在一个地方管理多个网站的订阅",
+	[Key.rssBenefit3]: "避免错过重要更新和文章",
+	[Key.rssBenefit4]: "享受无广告的纯净阅读体验",
+	[Key.rssHowToUse]: "推荐使用 Feedly、Inoreader 或其他 RSS 阅读器来订阅本站。",
+	[Key.rssCopied]: "RSS 链接已复制到剪贴板！",
+	[Key.rssCopyFailed]: "复制失败，请手动复制链接",
+
 	// 技能展示页面
 	[Key.skills]: "技能展示",
 	[Key.skillsSubtitle]: "我的技术技能和专业知识",

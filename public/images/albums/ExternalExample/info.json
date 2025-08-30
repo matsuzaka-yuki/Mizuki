@@ -1,0 +1,24 @@
+{
+	"mode": "external",
+	"hidden": true,
+	"title": "外链相册示例",
+	"description": "这是一个使用外链图片的相册示例，所有图片都来自外部链接",
+	"date": "2025-08-28",
+	"location": "网络",
+	"tags": ["外链", "示例", "测试"],
+	"layout": "masonry",
+	"columns": 3,
+	"cover": "https://picsum.photos/800/600?random=1",
+	"photos": [
+		{
+			"id": "external-1",
+			"src": "https://picsum.photos/800/600?random=2",
+			"alt": "随机图片 1",
+			"title": "美丽的风景",
+			"description": "这是一张来自外链的美丽风景图片",
+			"tags": ["风景", "自然"],
+			"width": 800,
+			"height": 600
+		}
+	]
+}

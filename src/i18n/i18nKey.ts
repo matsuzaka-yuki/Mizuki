@@ -137,6 +137,24 @@ enum I18nKey {
 	skillsByLevel = "skillsByLevel",
 	skillsByCategory = "skillsByCategory",
 
+	// RSS页面
+	rss = "rss",
+	rssDescription = "rssDescription",
+	rssSubtitle = "rssSubtitle",
+	rssLink = "rssLink",
+	rssCopyToReader = "rssCopyToReader",
+	rssCopyLink = "rssCopyLink",
+	rssLatestPosts = "rssLatestPosts",
+	rssWhatIsRSS = "rssWhatIsRSS",
+	rssWhatIsRSSDescription = "rssWhatIsRSSDescription",
+	rssBenefit1 = "rssBenefit1",
+	rssBenefit2 = "rssBenefit2",
+	rssBenefit3 = "rssBenefit3",
+	rssBenefit4 = "rssBenefit4",
+	rssHowToUse = "rssHowToUse",
+	rssCopied = "rssCopied",
+	rssCopyFailed = "rssCopyFailed",
+
 	// 时间线页面
 	timeline = "timeline",
 	timelineSubtitle = "timelineSubtitle",
