@@ -81,13 +81,13 @@ export const siteConfig: SiteConfig = {
 
 		homeText: {
 			enable: true, // 在主页显示自定义文本
-			title: "Beautiful Mizuki!", // 主页横幅主标题
+			title: "​晚风拾云笺", // 主页横幅主标题
 
 			subtitle: [
-				"A Showcase Demo Site",
-				"Carousel Highlight: Innovation",
-				"Carousel Focus: User Experience",
-				"Carousel Spot: Core Advantages",
+				"​拾一段云上时光，写几行风中絮语",
+				"​在文字的风隙里，捕捉生活的云朵",
+				"​晚风拂过字里行间，云朵停泊在思绪尽头​	",
+				"向晚风借一份温柔，向流云借一抹自在",
 			],
 			typewriter: {
 				enable: true, // 启用副标题打字机效果
@@ -229,8 +229,8 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/avatar.gif", // 相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录
-	name: "Mizuki",
-	bio: "世界很大,一定要去看看",
+	name: "Guhunnb",
+	bio: "漫漫长路，愿作清风伴君途。",
 	links: [
 		{
 			name: "Bilibli",
