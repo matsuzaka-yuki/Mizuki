@@ -1,0 +1,241 @@
+---
+
+---
+
+<div id="custom-cursor" class="custom-cursor"></div>
+<div id="custom-cursor-follower" class="custom-cursor-follower"></div>
+
+<script lang="ts">
+
+const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+const enabledByConfig = document.body?.classList.contains('custom-cursor-enabled');
+
+
+if (!enabledByConfig || !isFinePointer || isCoarse) {
+  const c = document.getElementById('custom-cursor');
+  const f = document.getElementById('custom-cursor-follower');
+  if (c) c.style.display = 'none';
+  if (f) f.style.display = 'none';
+
+} else {
+
+  document.documentElement.style.cursor = 'none';
+  document.body.style.cursor = 'none';
+
+
+  const style = document.createElement('style');
+  style.textContent = `
+      *, *::before, *::after, 
+      html, body, 
+      ::-webkit-scrollbar, 
+      ::-webkit-scrollbar-thumb, 
+      ::-webkit-scrollbar-track,
+      ::-webkit-scrollbar-corner,
+      ::-webkit-scrollbar-button {
+          cursor: none !important;
+      }
+  `;
+  document.head.appendChild(style);
+
+
+  function forceHideCursor() {
+      document.documentElement.style.cursor = 'none';
+      document.body.style.cursor = 'none';
+      
+
+      const allElements = document.querySelectorAll('*');
+      allElements.forEach((element) => {
+          if (element instanceof HTMLElement) {
+              element.style.cursor = 'none';
+          }
+      });
+  }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (!enabledByConfig || !isFinePointer || isCoarse) return; // 配置未启用或移动端不启用
+    const cursor = document.getElementById('custom-cursor');
+    const follower = document.getElementById('custom-cursor-follower');
+    
+    if (!cursor || !follower) return;
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let followerX = 0;
+    let followerY = 0;
+    let currentScale = 1;
+    let targetScale = 1;
+    let baseOpacity = 0.5; // 基础透明度
+    let isHovering = false; // 悬停状态
+    
+
+    let escapeX = 0;
+    let escapeY = 0;
+    let escapeForce = 0;
+    let escapeDecay = 0.95;
+    
+
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+
+        forceHideCursor();
+        
+
+        if (cursor) {
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        }
+    });
+    
+
+    document.addEventListener('wheel', function(e) {
+
+
+        const scrollDirection = e.deltaY > 0 ? 1 : -1; 
+        
+
+        escapeX = (Math.random() - 0.5) * 20; 
+        escapeY = -scrollDirection * 40; 
+        
+
+        escapeForce = Math.min(1, Math.abs(e.deltaY) / 100);
+        
+
+        escapeX += (Math.random() - 0.5) * 15;
+    }, { passive: true }); 
+    
+
+    function animateFollower() {
+
+        escapeX *= escapeDecay;
+        escapeY *= escapeDecay;
+        escapeForce *= escapeDecay;
+        
+
+        const targetX = mouseX + escapeX * escapeForce;
+        const targetY = mouseY + escapeY * escapeForce;
+        
+
+        const positionSpeed = 0.15;
+        followerX += (targetX - followerX) * positionSpeed;
+        followerY += (targetY - followerY) * positionSpeed;
+        
+
+        const scaleSpeed = 0.1;
+        currentScale += (targetScale - currentScale) * scaleSpeed;
+        
+
+        const fearScale = Math.max(0.8, 1 - Math.abs(escapeForce) * 0.3);
+        const finalScale = currentScale * fearScale;
+        
+        if (follower) {
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+            follower.style.transform = `translate(-50%, -50%) scale(${finalScale})`;
+            
+
+            const fearOpacity = isHovering ? 0.8 : baseOpacity;
+            const finalOpacity = Math.max(0.2, fearOpacity - Math.abs(escapeForce) * 0.3);
+            follower.style.opacity = finalOpacity.toString();
+        }
+        
+        requestAnimationFrame(animateFollower);
+    }
+    
+
+    animateFollower();
+    
+
+    setInterval(() => {
+        forceHideCursor();
+    }, 200); // 每200毫秒检查一次，降低负载
+    
+
+    document.addEventListener('mouseenter', () => {
+        if (cursor) cursor.style.opacity = '1';
+        if (follower) follower.style.opacity = '0.5';
+        forceHideCursor();
+    });
+    
+
+    document.addEventListener('mouseleave', () => {
+        if (cursor) cursor.style.opacity = '0';
+        if (follower) follower.style.opacity = '0';
+    });
+    
+
+    const clickableElements = document.querySelectorAll('a, button, input, textarea, select, [role="button"], [onclick]');
+    
+    clickableElements.forEach((element) => {
+        element.addEventListener('mouseenter', () => {
+            if (cursor) cursor.classList.add('hover');
+            targetScale = 1.5;
+            isHovering = true;
+            forceHideCursor();
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            if (cursor) cursor.classList.remove('hover');
+            targetScale = 1;
+            isHovering = false;
+            forceHideCursor();
+        });
+    });
+    
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1 && node instanceof Element) {
+                    const newClickableElements = node.querySelectorAll('a, button, input, textarea, select, [role="button"], [onclick]');
+                    newClickableElements.forEach((element) => {
+                        element.addEventListener('mouseenter', () => {
+                            if (cursor) cursor.classList.add('hover');
+                            targetScale = 1.5;
+                            isHovering = true;
+                            forceHideCursor();
+                        });
+                        
+                        element.addEventListener('mouseleave', () => {
+                            if (cursor) cursor.classList.remove('hover');
+                            targetScale = 1;
+                            isHovering = false;
+                            forceHideCursor();
+                        });
+                    });
+                }
+            });
+        });
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+    
+    ['scroll', 'resize', 'focus', 'blur', 'click'].forEach((eventType) => {
+        document.addEventListener(eventType, forceHideCursor);
+    });
+});
+}
+</script>
+
+<style>
+#custom-cursor,
+#custom-cursor-follower {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body.custom-cursor-enabled:hover #custom-cursor {
+        opacity: 1;
+    }
+    body.custom-cursor-enabled:hover #custom-cursor-follower {
+        opacity: 0.5;
+    }
+}
+</style>
