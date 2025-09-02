@@ -5,7 +5,7 @@ import "@fontsource/roboto/700.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
 import MusicPlayer from "@components/widget/MusicPlayer.svelte";
-import { profileConfig, siteConfig } from "@/config";
+import { profileConfig, siteConfig, customCursor } from "@/config";
 import { widgetConfigs } from "../config";
 import {
 	AUTO_MODE,
@@ -23,6 +23,7 @@ import { pathsEqual, url } from "../utils/url-utils";
 import "katex/dist/katex.css";
 import "../styles/mobile-navbar.css";
 import "../styles/wallpaper-navbar-transparent.css";
+import CustomCursor from "../components/CustomCursor.astro";
 
 interface Props {
 	title?: string;
@@ -194,12 +195,13 @@ const bannerOffset =
 
 
 	</head>
-	<body class=" min-h-screen " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
+	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner, "custom-cursor-enabled": customCursor?.enable}]}
 		  data-overlayscrollbars-initialize
 	>
 		<!-- 页面顶部渐变高光效果 - 只在full和semifull模式下显示 -->
 		{shouldShowTopHighlight && <div class="top-gradient-highlight"></div>}
 		<ConfigCarrier></ConfigCarrier>
+		{customCursor?.enable && <CustomCursor />}
 		<slot />
 		
 		<!-- Music Player -->
