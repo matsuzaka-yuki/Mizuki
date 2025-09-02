@@ -349,3 +349,136 @@ html {
 :root:not(.dark) .custom-md spoiler {
   --_spoiler-mask: color-mix(in oklch, var(--primary) 55%, white 45%);
 }
+
+/* =========================
+     自定义鼠标光标效果（仅桌面端启用）
+     ========================= */
+@media (hover: hover) and (pointer: fine) {
+
+    body.custom-cursor-enabled *, 
+    body.custom-cursor-enabled *::before, 
+    body.custom-cursor-enabled *::after {
+        cursor: none !important;
+    }
+
+    body.custom-cursor-enabled {
+        cursor: none !important;
+    }
+
+
+    body.custom-cursor-enabled ::-webkit-scrollbar {
+        cursor: none !important;
+    }
+
+    body.custom-cursor-enabled ::-webkit-scrollbar-thumb {
+        cursor: none !important;
+    }
+
+    body.custom-cursor-enabled ::-webkit-scrollbar-track {
+        cursor: none !important;
+    }
+
+    body.custom-cursor-enabled ::-webkit-scrollbar-corner {
+        cursor: none !important;
+    }
+
+
+    html {
+        scrollbar-width: thin;
+    }
+
+
+    body.custom-cursor-enabled input, 
+    body.custom-cursor-enabled textarea, 
+    body.custom-cursor-enabled button, 
+    body.custom-cursor-enabled a, 
+    body.custom-cursor-enabled select, 
+    body.custom-cursor-enabled option {
+        cursor: none !important;
+    }
+
+
+    body.custom-cursor-enabled.custom-cursor-active {
+        cursor: none !important;
+    }
+
+    body.custom-cursor-enabled.custom-cursor-active * {
+        cursor: none !important;
+    }
+
+
+    body.custom-cursor-enabled .custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 8px;
+        height: 8px;
+        background-color: var(--primary);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+
+    body.custom-cursor-enabled .custom-cursor-follower {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 24px;
+        height: 24px;
+        background-color: var(--primary);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.5;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+
+    body.custom-cursor-enabled .custom-cursor.hover {
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+
+    body.custom-cursor-enabled ::-webkit-scrollbar,
+    body.custom-cursor-enabled ::-webkit-scrollbar-button,
+    body.custom-cursor-enabled ::-webkit-scrollbar-track,
+    body.custom-cursor-enabled ::-webkit-scrollbar-track-piece,
+    body.custom-cursor-enabled ::-webkit-scrollbar-thumb,
+    body.custom-cursor-enabled ::-webkit-scrollbar-corner,
+    body.custom-cursor-enabled ::-webkit-resizer {
+        cursor: none !important;
+    }
+
+    body.custom-cursor-enabled, 
+    body.custom-cursor-enabled * {
+        cursor: none !important;
+    }
+
+    body.custom-cursor-enabled *:hover, 
+    body.custom-cursor-enabled *:active, 
+    body.custom-cursor-enabled *:focus, 
+    body.custom-cursor-enabled *:visited, 
+    body.custom-cursor-enabled *:link {
+        cursor: none !important;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body:not(.custom-cursor-enabled) {
+        cursor: auto !important;
+    }
+    
+    body:not(.custom-cursor-enabled) * {
+        cursor: initial;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .custom-cursor,
+    .custom-cursor-follower {
+        display: none !important;
+    }
+}
