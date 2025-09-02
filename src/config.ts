@@ -258,7 +258,7 @@ export const profileConfig: ProfileConfig = {
 
 //圆形光标
 export const customCursor = {
-	enable: false,
+	enable: true,
 };
 
 
