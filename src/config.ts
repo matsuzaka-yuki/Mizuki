@@ -22,8 +22,8 @@ import { getTranslateLanguageFromConfig } from "./utils/language-utils";
 const SITE_LANG = "zh_CN"; // 语言代码，例如：'en', 'zh_CN', 'ja' 等。
 
 export const siteConfig: SiteConfig = {
-	title: "Fuseakira",
-	subtitle: "MY DEMO WEBSITE",
+	title: "FUSEAKIRA",
+	subtitle: "MY WEBSITE",
 
 	lang: SITE_LANG,
 
@@ -82,7 +82,7 @@ export const siteConfig: SiteConfig = {
 
 		homeText: {
 			enable: true, // 在主页显示自定义文本
-			title: "Beautiful Mizuki!", // 主页横幅主标题
+			title: "FUSEAKIRA!", // 主页横幅主标题
 
 			subtitle: [
 				"A Showcase Demo Site",
@@ -159,27 +159,39 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		// 支持自定义导航栏链接,并且支持多级菜单,3.1版本新加
 		{
-			name: "链接",
+			name: "社交链接",
 			url: "/links/",
 			icon: "material-symbols:link",
 			children: [
 				{
 					name: "GitHub",
-					url: "https://github.com/matsuzaka-yuki/Mizuki",
+					url: "https://github.com/INT-Gunbot",
 					external: true,
 					icon: "fa6-brands:github",
 				},
 				{
-					name: "Bilibili",
-					url: "https://space.bilibili.com/701864046",
+					name: "Gunbo42",
+					url: "https://space.bilibili.com/542433338",
 					external: true,
 					icon: "fa6-brands:bilibili",
 				},
 				{
-					name: "Gitee",
-					url: "https://gitee.com/matsuzakayuki/Mizuki",
+					name: "布世明",
+					url: "https://x.com/fuseakira1908",
 					external: true,
-					icon: "mdi:git",
+					icon: "fa6-brands:x-twitter",
+				},
+				{
+					name: "FUSEAKIRA",
+					url: "https://steamcommunity.com/profiles/76561199524311560/",
+					external: true,
+					icon: "fa6-brands:steam",
+				},
+				{
+					name: "3419996963",
+					url: "",
+					external: false,
+					icon: "fa6-brands:qq",
 				},
 			],
 		},
@@ -194,6 +206,11 @@ export const navBarConfig: NavBarConfig = {
 					name: "相册",
 					url: "/albums/",
 					icon: "material-symbols:photo-library",
+				},
+				{
+					name: "音乐",
+					url: "/music/",
+					icon: "fa6-solid:music",
 				},
 			],
 		},
@@ -230,24 +247,32 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/avatar.gif", // 相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录
-	name: "Mizuki",
-	bio: "世界很大,一定要去看看",
+	name: "FUSEAKIRA",
+	bio: "Ho Fatto Un Sogno",
 	links: [
 		{
-			name: "Bilibli",
-			icon: "fa6-brands:bilibili",
-			url: "https://space.bilibili.com/701864046",
-		},
-		{
-			name: "Gitee",
-			icon: "mdi:git",
-			url: "https://gitee.com/matsuzakayuki",
-		},
-		{
-			name: "GitHub",
-			icon: "fa6-brands:github",
-			url: "https://github.com/matsuzaka-yuki",
-		},
+					name: "GitHub",
+					url: "https://github.com/INT-Gunbot",
+					
+					icon: "fa6-brands:github",
+				},
+				{
+					name: "Gunbo42",
+					url: "https://space.bilibili.com/542433338",
+					
+					icon: "fa6-brands:bilibili",
+				},
+				{
+					name: "布世明",
+					url: "https://x.com/fuseakira1908",
+					
+					icon: "fa6-brands:x-twitter",
+				},
+				{
+					name: "FUSEAKIRA",
+					url: "https://steamcommunity.com/profiles/76561199524311560/",
+					icon: "fa6-brands:steam",
+				},
 	],
 	// Umami统计部份，记得在layout插入Umami的head标签
 	umami: {
