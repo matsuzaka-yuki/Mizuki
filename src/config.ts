@@ -22,7 +22,7 @@ import { getTranslateLanguageFromConfig } from "./utils/language-utils";
 const SITE_LANG = "zh_CN"; // 语言代码，例如：'en', 'zh_CN', 'ja' 等。
 
 export const siteConfig: SiteConfig = {
-	title: "Mizuki",
+	title: "Fuseakira",
 	subtitle: "One demo website",
 
 	lang: SITE_LANG,
