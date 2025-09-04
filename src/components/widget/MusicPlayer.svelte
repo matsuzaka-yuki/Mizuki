@@ -793,7 +793,7 @@ onDestroy(() => {
 }
 
 .cover-container img {
-    animation: spin-continuous 3s linear infinite;
+    animation: spin-continuous 10s linear infinite;
     animation-play-state: paused;
 }
 
