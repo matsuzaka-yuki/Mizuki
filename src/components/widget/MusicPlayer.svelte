@@ -24,7 +24,7 @@ let meting_server = musicPlayerConfig.server ?? "netease";
 // Meting API 的类型，从配置中获取或使用默认值
 let meting_type = musicPlayerConfig.type ?? "playlist";
 // 播放状态，默认为 false (未播放)
-let isPlaying = false;
+let isPlaying = true;
 // 播放器是否展开，默认为 false
 let isExpanded = false;
 // 播放器是否隐藏，默认为 false
