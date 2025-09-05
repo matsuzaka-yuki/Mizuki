@@ -23,7 +23,7 @@ const SITE_LANG = "zh_CN"; // 语言代码，例如：'en', 'zh_CN', 'ja' 等。
 
 export const siteConfig: SiteConfig = {
 	title: "FUSEAKIRA",
-	subtitle: "MY WEBSITE",
+	subtitle: "MY OWN WEBSITE",
 
 	lang: SITE_LANG,
 
