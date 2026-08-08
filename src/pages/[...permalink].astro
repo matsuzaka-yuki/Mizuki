@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { render } from "astro:content";
 /**
  * 处理 permalink 的文章（包括全局 permalink 和自定义 permalink）
  * 全局 permalink 启用时，所有文章链接在根目录下生成
@@ -21,6 +20,7 @@ import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { renderPostContent } from "@utils/content-renderer";
 import { getSortedPosts } from "@utils/content-utils";
 import {
 	generatePermalinkSlug,
@@ -74,9 +74,10 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content, headings } = await render(entry);
-
-const { remarkPluginFrontmatter } = await render(entry);
+const { Content, headings, remarkPluginFrontmatter } = await renderPostContent(
+	entry,
+	{ target: "page", site: Astro.site ?? siteConfig.siteURL },
+);
 
 // 处理加密逻辑
 const isEncrypted = !!(entry.data.encrypted && entry.data.password);

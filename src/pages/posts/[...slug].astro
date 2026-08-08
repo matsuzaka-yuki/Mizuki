@@ -1,7 +1,6 @@
 ---
 import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { render } from "astro:content";
 import path from "node:path";
 import Comment from "@components/comment/index.astro";
 import {
@@ -16,6 +15,7 @@ import { ReadingTime, WordCount } from "@components/features/posts/atoms";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { renderPostContent } from "@utils/content-renderer";
 import { getRelatedPosts, getSortedPosts } from "@utils/content-utils";
 import { hasCustomPermalink, initPostIdMap } from "@utils/permalink-utils";
 import { getPostPublicDescription } from "@utils/post-card-content";
@@ -95,8 +95,10 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content, headings } = await render(entry);
-const { remarkPluginFrontmatter } = await render(entry);
+const { Content, headings, remarkPluginFrontmatter } = await renderPostContent(
+	entry,
+	{ target: "page", site: Astro.site ?? siteConfig.siteURL },
+);
 
 // 获取相关文章
 const relatedPosts = relatedPostsConfig.enable
