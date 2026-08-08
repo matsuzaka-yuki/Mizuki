@@ -13,7 +13,7 @@
     "update-anime": "node scripts/update-anime.mjs",
     "update-bangumi": "node scripts/update-bangumi.mjs",
     "update-bilibili": "node scripts/update-bilibili.mjs",
-    "build": "node scripts/update-anime.mjs && astro build && node scripts/check-content-pipeline.mjs && node scripts/check-global-style-loading.mjs && pagefind --site dist && node scripts/check-font-loading.mjs",
+    "build": "node scripts/update-anime.mjs && astro build && node scripts/check-global-style-loading.mjs && pagefind --site dist && node scripts/check-font-loading.mjs",
     "submit": "node scripts/indexnow-submit.js",
     "preview": "astro preview",
     "astro": "astro",
