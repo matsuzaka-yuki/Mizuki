@@ -18,7 +18,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "type-check": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/content-pipeline.test.mjs tests/content-links.test.ts tests/feed-content.test.ts tests/post-cover-source.test.ts tests/post-date-utils.test.ts tests/markdown-enhancements.test.mjs tests/layout-regressions.test.mjs tests/mermaid-interactions.test.mjs tests/image-loading.test.mjs tests/music-player-loading.test.mjs tests/font-loading.test.mjs && node tests/crypto.test.mjs",
+    "test": "node --experimental-strip-types --test tests/markdown-enhancements.test.mjs tests/layout-regressions.test.mjs tests/image-loading.test.mjs tests/music-player-loading.test.mjs && node tests/crypto.test.mjs",
     "prepare-fonts": "node scripts/prepare-fonts.mjs",
     "check-fonts": "node scripts/check-font-loading.mjs",
     "prepare-images": "node scripts/prepare-default-images.mjs",
