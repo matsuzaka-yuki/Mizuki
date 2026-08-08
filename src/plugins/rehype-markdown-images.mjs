@@ -1,4 +1,5 @@
 import { fromHtml } from "hast-util-from-html";
+import { matchesNoReferrerDomain } from "../utils/image-referrer.ts";
 
 const WIDTH_TOKEN = /(?:^|\s)w-(\d{1,3})%(?=\s|$)/g;
 const SKIP_CLASSES = new Set([
@@ -30,32 +31,6 @@ function shouldSkipEnhancement(ancestors, image) {
 			node?.tagName === "figure" ||
 			classNames(node).some((className) => SKIP_CLASSES.has(className)),
 	);
-}
-
-function domainPatternToRegExp(pattern) {
-	const escaped = pattern
-		.trim()
-		.toLowerCase()
-		.replace(/[.+?^${}()|[\]\\]/g, "\\$&")
-		.replace(/\*/g, ".*");
-	return escaped ? new RegExp(`^${escaped}$`, "i") : null;
-}
-
-/**
- * Match an HTTP(S) image URL against exact or wildcard host patterns.
- */
-export function matchesNoReferrerDomain(url, patterns = []) {
-	if (typeof url !== "string" || !/^https?:\/\//i.test(url)) return false;
-
-	try {
-		const hostname = new URL(url).hostname;
-		return patterns.some((pattern) => {
-			const matcher = domainPatternToRegExp(String(pattern));
-			return matcher?.test(hostname) ?? false;
-		});
-	} catch {
-		return false;
-	}
 }
 
 /**

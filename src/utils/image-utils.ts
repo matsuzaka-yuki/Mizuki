@@ -1,5 +1,6 @@
 import { siteConfig } from "../config/siteConfig";
 import type { ImageFormat } from "../types/config";
+import { matchesNoReferrerDomain } from "./image-referrer";
 
 /**
  * 获取图片优化格式配置
@@ -40,16 +41,6 @@ export function getFallbackFormat(): "avif" | "webp" {
  * @param urlStr - 图片完整 URL
  */
 export function shouldAddNoReferrer(urlStr: string): boolean {
-	if (!urlStr.startsWith("http")) return false;
 	const domains = siteConfig.imageOptimization?.noReferrerDomains || [];
-	if (domains.length === 0) return false;
-	try {
-		const hostname = new URL(urlStr).hostname;
-		return domains.some((pattern) => {
-			const regexPattern = pattern.replace(/\./g, "\\.").replace(/\*/g, ".*");
-			return new RegExp(`^${regexPattern}$`).test(hostname);
-		});
-	} catch {
-		return false;
-	}
+	return matchesNoReferrerDomain(urlStr, domains);
 }

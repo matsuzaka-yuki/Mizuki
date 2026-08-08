@@ -19,6 +19,7 @@ import { renderPostContent } from "@utils/content-renderer";
 import { getRelatedPosts, getSortedPosts } from "@utils/content-utils";
 import { hasCustomPermalink, initPostIdMap } from "@utils/permalink-utils";
 import { getPostPublicDescription } from "@utils/post-card-content";
+import { resolvePostCoverSource } from "@utils/post-cover-source";
 import { getFileDirFromPath, removeFileExtension } from "@utils/url-utils";
 import {
 	licenseConfig,
@@ -105,24 +106,25 @@ const relatedPosts = relatedPostsConfig.enable
 	? await getRelatedPosts(entry, relatedPostsConfig.maxCount)
 	: [];
 
+const cover = await resolvePostCoverSource(entry.data, {
+	contentFilePath: entry.filePath,
+	basePath: getFileDirFromPath(entry.filePath || ""),
+	identity: entry.id,
+	imageApi: siteConfig.banner.imageApi,
+});
+const coverSrc = cover.src ?? "";
+
 // Process cover image, for both OG and SharePoster
 let ogCoverUrl: string | undefined;
-let posterCoverUrl = entry.data.image;
+let posterCoverUrl = coverSrc;
 
-if (entry.data.image) {
-	const isLocal = !(
-		entry.data.image.startsWith("/") ||
-		entry.data.image.startsWith("http") ||
-		entry.data.image.startsWith("https") ||
-		entry.data.image.startsWith("data:")
-	);
-	if (isLocal) {
-		const basePath = getFileDirFromPath(entry.filePath || "");
+if (coverSrc) {
+	if (cover.kind === "local") {
 		const files = import.meta.glob<ImageMetadata>("../../**", {
 			import: "default",
 		});
 		const normalizedPath = path
-			.normalize(path.join("../../", basePath, entry.data.image))
+			.normalize(path.join("../../", cover.basePath || "", coverSrc))
 			.replace(/\\/g, "/");
 		const file = files[normalizedPath];
 		if (file) {
@@ -138,22 +140,22 @@ if (entry.data.image) {
 			});
 			ogCoverUrl = ogImage.src;
 		}
-	} else if (entry.data.image.startsWith("http")) {
+	} else if (/^https?:\/\//i.test(coverSrc)) {
 		// Retain the original URL for OG
-		ogCoverUrl = entry.data.image;
+		ogCoverUrl = coverSrc;
 
 		// Convert to base64 only for poster
 		try {
-			const response = await fetch(entry.data.image);
+			const response = await fetch(coverSrc);
 			const arrayBuffer = await response.arrayBuffer();
 			const base64 = Buffer.from(arrayBuffer).toString("base64");
 			const contentType = response.headers.get("content-type") || "image/jpeg";
 			posterCoverUrl = `data:${contentType};base64,${base64}`;
 		} catch {
-			posterCoverUrl = entry.data.image;
+			posterCoverUrl = coverSrc;
 		}
 	} else {
-		ogCoverUrl = entry.data.image; // absolute path like "/images/foo.png"
+		ogCoverUrl = coverSrc; // absolute path like "/images/foo.png"
 	}
 }
 
@@ -208,7 +210,7 @@ const jsonLd = {
 ---
 
 <MainGridLayout
-	banner={entry.data.image}
+	banner={coverSrc}
 	title={entry.data.title}
 	description={publicDescription}
 	lang={entry.data.lang}
@@ -286,8 +288,8 @@ const jsonLd = {
 					showEncrypted={isEncrypted}
 				/>
 				{
-					(!entry.data.image ||
-						(entry.data.image &&
+					(!coverSrc ||
+						(coverSrc &&
 							!siteConfig.showCoverInContent)) && (
 						<div class="mt-4 border-(--line-divider) border-dashed border-b mb-5" />
 					)
@@ -297,13 +299,13 @@ const jsonLd = {
 			<!-- always show cover as long as it has one -->
 
 			{
-				entry.data.image && siteConfig.showCoverInContent && (
+				coverSrc && siteConfig.showCoverInContent && (
 					<>
 						<div class="mt-4" />
 						<Image
 							id="post-cover"
-							src={entry.data.image}
-							basePath={getFileDirFromPath(entry.filePath || "")}
+							src={coverSrc}
+							basePath={cover.basePath}
 							class="mb-8 rounded-xl banner-container onload-animation"
 							widths={[640, 1024, 1536, 2048]}
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"

@@ -222,6 +222,9 @@ export default defineConfig({
 								{
 									...markdownConfig.wikiLink,
 									permalink: permalinkConfig,
+									imageApi: siteConfig.banner.imageApi,
+									noReferrerDomains:
+										siteConfig.imageOptimization?.noReferrerDomains ?? [],
 								},
 							],
 						]

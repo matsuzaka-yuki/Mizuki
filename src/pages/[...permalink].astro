@@ -28,6 +28,7 @@ import {
 	initPostIdMap,
 } from "@utils/permalink-utils";
 import { getPostPublicDescription } from "@utils/post-card-content";
+import { resolvePostCoverSource } from "@utils/post-cover-source";
 import { getFileDirFromPath } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
 import { licenseConfig } from "src/config";
@@ -78,6 +79,13 @@ const { Content, headings, remarkPluginFrontmatter } = await renderPostContent(
 	entry,
 	{ target: "page", site: Astro.site ?? siteConfig.siteURL },
 );
+const cover = await resolvePostCoverSource(entry.data, {
+	contentFilePath: entry.filePath,
+	basePath: getFileDirFromPath(entry.filePath || ""),
+	identity: entry.id,
+	imageApi: siteConfig.banner.imageApi,
+});
+const coverSrc = cover.src ?? "";
 
 // 处理加密逻辑
 const isEncrypted = !!(entry.data.encrypted && entry.data.password);
@@ -105,7 +113,7 @@ const jsonLd = {
 ---
 
 <MainGridLayout
-	banner={entry.data.image}
+	banner={coverSrc}
 	title={entry.data.title}
 	description={publicDescription}
 	lang={entry.data.lang}
@@ -199,8 +207,8 @@ const jsonLd = {
 					id={entry.id}
 				/>
 				{
-					(!entry.data.image ||
-						(entry.data.image &&
+					(!coverSrc ||
+						(coverSrc &&
 							!siteConfig.showCoverInContent)) && (
 						<div class="mt-4 border-(--line-divider) border-dashed border-b mb-5" />
 					)
@@ -208,13 +216,13 @@ const jsonLd = {
 			</div>
 
 			{
-				entry.data.image && siteConfig.showCoverInContent && (
+				coverSrc && siteConfig.showCoverInContent && (
 					<>
 						<div class="mt-4" />
 						<Image
 							id="post-cover"
-							src={entry.data.image}
-							basePath={getFileDirFromPath(entry.filePath || "")}
+							src={coverSrc}
+							basePath={cover.basePath}
 							class="mb-8 rounded-xl banner-container onload-animation"
 							widths={[640, 1024, 1536, 2048]}
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"

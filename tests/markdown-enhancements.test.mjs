@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
 
 import katex from "katex";
 import "katex/dist/contrib/mhchem.mjs";
@@ -11,7 +12,6 @@ import {
 	plantUMLUrl,
 } from "../src/plugins/plantuml-encoder.mjs";
 import {
-	matchesNoReferrerDomain,
 	parseMarkdownImageAlt,
 	rehypeMarkdownImages,
 } from "../src/plugins/rehype-markdown-images.mjs";
@@ -23,6 +23,7 @@ import {
 	readCodeCollapseConfig,
 	shouldAutoCollapse,
 } from "../src/scripts/code-collapse.js";
+import { matchesNoReferrerDomain } from "../src/utils/image-referrer.ts";
 
 describe("KaTeX mhchem integration", () => {
 	it("uses one KaTeX version and renders chemical equations", () => {
@@ -280,32 +281,45 @@ describe("Markdown AST enhancements", () => {
 		assert.equal(tree.children[0].attributes.title, "Known issue");
 	});
 
-	it("turns standalone wiki links into post cards and inline links into links", () => {
+	it("turns standalone wiki links into covered cards and inline links", async () => {
 		const tree = {
 			type: "root",
 			children: [
 				{
 					type: "paragraph",
-					children: [{ type: "text", value: "[[markdown-extended]]" }],
+					children: [{ type: "text", value: "[[guide]]" }],
 				},
 				{
 					type: "paragraph",
 					children: [
 						{
 							type: "text",
-							value: "See [[markdown-extended|extended syntax]].",
+							value: "See [[guide|the guide]].",
 						},
 					],
 				},
 			],
 		};
-		remarkWikiLink()(tree);
+		await remarkWikiLink()(tree, {
+			path: fileURLToPath(
+				new URL(
+					"../src/content/posts/content-pipeline-fixture.mdx",
+					import.meta.url,
+				),
+			),
+		});
 		assert.equal(tree.children[0].data.hName, "a");
 		assert.match(tree.children[0].data.hProperties.class, /card-wiki-link/);
-		assert.equal(tree.children[1].children[1].type, "link");
+		assert.equal(tree.children[0].children[0].data.hName, "span");
 		assert.equal(
-			tree.children[1].children[1].children[0].value,
-			"extended syntax",
+			tree.children[0].children[0].children[0].url,
+			"./guide/cover.webp",
 		);
+		assert.equal(
+			tree.children[0].children[0].data.hProperties.dataNoEnhance,
+			true,
+		);
+		assert.equal(tree.children[1].children[1].type, "link");
+		assert.equal(tree.children[1].children[1].children[0].value, "the guide");
 	});
 });
