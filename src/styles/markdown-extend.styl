@@ -1,10 +1,10 @@
 .custom-md
 
   blockquote.admonition
-    .bdm-title
+    > .bdm-title
       display: flex
       align-items: center
-      margin-bottom: -.9rem
+      margin-bottom: .5rem
       font-weight: bold
 
       &:before
@@ -20,6 +20,10 @@
         mask-position: center
         mask-repeat: no-repeat
         transform: translateY(-0.0625rem)
+
+    > .bdm-title + *
+      margin-top: 0
+
     &.bdm-tip
       .bdm-title
         color: var(--admonitions-color-tip)

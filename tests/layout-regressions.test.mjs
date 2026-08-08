@@ -18,6 +18,10 @@ const markdownSource = await readFile(
 	new URL("../src/components/misc/Markdown.astro", import.meta.url),
 	"utf8",
 );
+const markdownExtendStyles = await readFile(
+	new URL("../src/styles/markdown-extend.styl", import.meta.url),
+	"utf8",
+);
 const encryptorSource = await readFile(
 	new URL("../src/components/features/auth/Encryptor.astro", import.meta.url),
 	"utf8",
@@ -77,6 +81,26 @@ describe("Global style loading regressions", () => {
 		assert.match(globalStyleCheckSource, /about\/index\.html/);
 		assert.match(globalStyleCheckSource, /\.card-github/);
 		assert.match(globalStyleCheckSource, /\.custom-md \.image-grid/);
+	});
+});
+
+describe("Markdown layout regressions", () => {
+	it("keeps admonition titles separated from every first content block", () => {
+		assert.match(
+			markdownExtendStyles,
+			/> \.bdm-title\s+[\s\S]*?margin-bottom:\s*\.5rem/,
+			"admonition titles must provide their own positive content gap",
+		);
+		assert.match(
+			markdownExtendStyles,
+			/> \.bdm-title \+ \*\s+[\s\S]*?margin-top:\s*0/,
+			"the first admonition child must not add content-type-specific spacing",
+		);
+		assert.doesNotMatch(
+			markdownExtendStyles,
+			/\.bdm-title\s+[\s\S]*?margin-bottom:\s*-/,
+			"negative title margins pull marginless content such as tables into the title",
+		);
 	});
 });
 
