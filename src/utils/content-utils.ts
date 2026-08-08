@@ -2,6 +2,7 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { initPostIdMap } from "@utils/permalink-utils";
+import { comparePublishedDatesDescending } from "@utils/post-date-utils";
 import { getCategoryUrl, getPostUrl } from "@utils/url-utils";
 
 // // Retrieve posts and sort them by publication date
@@ -35,9 +36,12 @@ async function getRawSortedPosts() {
 		}
 
 		// 否则按发布日期排序
-		const dateA = new Date(a.data.published);
-		const dateB = new Date(b.data.published);
-		return dateA > dateB ? -1 : 1;
+		return comparePublishedDatesDescending(
+			a.data.published,
+			b.data.published,
+			a.id,
+			b.id,
+		);
 	});
 	return sorted;
 }

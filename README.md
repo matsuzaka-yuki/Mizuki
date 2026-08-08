@@ -272,6 +272,7 @@ export const siteConfig: SiteConfig = {
   title: "Your Blog Name",
   subtitle: "Your Blog Description",
   lang: "en", // or "zh-CN", "ja", etc.
+  timeZone: "Asia/Shanghai", // IANA time zone, e.g. Asia/Tokyo or Europe/Berlin
   themeColor: {
     hue: 210, // 0-360, theme hue
     fixed: false, // Hide theme color picker

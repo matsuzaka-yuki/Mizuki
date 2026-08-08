@@ -116,7 +116,10 @@ const t = (key: string) => i18n(key as I18nKey);
 									datetime={post.data.published.toISOString()}
 									class="text-75"
 								>
-									{formatDateToYYYYMMDD(post.data.published)}
+									{formatDateToYYYYMMDD(
+										post.data.published,
+										post.data._publishedDateOnly,
+									)}
 								</time>
 							</div>
 						</article>

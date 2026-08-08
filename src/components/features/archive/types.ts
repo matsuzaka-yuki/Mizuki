@@ -12,6 +12,7 @@ export interface Post {
 		tags: string[];
 		category?: string;
 		published: Date;
+		_publishedDateOnly: boolean;
 		alias?: string;
 		permalink?: string;
 	};

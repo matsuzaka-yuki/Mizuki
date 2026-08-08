@@ -201,7 +201,10 @@ const jsonLd = {
 		name: profileConfig.name,
 		url: Astro.site,
 	},
-	datePublished: formatDateToYYYYMMDD(entry.data.published),
+	datePublished: entry.data.published.toISOString(),
+	...(entry.data.updated && {
+		dateModified: entry.data.updated.toISOString(),
+	}),
 	inLanguage: entry.data.lang
 		? entry.data.lang.replace("_", "-")
 		: siteConfig.lang.replace("_", "-"),
@@ -219,6 +222,7 @@ const jsonLd = {
 	headings={headings}
 	coverImage={ogCoverUrl}
 	publishedDate={entry.data.published}
+	publishedDateOnly={entry.data._publishedDateOnly}
 	category={entry.data.category || undefined}
 	wordCount={remarkPluginFrontmatter.words}
 >
@@ -281,7 +285,9 @@ const jsonLd = {
 				<PostMeta
 					className="mb-5"
 					published={entry.data.published}
+					publishedDateOnly={entry.data._publishedDateOnly}
 					updated={entry.data.updated}
+					updatedDateOnly={entry.data._updatedDateOnly}
 					tags={entry.data.tags}
 					category={entry.data.category || undefined}
 					id={entry.id}
@@ -339,7 +345,10 @@ const jsonLd = {
 						title={entry.data.title}
 						author={entry.data.author}
 						description={publicDescription}
-						pubDate={formatDateToYYYYMMDD(entry.data.published)}
+						pubDate={formatDateToYYYYMMDD(
+							entry.data.published,
+							entry.data._publishedDateOnly,
+						)}
 						coverImage={posterCoverUrl}
 						url={Astro.url.toString()}
 						siteTitle={siteConfig.title}
@@ -361,6 +370,7 @@ const jsonLd = {
 							title={entry.data.title}
 							id={entry.id}
 							pubDate={entry.data.published}
+							pubDateOnly={entry.data._publishedDateOnly}
 
 							author={entry.data.author}
 							sourceLink={entry.data.sourceLink}

@@ -1,7 +1,21 @@
 import { siteConfig } from "../config";
+import { isDateOnlyString } from "./frontmatter-date";
+import {
+	assertValidTimeZone,
+	formatPostDateInTimeZone,
+	formatPostDateWithLocale,
+	getPostDatePartsInTimeZone,
+	type PostDateParts,
+} from "./post-date-utils";
 
-export function formatDateToYYYYMMDD(date: Date): string {
-	return date.toISOString().substring(0, 10);
+assertValidTimeZone(siteConfig.timeZone);
+
+export function getPostDateParts(date: Date, dateOnly = false): PostDateParts {
+	return getPostDatePartsInTimeZone(date, siteConfig.timeZone, dateOnly);
+}
+
+export function formatDateToYYYYMMDD(date: Date, dateOnly = false): string {
+	return formatPostDateInTimeZone(date, siteConfig.timeZone, dateOnly);
 }
 
 // 国际化日期格式化函数
@@ -35,5 +49,26 @@ export function formatDateI18n(dateString: string): string {
 	};
 
 	const locale = localeMap[lang] || "en-US";
-	return date.toLocaleDateString(locale, options);
+	return formatPostDateWithLocale(
+		date,
+		locale,
+		siteConfig.timeZone,
+		options,
+		isDateOnlyString(dateString),
+	);
+}
+
+export function formatDateWithLocale(
+	date: Date,
+	locale: string,
+	options: Intl.DateTimeFormatOptions,
+	dateOnly = false,
+): string {
+	return formatPostDateWithLocale(
+		date,
+		locale,
+		siteConfig.timeZone,
+		options,
+		dateOnly,
+	);
 }

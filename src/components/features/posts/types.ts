@@ -9,7 +9,9 @@ export interface PostCardProps {
 
 export interface PostMetaProps {
 	published: Date;
+	publishedDateOnly?: boolean;
 	updated?: Date;
+	updatedDateOnly?: boolean;
 	category?: string;
 	tags?: string[];
 	hideUpdateDate?: boolean;
