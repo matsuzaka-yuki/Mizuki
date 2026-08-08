@@ -1,0 +1,20 @@
+---
+interface Props {
+	label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<aside class="content-pipeline-fixture" data-content-pipeline-fixture>
+	<strong>{label}</strong>
+	<span>This text is rendered by an imported Astro component.</span>
+</aside>
+
+<script>
+	document
+		.querySelectorAll<HTMLElement>("[data-content-pipeline-fixture]")
+		.forEach((element) => {
+			element.dataset.enhanced = "true";
+		});
+</script>

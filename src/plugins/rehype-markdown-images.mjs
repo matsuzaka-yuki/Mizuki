@@ -6,8 +6,6 @@ const SKIP_CLASSES = new Set([
 	"card-wiki-link",
 	"diagram-container",
 	"image-grid",
-	"mermaid-diagram-container",
-	"plantuml-container",
 ]);
 
 function classNames(node) {

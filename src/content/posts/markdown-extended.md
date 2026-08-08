@@ -194,7 +194,11 @@ This directive uses a custom title.
 Obsidian-style Wiki Links resolve article paths, aliases, and heading anchors.
 A standalone link becomes an article card:
 
-[[markdown-mermaid]]
+[[guide]]
+
+Cards reuse the target post cover. Relative covers are resolved from the target
+post, while public, remote, and configured `image: api` covers are also
+supported. Encrypted posts never expose their cover in previews.
 
 Inline links stay inline. See
 [[markdown-mermaid|the Mermaid examples]], or link directly to
@@ -205,6 +209,23 @@ Inline links stay inline. See
 
 See [[markdown-mermaid|the Mermaid examples]].
 ```
+
+## Markdown Images
+
+Image alt text remains available to assistive technology. A Markdown title is
+shown as the visible caption, and an optional validated `w-N%` token controls
+the display width:
+
+![Caption example w-60%](/images/demos/image-grid-demo/square-3.webp "A visible image caption")
+
+```markdown
+![Descriptive alt w-60%](./image.webp "A visible image caption")
+```
+
+Only widths from `w-1%` through `w-100%` are accepted. Remote image hosts in
+`imageOptimization.noReferrerDomains` receive `referrerpolicy="no-referrer"`
+in the initial HTML. Add `data-no-enhance` to a raw HTML image or ancestor when
+custom markup should be left alone.
 
 ## Automatic Image Grids
 

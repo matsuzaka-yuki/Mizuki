@@ -20,6 +20,11 @@
 
 ### 内容分离相关
 
+- **[CONTENT_RENDERING.md](./CONTENT_RENDERING.md)** - Markdown/MDX 与 Feed 渲染指南
+  - 图片 caption、宽度和防盗链规则
+  - Wiki Link 封面和 Feed 静态降级
+  - 页面与 Feed 的共享链接分类
+
 - **[CONTENT_SEPARATION.md](./CONTENT_SEPARATION.md)** - 内容分离完整指南 ⭐
   - ENABLE_CONTENT_SYNC 控制开关
   - 环境变量配置详解
@@ -80,6 +85,7 @@
 ```
 docs/
 ├── README.md                    # 本文档 - 索引导航
+├── CONTENT_RENDERING.md         # Markdown/MDX 与 Feed 渲染
 ├── CONTENT_SEPARATION.md        # 内容分离核心指南
 ├── CONTENT_REPOSITORY.md        # 内容仓库结构
 ├── MIGRATION_GUIDE.md           # 迁移指南

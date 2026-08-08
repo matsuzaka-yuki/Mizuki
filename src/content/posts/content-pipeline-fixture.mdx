@@ -1,0 +1,45 @@
+---
+title: Markdown and MDX Content Pipeline Fixture
+published: 2026-08-08
+description: A regression fixture for shared page, RSS, Atom, and content rendering.
+image: /images/demos/image-grid-demo/square-1.webp
+tags: [Markdown, MDX, Testing]
+category: Examples
+draft: false
+---
+
+import ContentPipelineFixture from "../../components/features/markdown/ContentPipelineFixture.astro";
+
+export const fixtureLabel = "MDX import, JSX, and expressions are rendered";
+
+# Shared Content Pipeline
+
+<ContentPipelineFixture label={fixtureLabel} />
+
+:::note[Static callout]
+This callout must remain readable on the page and in both feeds.
+:::
+
+The inline Wiki Link points to [[guide|the Mizuki guide]].
+
+[[guide]]
+
+The shared link classifier keeps the [absolute site link](https://mizuki.mysqil.com/about/)
+internal and marks the [external reference](https://example.com/reference) once for every output.
+
+The shared math pipeline renders $E = mc^2$ and the chemical formula
+$\ce{H2O + CO2 -> H2CO3}$.
+
+::: code-group labels=[TypeScript, Shell]
+
+```ts title="pipeline.ts"
+export const target = "page";
+```
+
+```bash title="Build"
+pnpm build
+```
+
+:::
+
+![Public fixture image](/images/demos/image-grid-demo/square-1.webp "Visible fixture caption")

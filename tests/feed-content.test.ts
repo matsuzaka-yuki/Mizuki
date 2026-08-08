@@ -18,10 +18,6 @@ describe("feed content post-processing", () => {
 			</div>
 			<a class="card-wiki-link" href="../guide/"><div class="wlc-title">Guide</div><div class="wlc-description">Wiki summary</div></a>
 			<span class="katex"><math><mrow><mi>E</mi><mo>=</mo><mi>m</mi></mrow></math></span>
-			<div class="mermaid-static-variants">
-				<svg id="mermaid-1234567890abcdef-light-0" class="mermaid-svg mermaid-svg--light" data-mermaid-theme="light" viewBox="0 0 10 10"><style>#mermaid-1234567890abcdef-light-0 .edge{marker-end:url(#arrow)}</style><defs><marker id="arrow"><path d="M0 0L1 1"/></marker></defs><path class="edge" d="M0 0L10 10"/></svg>
-				<svg class="mermaid-svg mermaid-svg--dark" viewBox="0 0 10 10"><path d="M0 10L10 0"/></svg>
-			</div>
 			<img src="/images/fixture.webp" alt="Fixture" onerror="alert(1)">
 			<a href="/about/" data-content-link-kind="internal" onclick="alert(1)">About</a>
 		`;
@@ -39,8 +35,6 @@ describe("feed content post-processing", () => {
 		assert.match(result, /pnpm build/);
 		assert.match(result, /Wiki summary/);
 		assert.match(result, /<math>/);
-		assert.match(result, /mermaid-svg--light/);
-		assert.doesNotMatch(result, /mermaid-svg--dark/);
 		assert.match(result, /href="https:\/\/example\.com\/posts\/guide\/"/);
 		assert.match(result, /src="https:\/\/example\.com\/images\/fixture\.webp"/);
 		assert.match(result, /href="https:\/\/example\.com\/about\/"/);

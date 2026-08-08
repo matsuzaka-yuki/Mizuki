@@ -210,6 +210,9 @@ importers:
       glob:
         specifier: ^13.0.6
         version: 13.0.6
+      hast-util-from-html:
+        specifier: 2.0.3
+        version: 2.0.3
       postcss-import:
         specifier: ^16.1.1
         version: 16.1.1(postcss@8.5.21)
