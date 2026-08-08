@@ -23,7 +23,7 @@ describe("feed content post-processing", () => {
 				<svg class="mermaid-svg mermaid-svg--dark" viewBox="0 0 10 10"><path d="M0 10L10 0"/></svg>
 			</div>
 			<img src="/images/fixture.webp" alt="Fixture" onerror="alert(1)">
-			<a href="/about/" onclick="alert(1)">About</a>
+			<a href="/about/" data-content-link-kind="internal" onclick="alert(1)">About</a>
 		`;
 
 		const result = prepareFeedHtml({
@@ -44,6 +44,7 @@ describe("feed content post-processing", () => {
 		assert.match(result, /href="https:\/\/example\.com\/posts\/guide\/"/);
 		assert.match(result, /src="https:\/\/example\.com\/images\/fixture\.webp"/);
 		assert.match(result, /href="https:\/\/example\.com\/about\/"/);
+		assert.match(result, /data-content-link-kind="internal"/);
 		assert.doesNotMatch(
 			result,
 			/<script|<button|\shidden(?:=|\s|>)|\son(?:click|error)=/i,

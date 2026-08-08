@@ -15,7 +15,6 @@ import { oddmisc } from "oddmisc";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeCodeGroup from "rehype-code-group";
 import rehypeComponents from "rehype-components";
-import rehypeExternalLinks from "rehype-external-links";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkDirective from "remark-directive";
@@ -34,6 +33,7 @@ import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badg
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { ImageGridComponent } from "./src/plugins/rehype-component-image-grid.mjs";
+import { rehypeContentLinks } from "./src/plugins/rehype-content-links.mjs";
 import { rehypeMarkdownImages } from "./src/plugins/rehype-markdown-images.mjs";
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { rehypePlantuml } from "./src/plugins/rehype-plantuml.mjs";
@@ -137,7 +137,7 @@ export default defineConfig({
 			animateHistoryBrowsing: false,
 			skipPopStateHandling: (event) => {
 				// 跳过锚点链接的处理，让浏览器原生处理
-				return event.state && event.state.url && event.state.url.includes("#");
+				return event.state?.url?.includes("#");
 			},
 		}),
 		icon({
@@ -240,8 +240,9 @@ export default defineConfig({
 			rehypePlugins: [
 				rehypeKatex,
 				[
-					rehypeExternalLinks,
+					rehypeContentLinks,
 					{
+						siteUrl: siteConfig.siteURL,
 						target: "_blank",
 						rel: ["nofollow", "noopener", "noreferrer"],
 					},
