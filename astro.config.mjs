@@ -1,5 +1,5 @@
-import { unified } from '@astrojs/markdown-remark';
-import mdx from '@astrojs/mdx';
+import { unified } from "@astrojs/markdown-remark";
+import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte, { vitePreprocess } from "@astrojs/svelte";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
@@ -34,7 +34,7 @@ import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badg
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { ImageGridComponent } from "./src/plugins/rehype-component-image-grid.mjs";
-import { rehypeImageWidth } from "./src/plugins/rehype-image-width.mjs";
+import { rehypeMarkdownImages } from "./src/plugins/rehype-markdown-images.mjs";
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { rehypePlantuml } from "./src/plugins/rehype-plantuml.mjs";
 import { rehypeWrapTable } from "./src/plugins/rehype-wrap-table.mjs";
@@ -137,21 +137,14 @@ export default defineConfig({
 			animateHistoryBrowsing: false,
 			skipPopStateHandling: (event) => {
 				// 跳过锚点链接的处理，让浏览器原生处理
-				return (
-					event.state &&
-					event.state.url &&
-					event.state.url.includes("#")
-				);
+				return event.state && event.state.url && event.state.url.includes("#");
 			},
 		}),
 		icon({
 			include: buildIconInclude(),
 		}),
 		expressiveCode({
-			themes: [
-				expressiveCodeConfig.lightTheme,
-				expressiveCodeConfig.darkTheme,
-			],
+			themes: [expressiveCodeConfig.lightTheme, expressiveCodeConfig.darkTheme],
 			plugins: [
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
@@ -263,8 +256,7 @@ export default defineConfig({
 							grid: ImageGridComponent,
 							note: (x, y) => AdmonitionComponent(x, y, "note"),
 							tip: (x, y) => AdmonitionComponent(x, y, "tip"),
-							important: (x, y) =>
-								AdmonitionComponent(x, y, "important"),
+							important: (x, y) => AdmonitionComponent(x, y, "important"),
 							caution: (x, y) => AdmonitionComponent(x, y, "caution"),
 							warning: (x, y) => AdmonitionComponent(x, y, "warning"),
 							info: (x, y) => AdmonitionComponent(x, y, "note"),
@@ -276,8 +268,7 @@ export default defineConfig({
 							success: (x, y) => AdmonitionComponent(x, y, "tip"),
 							check: (x, y) => AdmonitionComponent(x, y, "tip"),
 							done: (x, y) => AdmonitionComponent(x, y, "tip"),
-							question: (x, y) =>
-								AdmonitionComponent(x, y, "important"),
+							question: (x, y) => AdmonitionComponent(x, y, "important"),
 							help: (x, y) => AdmonitionComponent(x, y, "important"),
 							faq: (x, y) => AdmonitionComponent(x, y, "important"),
 							attention: (x, y) => AdmonitionComponent(x, y, "warning"),
@@ -311,7 +302,13 @@ export default defineConfig({
 						},
 					},
 				],
-				rehypeImageWidth,
+				[
+					rehypeMarkdownImages,
+					{
+						noReferrerDomains:
+							siteConfig.imageOptimization?.noReferrerDomains ?? [],
+					},
+				],
 			],
 		}),
 	},
@@ -358,12 +355,8 @@ export default defineConfig({
 			rollupOptions: {
 				onwarn(warning, warn) {
 					if (
-						warning.message.includes(
-							"is dynamically imported by",
-						) &&
-						warning.message.includes(
-							"but also statically imported by",
-						)
+						warning.message.includes("is dynamically imported by") &&
+						warning.message.includes("but also statically imported by")
 					) {
 						return;
 					}
@@ -374,9 +367,7 @@ export default defineConfig({
 		// 生产环境移除 console.log 和 debugger
 		esbuildOptions: {
 			drop:
-				process.env.NODE_ENV === "production"
-					? ["console", "debugger"]
-					: [],
+				process.env.NODE_ENV === "production" ? ["console", "debugger"] : [],
 		},
 	},
 });
