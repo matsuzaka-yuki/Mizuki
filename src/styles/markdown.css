@@ -101,6 +101,24 @@
     }
   }
 
+  /* --- Standalone Markdown images --- */
+  .markdown-image-figure {
+    margin: 1.5rem 0;
+  }
+
+  .markdown-image-figure > img {
+    display: block;
+    margin-inline: auto;
+  }
+
+  .markdown-image-caption {
+    margin-top: 0.5rem;
+    color: var(--tw-prose-body);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
   /* --- 表格样式 --- */
   .table-wrapper {
     @apply w-full overflow-x-auto m-0 rounded-(--radius-large);

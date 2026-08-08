@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
 
 import katex from "katex";
 import "katex/dist/contrib/mhchem.mjs";
@@ -10,6 +11,10 @@ import {
 	injectPlantUMLTheme,
 	plantUMLUrl,
 } from "../src/plugins/plantuml-encoder.mjs";
+import {
+	parseMarkdownImageAlt,
+	rehypeMarkdownImages,
+} from "../src/plugins/rehype-markdown-images.mjs";
 import { remarkAutoImageGrid } from "../src/plugins/remark-auto-image-grid.mjs";
 import { remarkFixGithubAdmonitions } from "../src/plugins/remark-fix-github-admonitions.js";
 import { remarkPlantuml } from "../src/plugins/remark-plantuml.mjs";
@@ -18,6 +23,7 @@ import {
 	readCodeCollapseConfig,
 	shouldAutoCollapse,
 } from "../src/scripts/code-collapse.js";
+import { matchesNoReferrerDomain } from "../src/utils/image-referrer.ts";
 
 describe("KaTeX mhchem integration", () => {
 	it("uses one KaTeX version and renders chemical equations", () => {
@@ -82,6 +88,137 @@ describe("PlantUML markdown pipeline", () => {
 });
 
 describe("Markdown AST enhancements", () => {
+	it("enhances Markdown images without discarding existing attributes", () => {
+		const image = {
+			type: "element",
+			tagName: "img",
+			properties: {
+				src: "https://img.example.com/photo.webp",
+				srcSet: "/small.webp 480w, /large.webp 960w",
+				alt: "A useful description w-75%",
+				title: "Visible caption",
+				width: 960,
+				height: 540,
+				className: ["existing-image"],
+				style: "border-radius: 1rem",
+				dataCredit: "Author",
+			},
+			children: [],
+		};
+		const tree = {
+			type: "root",
+			children: [
+				{ type: "element", tagName: "p", properties: {}, children: [image] },
+			],
+		};
+
+		rehypeMarkdownImages({ noReferrerDomains: ["*.example.com"] })(tree);
+
+		const figure = tree.children[0];
+		assert.equal(figure.tagName, "figure");
+		assert.deepEqual(figure.properties.className, ["markdown-image-figure"]);
+		assert.equal(figure.children[0], image);
+		assert.equal(image.properties.alt, "A useful description");
+		assert.equal(image.properties.loading, "lazy");
+		assert.equal(image.properties.decoding, "async");
+		assert.equal(image.properties.referrerPolicy, "no-referrer");
+		assert.equal(image.properties.width, 960);
+		assert.equal(image.properties.height, 540);
+		assert.match(image.properties.style, /border-radius: 1rem/);
+		assert.match(image.properties.style, /width: 75%/);
+		assert.equal(figure.children[1].children[0].value, "Visible caption");
+	});
+
+	it("uses alt text independently and leaves invalid width tokens untouched", () => {
+		assert.deepEqual(parseMarkdownImageAlt("Diagram"), {
+			alt: "Diagram",
+			width: undefined,
+		});
+		assert.deepEqual(parseMarkdownImageAlt("Diagram w-101%"), {
+			alt: "Diagram w-101%",
+			width: undefined,
+		});
+		assert.deepEqual(parseMarkdownImageAlt("Diagram w-0%"), {
+			alt: "Diagram w-0%",
+			width: undefined,
+		});
+	});
+
+	it("applies no-referrer rules to raw HTML but skips structural wrapping", () => {
+		const tree = {
+			type: "root",
+			children: [
+				{
+					type: "raw",
+					value:
+						'<div class="image-grid"><img src="https://i.example.com/a.png" alt="Grid w-50%" data-credit="A"></div>',
+				},
+				{
+					type: "raw",
+					value:
+						'<img src="https://cdn.example.net/b.png" alt="Raw" title="Raw caption">',
+				},
+			],
+		};
+
+		rehypeMarkdownImages({ noReferrerDomains: ["*.example.com"] })(tree);
+
+		const gridImage = tree.children[0].children[0];
+		assert.equal(gridImage.tagName, "img");
+		assert.equal(gridImage.properties.alt, "Grid w-50%");
+		assert.equal(gridImage.properties.referrerPolicy, "no-referrer");
+		assert.equal(tree.children[1].tagName, "figure");
+		assert.equal(tree.children[1].children[0].properties.alt, "Raw");
+	});
+
+	it("honors data-no-enhance and existing figure boundaries", () => {
+		const makeImage = (alt) => ({
+			type: "element",
+			tagName: "img",
+			properties: { src: "/image.webp", alt, title: "No duplicate caption" },
+			children: [],
+		});
+		const protectedImage = makeImage("Protected w-40%");
+		const figureImage = makeImage("Figure w-50%");
+		const tree = {
+			type: "root",
+			children: [
+				{
+					type: "element",
+					tagName: "div",
+					properties: { dataNoEnhance: true },
+					children: [protectedImage],
+				},
+				{
+					type: "element",
+					tagName: "figure",
+					properties: {},
+					children: [figureImage],
+				},
+			],
+		};
+
+		rehypeMarkdownImages()(tree);
+
+		assert.equal(tree.children[0].children[0], protectedImage);
+		assert.equal(protectedImage.properties.alt, "Protected w-40%");
+		assert.equal(tree.children[1].children[0], figureImage);
+		assert.equal(figureImage.properties.alt, "Figure w-50%");
+		assert.equal(tree.children[1].children.length, 1);
+	});
+
+	it("matches only valid HTTP image host patterns", () => {
+		assert.equal(
+			matchesNoReferrerDomain("https://i.hdslb.com/a.webp", ["*.hdslb.com"]),
+			true,
+		);
+		assert.equal(
+			matchesNoReferrerDomain("https://hdslb.com/a.webp", ["*.hdslb.com"]),
+			false,
+		);
+		assert.equal(matchesNoReferrerDomain("/local.webp", ["*"]), false);
+	});
+
 	it("groups consecutive standalone images", () => {
 		const image = (url) => ({
 			type: "paragraph",
@@ -144,32 +281,45 @@ describe("Markdown AST enhancements", () => {
 		assert.equal(tree.children[0].attributes.title, "Known issue");
 	});
 
-	it("turns standalone wiki links into post cards and inline links into links", () => {
+	it("turns standalone wiki links into covered cards and inline links", async () => {
 		const tree = {
 			type: "root",
 			children: [
 				{
 					type: "paragraph",
-					children: [{ type: "text", value: "[[markdown-extended]]" }],
+					children: [{ type: "text", value: "[[guide]]" }],
 				},
 				{
 					type: "paragraph",
 					children: [
 						{
 							type: "text",
-							value: "See [[markdown-extended|extended syntax]].",
+							value: "See [[guide|the guide]].",
 						},
 					],
 				},
 			],
 		};
-		remarkWikiLink()(tree);
+		await remarkWikiLink()(tree, {
+			path: fileURLToPath(
+				new URL(
+					"../src/content/posts/content-pipeline-fixture.mdx",
+					import.meta.url,
+				),
+			),
+		});
 		assert.equal(tree.children[0].data.hName, "a");
 		assert.match(tree.children[0].data.hProperties.class, /card-wiki-link/);
-		assert.equal(tree.children[1].children[1].type, "link");
+		assert.equal(tree.children[0].children[0].data.hName, "span");
 		assert.equal(
-			tree.children[1].children[1].children[0].value,
-			"extended syntax",
+			tree.children[0].children[0].children[0].url,
+			"./guide/cover.webp",
 		);
+		assert.equal(
+			tree.children[0].children[0].data.hProperties.dataNoEnhance,
+			true,
+		);
+		assert.equal(tree.children[1].children[1].type, "link");
+		assert.equal(tree.children[1].children[1].children[0].value, "the guide");
 	});
 });

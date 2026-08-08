@@ -213,7 +213,7 @@ export const getDefaultFancyboxConfig = (): FancyboxConfig => ({
 export const FANCYBOX_SELECTORS = {
 	// 相册/文章图片
 	albumImages:
-		".custom-md img:not(.image-grid img), #post-cover img, .moment-images img",
+		".custom-md img:not(.image-grid img):not(.card-wiki-link img), #post-cover img, .moment-images img",
 
 	// Markdown 图片网格：每个网格通过 data-fancybox 形成独立轮播组
 	imageGrids: ".image-grid [data-fancybox]",

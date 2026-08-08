@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import { getPostHomeContent } from "@utils/post-card-content";
+import { resolvePostCoverSource } from "@utils/post-cover-source";
 import { Icon } from "astro-icon/components";
 
 import { getFileDirFromPath, getPostUrl, getTagUrl } from "@/utils/url-utils";
@@ -21,7 +22,6 @@ const {
 	updated,
 	tags,
 	category,
-	image,
 	description,
 	hideHomeContent,
 	pinned,
@@ -30,7 +30,14 @@ const {
 } = entry.data;
 
 const url = getPostUrl(entry);
-const hasCover = image !== undefined && image !== null && image !== "";
+const cover = await resolvePostCoverSource(entry.data, {
+	contentFilePath: entry.filePath,
+	basePath: getFileDirFromPath(entry.filePath || ""),
+	identity: entry.id,
+	imageApi: siteConfig.banner.imageApi,
+});
+const coverSrc = cover.src ?? "";
+const hasCover = Boolean(coverSrc);
 const coverWidth = "28%";
 
 const { remarkPluginFrontmatter } = await render(entry);
@@ -159,8 +166,8 @@ const homeContent = getPostHomeContent(
 					/>
 				</div>
 				<Image
-					src={image}
-					basePath={getFileDirFromPath(entry.filePath || "")}
+					src={coverSrc}
+					basePath={cover.basePath}
 					alt="Cover Image of the Post"
 					class="w-full h-full"
 					widths={[200, 400, 800]}

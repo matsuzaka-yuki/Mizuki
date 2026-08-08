@@ -1,0 +1,47 @@
+---
+interface Props {
+	label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<aside
+	class="content-pipeline-fixture"
+	data-content-pipeline-fixture
+	aria-label="Imported component example"
+>
+	<strong>{label}</strong>
+	<span>
+		Its semantic HTML remains readable even when client-side JavaScript is
+		disabled.
+	</span>
+</aside>
+
+<script>
+	document
+		.querySelectorAll<HTMLElement>("[data-content-pipeline-fixture]")
+		.forEach((element) => {
+			element.dataset.enhanced = "true";
+		});
+</script>
+
+<style>
+	.content-pipeline-fixture {
+		display: grid;
+		gap: 0.35rem;
+		margin-block: 1.5rem;
+		padding: 1rem 1.125rem;
+		border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+		border-radius: 0.875rem;
+		background: color-mix(in srgb, var(--primary) 8%, var(--card-bg));
+	}
+
+	.content-pipeline-fixture strong {
+		color: var(--primary);
+	}
+
+	.content-pipeline-fixture span {
+		line-height: 1.65;
+	}
+</style>
