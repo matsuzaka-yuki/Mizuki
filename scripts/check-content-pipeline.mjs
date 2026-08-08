@@ -4,17 +4,17 @@ import { readFile } from "node:fs/promises";
 import { XMLParser, XMLValidator } from "fast-xml-parser";
 import { parse } from "node-html-parser";
 
-const FIXTURE_TITLE = "Markdown and MDX Content Pipeline Fixture";
+const FIXTURE_TITLE = "MDX Syntax Guide";
 const FIXTURE_PAGE = "dist/posts/content-pipeline-fixture/index.html";
 
 function entries(value) {
 	return Array.isArray(value) ? value : [value];
 }
 
-function findLink(root, label) {
+function findLink(root, href) {
 	return root
 		.querySelectorAll("a")
-		.find((link) => link.textContent.trim() === label);
+		.find((link) => link.getAttribute("href") === href);
 }
 
 function assertNoExecutableMarkup(root, label) {
@@ -49,7 +49,8 @@ function assertAbsoluteFeedUrls(root, label) {
 function assertRenderedFixture(root, label, { feed = false } = {}) {
 	const html = root.toString();
 	assert.match(html, /data-content-pipeline-fixture/);
-	assert.match(html, /MDX import, JSX, and expressions are rendered/);
+	assert.match(html, /This panel is rendered by an imported Astro component/);
+	assert.match(html, /This live expression counts 3 topics/);
 	assert.ok(root.querySelector(".admonition"), `${label} is missing its callout`);
 	assert.ok(root.querySelector(".card-wiki-link"), `${label} is missing its Wiki card`);
 	assert.ok(root.querySelector("math"), `${label} is missing MathML`);
@@ -59,8 +60,12 @@ function assertRenderedFixture(root, label, { feed = false } = {}) {
 		root.querySelector(".markdown-image-caption"),
 		`${label} is missing its image caption`,
 	);
+	const prose = parse(html);
+	prose.querySelectorAll("pre,code,script,style").forEach((node) => {
+		node.remove();
+	});
 	assert.doesNotMatch(
-		html,
+		prose.textContent,
 		/import ContentPipelineFixture|<ContentPipelineFixture|:::note|\[\[guide/,
 	);
 
@@ -71,10 +76,10 @@ function assertRenderedFixture(root, label, { feed = false } = {}) {
 		`${label} nests a link in its Wiki card`,
 	);
 
-	const internal = findLink(root, "absolute site link");
+	const internal = findLink(root, "https://mizuki.mysqil.com/about/");
 	assert.equal(internal?.getAttribute("data-content-link-kind"), "internal");
 	assert.equal(internal?.getAttribute("target"), undefined);
-	const external = findLink(root, "external reference");
+	const external = findLink(root, "https://example.com/reference");
 	assert.equal(external?.getAttribute("data-content-link-kind"), "external");
 	assert.equal(external?.getAttribute("target"), "_blank");
 

@@ -24,13 +24,14 @@ describe("shared content pipeline fixture", () => {
 		assert.match(fixtureSource, /^import ContentPipelineFixture/m);
 		assert.match(
 			fixtureSource,
-			/<ContentPipelineFixture label=\{fixtureLabel\}/,
+			/<ContentPipelineFixture label=\{componentMessage\}/,
 		);
 		assert.match(fixtureSource, /:::note/);
 		assert.match(fixtureSource, /\[\[guide\]\]/);
 		assert.match(fixtureSource, /::: code-group/);
 		assert.match(fixtureSource, /\\ce\{/);
-		assert.match(fixtureSource, /!\[Public fixture image\]/);
+		assert.match(fixtureSource, /topics\.join\(/);
+		assert.match(fixtureSource, /!\[A square demonstration image/);
 	});
 
 	it("routes RSS and Atom through one shared content renderer", () => {
