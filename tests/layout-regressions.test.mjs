@@ -26,6 +26,13 @@ const encryptorSource = await readFile(
 	new URL("../src/components/features/auth/Encryptor.astro", import.meta.url),
 	"utf8",
 );
+const lastModifiedSource = await readFile(
+	new URL(
+		"../src/components/features/posts/LastModified.astro",
+		import.meta.url,
+	),
+	"utf8",
+);
 const globalStyleCheckSource = await readFile(
 	new URL("../scripts/check-global-style-loading.mjs", import.meta.url),
 	"utf8",
@@ -101,6 +108,42 @@ describe("Markdown layout regressions", () => {
 			/\.bdm-title\s+[\s\S]*?margin-bottom:\s*-/,
 			"negative title margins pull marginless content such as tables into the title",
 		);
+	});
+});
+
+describe("Last modified time regressions", () => {
+	it("preserves the updated instant across visitor time zones", () => {
+		assert.match(
+			lastModifiedSource,
+			/const lastModified = updatedDate\.toISOString\(\);/,
+			"the browser must receive an ISO timestamp with an explicit UTC designator",
+		);
+		assert.doesNotMatch(
+			lastModifiedSource,
+			/\.format\(["']YYYY-MM-DDTHH:mm:ss["']\)/,
+			"a timezone-less timestamp would be parsed as the visitor's local time",
+		);
+
+		const instant = new Date("2026-06-15T03:14:03+08:00");
+		const serialized = instant.toISOString();
+		const originalTimeZone = process.env.TZ;
+		try {
+			for (const visitorTimeZone of [
+				"UTC",
+				"Asia/Shanghai",
+				"Europe/Berlin",
+				"America/Los_Angeles",
+			]) {
+				process.env.TZ = visitorTimeZone;
+				assert.equal(new Date(serialized).getTime(), instant.getTime());
+			}
+		} finally {
+			if (originalTimeZone === undefined) {
+				delete process.env.TZ;
+			} else {
+				process.env.TZ = originalTimeZone;
+			}
+		}
 	});
 });
 

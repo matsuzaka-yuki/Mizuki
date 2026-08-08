@@ -1,6 +1,8 @@
 <script lang="ts">
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import { formatDateToYYYYMMDD, getPostDateParts } from "@utils/date-utils";
+import { comparePublishedDatesDescending } from "@utils/post-date-utils";
 import { onMount } from "svelte";
 import type { ArchivePanelProps, Group, Post } from "./types";
 
@@ -17,10 +19,8 @@ const uncategorized = params.get("uncategorized");
 
 let groups = $state<Group[]>([]);
 
-function formatDate(date: Date) {
-	const month = (date.getMonth() + 1).toString().padStart(2, "0");
-	const day = date.getDate().toString().padStart(2, "0");
-	return `${month}-${day}`;
+function formatDate(date: Date, dateOnly: boolean) {
+	return formatDateToYYYYMMDD(date, dateOnly).slice(5);
 }
 
 function formatTag(tagList: string[]) {
@@ -51,11 +51,21 @@ onMount(async () => {
 	// 按发布时间倒序排序，确保不受置顶影响
 	filteredPosts = filteredPosts
 		.slice()
-		.sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
+		.sort((a, b) =>
+			comparePublishedDatesDescending(
+				a.data.published,
+				b.data.published,
+				a.id,
+				b.id,
+			),
+		);
 
 	const grouped = filteredPosts.reduce(
 		(acc, post) => {
-			const year = post.data.published.getFullYear();
+			const year = getPostDateParts(
+				post.data.published,
+				post.data._publishedDateOnly,
+			).year;
 			if (!acc[year]) {
 				acc[year] = [];
 			}
@@ -114,7 +124,7 @@ onMount(async () => {
 						<div
 							class="w-[15%] md:w-[10%] transition text-sm text-right text-50"
 						>
-							{formatDate(post.data.published)}
+							{formatDate(post.data.published, post.data._publishedDateOnly)}
 						</div>
 
 						<!-- dot and line -->

@@ -15,7 +15,9 @@ import {
 
 interface Props {
 	published: Date;
+	publishedDateOnly?: boolean;
 	updated?: Date;
+	updatedDateOnly?: boolean;
 	category?: string;
 	tags?: string[];
 	hideUpdateDate?: boolean;
@@ -33,7 +35,9 @@ interface Props {
 
 const {
 	published,
+	publishedDateOnly = false,
 	updated,
+	updatedDateOnly = false,
 	category,
 	tags,
 	hideUpdateDate,
@@ -51,14 +55,14 @@ const {
 ---
 
 <div class:list={["flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2", className]}>
-    <PublishedDate date={published} />
+    <PublishedDate date={published} dateOnly={publishedDateOnly} />
 
     {!hideUpdateDate && updated && updated.getTime() !== published.getTime() && (
         <div class="flex items-center">
             <div class="meta-icon">
                 <Icon name="material-symbols:edit-calendar-outline-rounded" class="text-xl"></Icon>
             </div>
-            <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(updated)}</span>
+            <span class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(updated, updatedDateOnly)}</span>
         </div>
     )}
 

@@ -2,13 +2,12 @@ import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import * as fs from "node:fs";
 import type { APIContext, GetStaticPaths } from "astro";
-
+import { type Font, setGlyphCacheMaxBytes } from "takumi-js";
+import { ImageResponse } from "takumi-js/response";
+import { formatDateWithLocale } from "@/utils/date-utils";
 import { getPostPublicDescription } from "@/utils/post-card-content";
 import { removeFileExtension } from "@/utils/url-utils";
-
 import { profileConfig, siteConfig } from "../../config";
-import { ImageResponse } from "takumi-js/response";
-import { setGlyphCacheMaxBytes, type Font } from "takumi-js";
 
 setGlyphCacheMaxBytes(32 * 1024 * 1024);
 
@@ -123,11 +122,16 @@ export async function GET({
 	const subtleTextColor = `hsl(${hue}, 10%, 75%)`;
 	const backgroundColor = `hsl(${hue}, 15%, 12%)`;
 
-	const pubDate = post.data.published.toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
+	const pubDate = formatDateWithLocale(
+		post.data.published,
+		"en-US",
+		{
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		},
+		post.data._publishedDateOnly,
+	);
 
 	const description = getPostPublicDescription(post.data);
 

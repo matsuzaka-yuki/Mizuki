@@ -21,6 +21,7 @@ const posts = sortedPostsList.map((post) => ({
 		tags: post.data.tags,
 		category: post.data.category === null ? undefined : post.data.category,
 		published: post.data.published,
+		_publishedDateOnly: post.data._publishedDateOnly,
 		alias: post.data.alias,
 		permalink: post.data.permalink,
 	},

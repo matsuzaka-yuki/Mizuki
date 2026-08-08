@@ -14,7 +14,13 @@ export async function GET() {
 			password: !!post.data.password,
 		}))
 		// 按发布日期降序排列
-		.sort((a, b) => b.published - a.published);
+		.sort((a, b) => {
+			const timeDifference = b.published - a.published;
+			if (timeDifference !== 0) {
+				return timeDifference;
+			}
+			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+		});
 
 	return new Response(JSON.stringify(allPostsData), {
 		headers: { "Content-Type": "application/json" },

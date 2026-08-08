@@ -273,6 +273,7 @@ export const siteConfig: SiteConfig = {
   title: "您的博客名称",
   subtitle: "您的博客描述",
   lang: "zh-CN", // 或 "en"、"ja" 等
+  timeZone: "Asia/Shanghai", // IANA 时区，例如 Asia/Tokyo 或 Europe/Berlin
   themeColor: {
     hue: 210, // 0-360，主题色调
     fixed: false, // 隐藏主题色选择器

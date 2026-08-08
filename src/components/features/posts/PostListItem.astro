@@ -24,10 +24,10 @@ const {
 
 const displayDate =
 	dateFormat === "iso"
-		? post.data.published.toISOString().substring(0, 10)
+		? formatDateToYYYYMMDD(post.data.published, post.data._publishedDateOnly)
 		: getPostPublicDescription(
 				post.data,
-				formatDateToYYYYMMDD(post.data.published),
+				formatDateToYYYYMMDD(post.data.published, post.data._publishedDateOnly),
 			);
 ---
 

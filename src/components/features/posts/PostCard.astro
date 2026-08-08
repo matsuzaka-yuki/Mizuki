@@ -19,7 +19,9 @@ const className = Astro.props.class;
 const {
 	title,
 	published,
+	_publishedDateOnly,
 	updated,
+	_updatedDateOnly,
 	tags,
 	category,
 	description,
@@ -102,7 +104,9 @@ const homeContent = getPostHomeContent(
 
 		<PostMetadata
 			published={published}
+			publishedDateOnly={_publishedDateOnly}
 			updated={updated}
+			updatedDateOnly={_updatedDateOnly}
 			tags={tags}
 			category={category || ""}
 			hideTagsForMobile={true}

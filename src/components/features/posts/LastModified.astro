@@ -2,19 +2,15 @@
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { Icon } from "astro-icon/components";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 
 interface Props {
 	updatedDate: Date;
 	class?: string;
 }
 
-dayjs.extend(utc);
-
 const { updatedDate, class: className } = Astro.props;
 
-const lastModified = dayjs(updatedDate).utc().format("YYYY-MM-DDTHH:mm:ss");
+const lastModified = updatedDate.toISOString();
 ---
 
 <>

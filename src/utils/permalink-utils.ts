@@ -1,6 +1,8 @@
 import type { CollectionEntry } from "astro:content";
 
 import { permalinkConfig } from "../config";
+import { getPostDateParts } from "./date-utils";
+import { comparePublishedDatesAscending } from "./post-date-utils";
 import { removeFileExtension } from "./url-utils";
 
 // 文章 ID 映射缓存（用于存储按时间排序后的文章序号）
@@ -19,8 +21,13 @@ export function initPostIdMap(
 	}
 
 	// 按发布时间升序排序（最早的在前）
-	const sortedPosts = [...posts].sort(
-		(a, b) => a.data.published.getTime() - b.data.published.getTime(),
+	const sortedPosts = [...posts].sort((a, b) =>
+		comparePublishedDatesAscending(
+			a.data.published,
+			b.data.published,
+			a.id,
+			b.id,
+		),
 	);
 
 	postIdMap = new Map();
@@ -80,6 +87,10 @@ export function generatePermalinkSlug(post: CollectionEntry<"posts">): string {
 	const format = permalinkConfig.format;
 
 	const published = post.data.published;
+	const publishedParts = getPostDateParts(
+		published,
+		post.data._publishedDateOnly,
+	);
 	const postname = removeFileExtension(post.id);
 
 	let rawPostname = postname;
@@ -95,15 +106,12 @@ export function generatePermalinkSlug(post: CollectionEntry<"posts">): string {
 
 	// 替换占位符
 	const slug = format
-		.replace(/%year%/g, published.getFullYear().toString())
-		.replace(
-			/%monthnum%/g,
-			(published.getMonth() + 1).toString().padStart(2, "0"),
-		)
-		.replace(/%day%/g, published.getDate().toString().padStart(2, "0"))
-		.replace(/%hour%/g, published.getHours().toString().padStart(2, "0"))
-		.replace(/%minute%/g, published.getMinutes().toString().padStart(2, "0"))
-		.replace(/%second%/g, published.getSeconds().toString().padStart(2, "0"))
+		.replace(/%year%/g, publishedParts.year.toString())
+		.replace(/%monthnum%/g, publishedParts.month.toString().padStart(2, "0"))
+		.replace(/%day%/g, publishedParts.day.toString().padStart(2, "0"))
+		.replace(/%hour%/g, publishedParts.hour.toString().padStart(2, "0"))
+		.replace(/%minute%/g, publishedParts.minute.toString().padStart(2, "0"))
+		.replace(/%second%/g, publishedParts.second.toString().padStart(2, "0"))
 		.replace(/%post_id%/g, getPostNumericId(post.id).toString())
 		.replace(/%postname%/g, postname)
 		.replace(/%raw_postname%/g, rawPostname)
