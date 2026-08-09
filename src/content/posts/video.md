@@ -9,7 +9,7 @@ draft: false
 
 Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.
 
-```yaml
+```markdown
 ---
 title: Include Video in the Post
 published: 2023-10-19
@@ -24,4 +24,6 @@ published: 2023-10-19
 
 ## Bilibili
 
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?bvid=BV1fK4y1s7Qf&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" &autoplay=0> </iframe>
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?bvid=BV1fK4y1s7Qf&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+Keep autoplay settings in the iframe URL query string; do not add query parameters as standalone HTML attributes.

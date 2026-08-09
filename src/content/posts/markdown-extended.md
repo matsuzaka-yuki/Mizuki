@@ -227,6 +227,12 @@ Only widths from `w-1%` through `w-100%` are accepted. Remote image hosts in
 in the initial HTML. Add `data-no-enhance` to a raw HTML image or ancestor when
 custom markup should be left alone.
 
+```html
+<div data-no-enhance>
+  <img src="/images/demos/image-grid-demo/square-3.webp" alt="Custom image markup" width="640" height="360">
+</div>
+```
+
 ## Automatic Image Grids
 
 Two or more adjacent standalone images are grouped into a responsive gallery.

@@ -1,18 +1,18 @@
 ---
 title: Encrypted Post
 published: 2024-01-15
-description: This is an article for testing the page encryption feature
+description: A generic example of browser-side post encryption.
 encrypted: true
-pinned: true
+pinned: false
 password: "123456"
 passwordHint: "123456"
 hideHomeContent: true
 alias: "encrypted-example"
-tags: ["Test", "Encryption"]
-category: "Technology"
+tags: ["Example", "Encryption"]
+category: "Examples"
 ---
 
-This blog template is built with [Astro](https://astro.build/). For the things that are not mentioned in this guide, you may find the answers in the [Astro Docs](https://docs.astro.build/).
+This article demonstrates browser-side password protection. The password is intentionally present in the repository so readers can open the example; never reuse it for private content.
 
 ## Front-matter of Posts
 

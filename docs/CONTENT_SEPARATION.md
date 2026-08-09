@@ -63,7 +63,8 @@ pnpm dev
 
 | 值 | 说明 | 适用场景 |
 |---|---|---|
-| `false` 或未设置 | **禁用内容分离** (默认) | 新手、个人博客、内容较少 |
+| `false` | **禁用内容分离** | 本地内容、个人博客、内容较少 |
+| 未设置或其他值 | 启用同步逻辑 | 建议显式设置为 `false` 或 `true`，避免误解 |
 | `true` | **启用内容分离** | 团队协作、私有内容、大量文章 |
 
 ### 配置位置
@@ -104,6 +105,8 @@ git commit -m "Update content"
 git push
 ```
 
+> **注意**：本地开发时建议显式设置 `ENABLE_CONTENT_SYNC=false`。如果不设置，当前同步脚本会进入同步逻辑；没有内容仓库地址时通常会继续使用本地内容，但会输出提示。
+
 #### 场景 2: 独立仓库（分离）模式
 
 **特点**:
@@ -132,11 +135,13 @@ git commit -m "Update article"
 git push
 ```
 
+> **同步副作用**：当 `CONTENT_DIR` 已经是 Git 仓库时，同步脚本会 fetch 并将其重置到远程 `main` 或 `master` 分支。建立运行时映射时，它还可能将已有目录备份为 `.backup`、创建 junction 或复制文件，并在代码仓库中提交同步结果。运行前请提交或备份本地修改，不要直接编辑同步目标。
+
 ### 模式切换
 
 #### 从本地切换到独立仓库
 
-1. 创建内容仓库 (参考 [CONTENT_MIGRATION.md](./CONTENT_MIGRATION.md))
+1. 创建内容仓库 (参考 [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md))
 2. 编辑 `.env`:
    ```bash
    ENABLE_CONTENT_SYNC=true
@@ -367,7 +372,8 @@ CONTENT_REPO_URL=https://YOUR_TOKEN@github.com/your-username/Mizuki-Content-Priv
 |------|------|
 | `pnpm run init-content` | 运行交互式初始化向导 |
 | `pnpm run sync-content` | 手动同步内容仓库 |
-| `pnpm run check-env` | 检查环境变量配置 |
+| `pnpm run check` | 运行 Astro 诊断 |
+| `pnpm run type-check` | 运行 TypeScript 类型检查 |
 | `pnpm dev` | 启动开发服务器 (自动同步) |
 | `pnpm build` | 构建项目 (自动同步) |
 
@@ -456,7 +462,8 @@ ssh -T git@github.com
 
 4. 运行检查命令
    ```bash
-   pnpm run check-env
+   pnpm run check
+   pnpm run type-check
    ```
 
 ### 问题 5: 内容同步失败
@@ -510,7 +517,7 @@ git clone https://github.com/your-username/Mizuki-Content.git content
 
 ## 📚 相关文档
 
-- [内容迁移指南](./CONTENT_MIGRATION.md) - 如何从单仓库迁移到分离模式
+- [内容迁移指南](./MIGRATION_GUIDE.md) - 如何从单仓库迁移到分离模式
 - [内容仓库结构](./CONTENT_REPOSITORY.md) - 内容仓库的推荐结构
 - [主 README](../README.zh.md) - 项目总体说明
 
@@ -520,6 +527,6 @@ git clone https://github.com/your-username/Mizuki-Content.git content
 
 - 查看 [GitHub Issues](https://github.com/LyraVoid/Mizuki/issues)
 - 阅读 [完整文档](../README.zh.md)
-- 运行 `pnpm run check-env` 检查配置
+- 运行 `pnpm run check` 和 `pnpm run type-check` 检查项目
 
 祝你使用愉快! 🎉

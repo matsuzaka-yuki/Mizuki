@@ -4,9 +4,9 @@
 
 [Astro](https://astro.build) で構築された高度な機能と美しいデザインを備えた、モダンで機能が豊富な静的ブログテンプレート。
 
-[![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen)](https://nodejs.org/)
-[![pnpm >= 9](https://img.shields.io/badge/pnpm-%3E%3D9-blue)](https://pnpm.io/)
-[![Astro](https://img.shields.io/badge/Astro-7.0.4-orange)](https://astro.build/)
+[![Node.js >= 20](https://img.shields.io/badge/node.js-%3E%3D20-brightgreen)](https://nodejs.org/)
+[![pnpm >= 11](https://img.shields.io/badge/pnpm-%3E%3D11-blue)](https://pnpm.io/)
+[![Astro](https://img.shields.io/badge/Astro-7.1.3-orange)](https://astro.build/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0.3-blue)](https://www.typescriptlang.org/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?logo=apache)](https://opensource.org/licenses/Apache-2.0)
 
@@ -34,43 +34,6 @@
   <tr>
 </table>
 
-## 🚀 NEW: 自動解像度スケーリング
-
-> **🎯 スマート解像度アルゴリズム** - デバイスの解像度に応じてレイアウトをインテリジェントに適応、あらゆるデバイスでの閲覧体験を提供します。
-
-🌏 **README の言語:**
-[**English**](./README.md) /
-[**中文**](./README.zh.md) /
-[**日本語**](./README.ja.md) /
-[**繁體中文**](./README.tw.md) /
-
-### 🔧 コンポーネント構成システムを再構築
-
-- **統合された構成アーキテクチャ:** 全く新しいモジュール型コンポーネント構成システムにより、動的なコンポーネント管理と順序設定に対応
-- **構成駆動型のコンポーネントの読み込み:** サイドバーコンポーネントを再構築し、完全に構成ベースのコンポーネントの読み込みメカニズムを実装しています
-- **統合コントロールの切り替え:** 音楽プレーヤーとお知らせのコンポーネントを独立した有効化切り替えを削除、sidebarLayoutConfig を通じた統合コントロールを実現しています
-- **適応型レスポンシブレイアウト:** コンポーネントはレスポンシブレイアウトに対応しており、デバイスの種類に応じた表示を自動調整します
-
-### 📐 レイアウトシステムを最適化
-
-- **動的なサイドバーの位置調整:** 自動なレイアウト適応による、左右サイドバーの切り替えに対応
-- **インテリジェントな記事ディレクトリの位置付け:** サイドバーが右側にある場合に自動で左側に移動で、より良い読書体験を提供します
-- **グリッドレイアウトの改善:** CSS グリッドレイアウトを最適化でコンテナ幅の異常問題を解決済み
-
-### 🎛️ 構成ファイル形式の標準化
-
-- **標準化された構成形式:** 統一されたコンポーネント設定ファイル形式仕様を作成
-- **型安全性:** 構成の型安全性を確保するための TypeScript 型な定義
-- **拡張性:** カスタムコンポーネントタイプと構成オプションに対応
-
-### 🧹 コードの最適化
-
-- **テストファイルのクリーンアップ:** 未使用なテスト構成と依存関係を削除でプロジェクトのサイズを削減
-- **コード構造の最適化:** コンポーネントアーキテクチャの改善でコードの保守性を向上
-- **パフォーマンスを向上:** コンポーネントの読み込みロジックを最適化し、ページレンダリングパフォーマンスを向上
-
----
-
 ## ✨ 機能
 
 ### 🎨 デザインとインターフェース
@@ -78,36 +41,43 @@
 - [x] [Astro](https://astro.build)と[Tailwind CSS](https://tailwindcss.com)で構築
 - [x] [Swup](https://swup.js.org/)を使用したスムーズなアニメーションとページ遷移
 - [x] システム設定検出機能付きのライト/ダークテーマ切り替え
-- [x] カスタマイズ可能なテーマカラーと動的バナーカルーセル
-- [x] カルーセル、透明度、ぼかし効果を備えた全画面背景画像
+- [x] カスタマイズ可能なテーマカラー、バナーカルーセル、全画面壁紙
+- [x] 壁紙モードの切り替えと透明度・ぼかしの調整
+- [x] サイドバーのコンポーネント、順序、レスポンシブレイアウトを設定可能
+- [x] ワイド画面向けの自動ページスケーリング（オプション）
 - [x] すべてのデバイスに対応した完全レスポンシブデザイン
-- [x] JetBrains Monoフォントによる美しいタイポグラフィ
+- [x] カスタムフォントまたはシステムフォントモード（JetBrains Mono と CJK フォントを含む）
 
 ### 🔍 コンテンツと検索
 
 - [x] [Pagefind](https://pagefind.app/)ベースの高度な検索機能
-- [x] 構文強調表示付きの[拡張Markdown機能](#-markdown拡張機能)
+- [x] 構文強調表示付きの[Markdown と MDX の拡張機能](#-markdown拡張機能)
 - [x] 自動スクロール機能付きのインタラクティブな目次
-- [x] RSSフィード生成
+- [x] 記事ページと同じ Markdown/MDX パイプラインを使った全文 RSS/Atom フィード
 - [x] 読書時間の推定
-- [x] 記事のカテゴリ化とタグシステム
+- [x] 記事のカテゴリ、タグ、ピン留め、エイリアス、カスタムパーマリンク
+- [x] 静的サイト暗号化の限界を明記した、オプションのパスワード保護記事
 
 ### 📱 特別ページ
 
-- [x] **アニメトラッキングページ** - アニメの視聴進捗と評価を追跡
-- [x] **友達ページ** - 友達のウェブサイトを美しいカードで紹介
-- [x] **日記ページ** - ソーシャルメディアのような生活の瞬間を共有
-- [x] **アーカイブページ** - 記事の整理されたタイムラインビュー
-- [x] **アバウトページ** - カスタマイズ可能な自己紹介
+- [x] **アニメページ** - ローカルデータ、Bangumi、Bilibili で視聴状況を管理
+- [x] **フレンドページ** - カードとタグで友人のサイトを紹介
+- [x] **日記ページ** - 文章、画像、場所、気分、タグ付きの記録を共有
+- [x] **アルバムページ** - ローカルまたは外部アルバムを管理し、任意で暗号化
+- [x] **プロジェクト、スキル、デバイス、タイムラインページ** - 構造化されたプロフィールデータを表示
+- [x] **AI ツールページ** - 検索可能なツール一覧を管理
+- [x] **アーカイブと About ページ** - 記事を閲覧し、カスタム紹介を公開
 
 ### 🛠 技術的特徴
 
 - [x] [Expressive Code](https://expressive-code.com/)ベースの**拡張コードブロック**
-- [x] KaTeXレンダリングによる**数式サポート**
-- [x] PhotoSwipeギャラリー統合による**画像最適化**
-- [x] サイトマップとメタタグを含む**SEO最適化**
+- [x] KaTeX、Mermaid、PlantUML による**数式と図表**
+- [x] レスポンシブサイズ、自動グリッド、Fancybox ライトボックスによる**画像拡張**
+- [x] サイトマップ、robots.txt、RSS、Atom、任意の Open Graph 画像を含む**SEO最適化**
 - [x] 遅延読み込みとキャッシュによる**パフォーマンス最適化**
-- [x] Twikoo統合による**コメントシステム**
+- [x] Twikoo または Giscus による**コメントシステム**
+- [x] ローカルと Meting モードに対応した**音楽プレーヤー**
+- [x] Pio による**Live2D マスコット**
 
 ## 🚀 クイックスタート
 
@@ -123,30 +93,34 @@
 2. **依存関係をインストール：**
 
    ```bash
-   # pnpmがインストールされていない場合はインストール
-   npm install -g pnpm
+   # プロジェクトが宣言したパッケージマネージャーを有効化
+   corepack enable
 
    # プロジェクトの依存関係をインストール
    pnpm install
    ```
 
-3. **ブログを設定：**
-   - `src/config.ts`を編集してブログ設定をカスタマイズ
-   - サイト情報、テーマカラー、バナー画像、ソーシャルリンクを更新
-   - 機能ページの機能を設定
+3. **ブログを設定（オプション）：**
+   - ローカルコンテンツだけを使う場合は、ルートの `.env` に `ENABLE_CONTENT_SYNC=false` を設定します。
+   - `src/config/siteConfig.ts` と `src/config/` 内の各モジュールを編集してサイトをカスタマイズします。
+   - 少なくとも `siteURL` をデプロイ先の公開 URL に変更してください。
 
 4. **開発サーバーを起動：**
    ```bash
    pnpm dev
    ```
-   ブログは`http://localhost:4321`で利用可能になります
+   ブログは `http://localhost:3000` で利用可能になります
 
 ### 📝 コンテンツ管理
 
-- **新しい投稿を作成：** `pnpm new-post <ファイル名>`
-- **投稿を編集：** `src/content/posts/`内のファイルを修正
-- **特別ページをカスタマイズ：** `src/content/spec/`内のファイルを編集
-- **画像を追加：** 画像を`src/assets/`または`public/`に配置
+- **投稿を作成：** `pnpm new-post -- <ファイル名>`（`.md` と `.mdx` に対応）
+- **投稿を編集：** `src/content/posts/` 内のファイルを修正します。
+- **About または Friends の内容を編集：** `src/content/spec/` 内の対応するファイルを編集します。
+- **構造化されたページデータを編集：** `src/data/` 内の対応するファイルを編集します。
+- **記事専用画像を追加：** 記事の隣に置き、`./cover.webp` のような相対パスで参照します。
+- **公開画像を追加：** `public/` に置き、`/images/example.webp` のようなルート相対パスで参照します。
+
+> **公開前に確認：** リポジトリにはサンプル記事、ページデータ、アルバム、画像が含まれています。個人サイトをデプロイする前に削除または置き換えてください。
 
 ### 🚀 デプロイ
 
@@ -157,183 +131,160 @@
 - **GitHub Pages：** 付属のGitHub Actionsワークフローを使用
 - **Cloudflare Pages：** リポジトリを接続
 
-デプロイ前に、`src/config.ts`の`siteURL`を更新してください。
+デプロイ前に、`src/config/siteConfig.ts` の `siteURL` を更新してください。
+`.env` や認証情報を Git にコミットしないでください。ホスティング環境では、プロバイダーの環境変数設定を使用します。
 
-- **環境変数設定（オプション）：** `.env.example`を参照して設定してください
-  **推奨されません**`.env`ファイルをGitにコミットすること。`.env`はローカルデバッグまたはビルドのみで使用する必要があります。クラウドプラットフォームにデプロイする場合、プラットフォームの`環境変数`設定経由で設定することをお勧めします。
+`.env.example` には Bilibili のセッションデータや IndexNow の認証情報など、任意の設定も含まれます。必要な場合だけ設定し、ローカル環境またはホスティングプロバイダーの Secret に保存してください。実際の値はコミットしないでください。
 
-## 📝 投稿フロントマター形式
+## 📝 コンテンツの執筆
 
-```yaml
----
-title: 私の最初のブログ投稿
-published: 2023-09-09
-description: これは私の新しいブログの最初の投稿です。
-image: ./cover.jpg
-tags: [タグ1, タグ2]
-category: フロントエンド
-draft: false
-pinned: false
-comment: true
-lang: ja # 記事の言語がconfig.tsのサイト言語と異なる場合のみ設定
----
-```
+記事は `src/content/posts/` 内の `.md` または `.mdx` ファイルで作成します。必須の frontmatter は `title` と `published` だけで、概要、画像、タグ、カテゴリ、下書き、ピン留め、コメント、エイリアス、パーマリンク、帰属情報、ブラウザー側の暗号化を設定できます。
 
-### フロントマターフィールドの説明
+Markdown と MDX は、コールアウト、KaTeX 数式、Expressive Code、Mermaid、PlantUML、GitHub カード、Wiki Link、スポイラー、レスポンシブ画像、画像グリッド、Fancybox、HTML 埋め込みに対応しています。暗号化記事は RSS/Atom から除外されますが、ブラウザー側の暗号化はサーバー側のアクセス制御ではありません。
 
-- **title**: 記事のタイトル（必須）
-- **published**: 公開日（必須）
-- **description**: SEOとプレビュー用の記事の説明
-- **image**: カバー画像のパス（記事ファイルからの相対パス）
-- **tags**: カテゴリ化のためのタグの配列
-- **category**: 記事のカテゴリ
-- **draft**: 本番環境で記事を非表示にするには`true`に設定
-- **pinned**: 記事を上部に固定するには`true`に設定
-- **comment**: 記事のコメントエリアを有効にするには`true`に設定（グローバルコメント機能を有効にする必要があります）
-- **lang**: 記事の言語（サイトのデフォルト言語と異なる場合のみ設定）
+PlantUML はデフォルトで `src/config/markdownConfig.ts` に設定された公開サーバーを使用します。図にパスワード、Token、個人情報を含めないでください。
 
-### ピン留め記事機能
-
-`pinned`フィールドを使用すると、重要な記事をブログリストの上部に固定できます。ピン留めされた記事は、公開日に関係なく、常に通常の記事の前に表示されます。
-
-**使用方法：**
-
-```yaml
-pinned: true  # この記事を上部に固定
-pinned: false # 通常の記事（デフォルト）
-```
-
-**ソートルール：**
-
-1. ピン留め記事が最初に表示され、公開日でソート（最新が先）
-2. 通常の記事がその後に表示され、公開日でソート（最新が先）
-
-### 記事レベルのコメント制御
-
-`comment`フィールドを使用すると、各記事のコメントエリアの有効化と無効化を個別に制御できます。
-
-**使用方法：**
-
-```yaml
-comment: true  # コメントを有効にする（デフォルト）
-comment: false # コメントを無効にする
-```
-
-**注意：**
-この機能を使用するには、まず`src/config.ts`でコメントシステムを有効にする必要があります。
-
-## 🧩 Markdown拡張機能
-
-Mizukiは標準のGitHub Flavored Markdownを超える拡張機能をサポートしています：
-
-### 📝 拡張ライティング
-
-- **コールアウト：** `> [!NOTE]`、`> [!TIP]`、`> [!WARNING]`などを使用して美しい注釈ボックスを作成
-- **数式：** `$インライン$`と`$$ブロック$$`構文を使用してLaTeX数式を記述
-- **コード強調表示：** 行番号とコピーボタン付きの高度な構文強調表示
-- **GitHubカード：** `::github{repo="ユーザー/リポジトリ"}`を使用してリポジトリカードを埋め込み
-
-### 🎨 ビジュアル要素
-
-- **画像ギャラリー：** 画像表示のための自動PhotoSwipe統合
-- **折りたたみセクション：** 展開可能なコンテンツブロックを作成
-- **カスタムコンポーネント：** 特別なディレクティブでコンテンツを強化
-
-### 📊 コンテンツ整理
-
-- **目次：** 見出しから自動生成され、スムーズスクロールをサポート
-- **読書時間：** 自動計算して表示
-- **記事メタデータ：** カテゴリとタグを含む豊富なフロントマターサポート
+frontmatter の全フィールド、記法、画像ルール、図表、動画埋め込み、暗号化の制限、公開前チェックリストは[コンテンツ執筆ガイド](docs/CONTENT_AUTHORING.ja.md)を参照してください。
 
 ## ⚡ コマンド
 
 すべてのコマンドはプロジェクトルートから実行します：
 
-| コマンド                     | アクション                                   |
-| :--------------------------- | :------------------------------------------- |
-| `pnpm install`               | 依存関係をインストール                       |
-| `pnpm dev`                   | `localhost:4321`でローカル開発サーバーを起動 |
-| `pnpm build`                 | 本番サイトを`./dist/`にビルド                |
-| `pnpm preview`               | デプロイ前にビルドをローカルでプレビュー     |
-| `pnpm check`                 | Astroエラーチェックを実行                    |
-| `pnpm format`                | Prettierでコードをフォーマット               |
-| `pnpm lint`                  | コードの問題をチェックして修正               |
-| `pnpm new-post <ファイル名>` | 新しいブログ投稿を作成                       |
-| `pnpm astro ...`             | Astro CLIコマンドを実行                      |
+| コマンド | アクション |
+| :--- | :--- |
+| `pnpm install` | 依存関係をインストール。 |
+| `pnpm dev` | `http://localhost:3000` で開発サーバーを起動。 |
+| `pnpm build` | `./dist/` をビルドし、検索データとビルドチェックを実行。 |
+| `pnpm preview` | 本番ビルドをローカルでプレビュー。 |
+| `pnpm run check` | Astro の診断を実行。 |
+| `pnpm run type-check` | TypeScript の型チェックを実行。 |
+| `pnpm test` | Markdown、レイアウト、画像、音楽、暗号化テストを実行。 |
+| `pnpm run format` | Biome でソースをフォーマット。 |
+| `pnpm run lint` | Biome でチェックと自動修正。 |
+| `pnpm new-post -- <ファイル名>` | Markdown または MDX の記事を作成。 |
+| `pnpm run sync-content` | 任意の外部コンテンツリポジトリを同期。 |
+| `pnpm run init-content` | 外部コンテンツ同期を対話形式で初期化。 |
+| `pnpm astro ...` | Astro CLI コマンドを実行。 |
 
 ## 🎯 設定ガイド
 
 ### 🔧 基本設定
 
-`src/config.ts`を編集してブログをカスタマイズ：
+設定は `src/config/` 以下のモジュールに分割され、`src/config/index.ts` が共通のエクスポート入口です。主要設定は `src/config/siteConfig.ts` にあります：
 
 ```typescript
 export const siteConfig: SiteConfig = {
   title: "あなたのブログ名",
   subtitle: "あなたのブログの説明",
-  lang: "ja", // または "zh-CN"、"en" など
-  timeZone: "Asia/Shanghai", // IANAタイムゾーン（例：Asia/Tokyo、Europe/Berlin）
+  siteURL: "https://example.com/", // 末尾のスラッシュを維持
+  lang: "ja", // 例: "en"、"zh_CN"、"zh_TW"
+  timeZone: "Asia/Tokyo", // 有効な IANA タイムゾーン
   themeColor: {
-    hue: 210, // 0-360、テーマの色相
-    fixed: false, // テーマカラーピッカーを非表示
+    hue: 210, // 0–360
+    fixed: false, // true で訪問者のテーマカラー選択を非表示
   },
-  banner: {
-    enable: true,
-    src: ["assets/banner/1.webp"], // バナー画像
-    carousel: {
-      enable: true,
-      interval: 0.8, // 秒
-    },
+  featurePages: {
+    anime: true,
+    diary: true,
+    friends: true,
+    projects: true,
+    skills: true,
+    timeline: true,
+    albums: true,
+    devices: true,
+    aiTools: true,
   },
+  // 残りのフィールドはテンプレートのデフォルトを維持してください。
 };
 ```
 
-### 📱 機能ページの設定
+その他の主な設定ファイル：
 
-- **アニメページ：** `src/pages/anime.astro`でアニメリストを編集
-- **友達ページ：** `src/content/spec/friends.md`で友達データを編集
-- **日記ページ：** `src/pages/diary.astro`で瞬間を編集
-- **アバウトページ：** `src/content/spec/about.md`でコンテンツを編集
+- `src/config/navBarConfig.ts` — ナビゲーションとメニュー。
+- `src/config/profileConfig.ts` — アバター、名前、プロフィール、ソーシャルリンク。
+- `src/config/sidebarConfig.ts` — サイドバーのウィジェット、順序、位置、レスポンシブ動作。
+- `src/config/backgroundWallpaper.ts` と `src/config/effectsConfig.ts` — 壁紙と視覚効果。
+- `src/config/commentConfig.ts` — Twikoo または Giscus のグローバル設定。コメントはデフォルトで無効です。使用前に `enable: true` とプロバイダー設定を追加してください。
+- `src/config/musicConfig.ts` — 音楽プレーヤーのモードとプレイリスト。
+- `src/config/markdownConfig.ts` — Wiki Link、自動画像グリッド、PlantUML。
+- `src/config/permalinkConfig.ts` — 任意のグローバルパーマリンク形式。
+- `src/config/expressiveCodeConfig.ts` — コードブロックのテーマと動作。
+
+### 📱 機能ページのコンテンツ
+
+ページの有効化は `siteConfig.featurePages` で制御します。ページの内容はテンプレートから分離されています：
+
+| ページ | コンテンツまたはデータ |
+| :--- | :--- |
+| About | `src/content/spec/about.md` |
+| Friends | `src/content/spec/friends.md` と `src/data/friends.ts` |
+| Anime | `src/config/siteConfig.ts` でソースモードを設定、ローカルデータは `src/data/anime.ts` |
+| Diary | `src/data/diary.ts`、または `diaryApiUrl` の Memos エンドポイント |
+| Albums | `public/images/albums/`、各ローカルアルバムは `info.json` を使用 |
+| Projects | `src/data/projects.ts` |
+| Skills | `src/data/skills.ts` |
+| Devices | `src/data/devices.ts` |
+| Timeline | `src/data/timeline.ts` |
+| AI Tools | `src/data/ai-tools.ts` |
+
+ページの内容を変更するためだけに `src/pages/*.astro` を編集しないでください。これらはレイアウトとレンダリングを定義します。
 
 ### 📦 コードとコンテンツの分離（オプション）
 
-Mizukiは、コードとコンテンツを2つの独立したリポジトリに分けて管理することをサポートしており、チーム协作や大規模プロジェクトに適しています。
+Mizuki はテーマコードとブログコンテンツを別のリポジトリに分離できます。プライベートコンテンツ、独立したバージョン管理、チーム協業に便利ですが、必須ではありません。
 
 **簡単選択**:
 
-| 使用シナリオ                        | 設定方法                         | 対象者                             |
-| ----------------------------------- | -------------------------------- | ---------------------------------- |
-| 🆕 **ローカルモード**（デフォルト） | 設定不要、そのまま使用           | 初心者、個人ブログ                 |
-| 🔧 **分離モード**                   | `ENABLE_CONTENT_SYNC=true`を設定 | チーム协作、プライベートコンテンツ |
+| 用途 | 設定 | コンテンツの場所 |
+| :--- | :--- | :--- |
+| **ローカルコンテンツ** | `ENABLE_CONTENT_SYNC=false` | `src/content/`、`src/data/`、`public/images/` |
+| **外部コンテンツリポジトリ** | `ENABLE_CONTENT_SYNC=true` と `CONTENT_REPO_URL=...` | 上記のパスへ同期される別リポジトリ |
 
 **ワンクリック有効化/無効化**:
 
 ```bash
-# 方法 1: ローカルモード（初心者向け）
-# .envファイルを作成せず、そのまま実行
+# ローカルコンテンツモード（入門向け）
+# .env に設定して同期を明示的に無効化
+ENABLE_CONTENT_SYNC=false
 pnpm dev
 
-# 方法 2: コンテンツ分離モード
-# 1. 設定ファイルをコピー
+# 外部コンテンツリポジトリモード
+# 1. 設定例をコピー
 cp .env.example .env
 
-# 2. .envを編集してコンテンツ分離を有効化
+# 2. .env を編集
 ENABLE_CONTENT_SYNC=true
 CONTENT_REPO_URL=https://github.com/your-username/Mizuki-Content.git
+# CONTENT_DIR=./content  # 任意。デフォルトもこのパスです
 
-# 3. コンテンツを同期
+# 3. コンテンツを同期してサイトを起動
 pnpm run sync-content
+pnpm dev
 ```
 
-**機能**:
+外部コンテンツリポジトリは次の構成にできます：
 
-- ✅ パブリックおよびプライベートリポジトリをサポート 🔐
-- ✅ ワンクリックで有効化/無効化、コード修正不要
-- ✅ 自動同期、開発前に最新コンテンツを自動プル
+```text
+Mizuki-Content/
+├── posts/       # .md と .mdx の記事
+├── spec/        # About、Friends などの Markdown ページ
+├── data/        # プロジェクトやスキルなどの構造化データ
+└── images/      # アルバムや記事を含む公開画像
+```
 
-📖 **詳細設定**: [コンテンツ分離完全ガイド](docs/CONTENT_SEPARATION.md)
-🔄 **移行チュートリアル**: [シングルリポジトリから分離モードへ移行](docs/MIGRATION_GUIDE.md)
-📚 **その他のドキュメント**: [ドキュメントインデックス](docs/README.md)
+同期スクリプトはこれらを `src/content/posts/`、`src/content/spec/`、`src/data/`、`public/images/` にマッピングします。`src/data/ai-tools.ts` はコードリポジトリ側で管理され、同期時も保護されます。
+
+> **同期に関する警告：** `ENABLE_CONTENT_SYNC` を有効にすると、`pnpm dev` と `pnpm build` の前に同期フックが実行されます。`CONTENT_DIR` が Git リポジトリの場合、スクリプトはリモートの `main` または `master` を fetch して reset します。既存のランタイムディレクトリを `.backup` に移動し、ジャンクションまたはコピーを作成し、コードリポジトリに同期結果をコミットする場合もあります。実行前にローカルの変更をコミットまたはバックアップし、同期先を直接編集しないでください。
+
+プライベートリポジトリには SSH URL を使うか、デプロイプロバイダーで認証情報を設定してください。Token を `.env` に書いてコミットしたり、公開 URL に含めたりしないでください。
+
+📖 **詳細設定：** [コンテンツ分離完全ガイド](docs/CONTENT_SEPARATION.md)
+
+🔄 **移行チュートリアル：** [シングルリポジトリから分離モードへ移行](docs/MIGRATION_GUIDE.md)
+
+🚀 **デプロイガイド：** [デプロイガイド](docs/DEPLOYMENT.md)
+
+📚 **その他のドキュメント：** [ドキュメントインデックス](docs/README.md)
 
 ## ✏️ 貢献
 

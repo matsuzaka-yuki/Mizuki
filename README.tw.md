@@ -4,9 +4,9 @@
 
 一個現代化、功能豐富的靜態部落格模板，基於 [Astro](https://astro.build) 構建，具有先進的功能和精美的設計。
 
-[![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen)](https://nodejs.org/)
-[![pnpm >= 9](https://img.shields.io/badge/pnpm-%3E%3D9-blue)](https://pnpm.io/)
-[![Astro](https://img.shields.io/badge/Astro-7.0.4-orange)](https://astro.build/)
+[![Node.js >= 20](https://img.shields.io/badge/node.js-%3E%3D20-brightgreen)](https://nodejs.org/)
+[![pnpm >= 11](https://img.shields.io/badge/pnpm-%3E%3D11-blue)](https://pnpm.io/)
+[![Astro](https://img.shields.io/badge/Astro-7.1.3-orange)](https://astro.build/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0.3-blue)](https://www.typescriptlang.org/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?logo=apache)](https://opensource.org/licenses/Apache-2.0)
 
@@ -34,43 +34,6 @@
   <tr>
 </table>
 
-## 🚀 NEW: 自動解析度適配
-
-> **🎯 自動解析度演算法** - 智能適配內容佈局基於裝置螢幕解析度，為所有裝置提供最佳觀看體驗
-
-🌏 README 語言
-[**English**](./README.md) /
-[**中文**](./README.zh.md) /
-[**日本語**](./README.ja.md) /
-[**繁體中文**](./README.tw.md) /
-
-### 🔧 元件配置系統重構
-
-- **統一配置架構：** 全新的模組化元件配置體系，支援動態元件管理和順序配置
-- **配置驅動的元件載入：** 重構 SideBar 元件，實現完全基於配置的元件載入機制
-- **統一控制開關：** 移除音樂播放器和公告元件的獨立 enable 開關，統一由 sidebarLayoutConfig 控制
-- **響應式佈局適配：** 元件支援響應式佈局，可根據裝置類型自動調整顯示
-
-### 📐 佈局系統優化
-
-- **側邊欄位置動態調整：** 支援左右側邊欄切換，佈局自動適配
-- **文章目錄智能定位：** 當側邊欄在右側時，文章導航自動移至左側，提供更好的閱讀體驗
-- **網格佈局改進：** 優化 CSS Grid 佈局，解決容器寬度異常問題
-
-### 🎛️ 配置文件格式規範
-
-- **標準化配置格式：** 創建統一的元件配置文件格式規範
-- **類型安全：** 完善的 TypeScript 類型定義，確保配置的類型安全
-- **可擴展性：** 支援自定義元件類型和配置選項
-
-### 🧹 程式碼優化
-
-- **測試文件清理：** 移除未使用的測試配置和依賴，減少專案體積
-- **程式碼結構優化：** 改進元件架構，提升程式碼可維護性
-- **效能提升：** 優化元件載入邏輯，提升頁面渲染效能
-
----
-
 ## ✨ 功能特性
 
 ### 🎨 設計與界面
@@ -78,36 +41,43 @@
 - [x] 基於 [Astro](https://astro.build) 和 [Tailwind CSS](https://tailwindcss.com) 構建
 - [x] 使用 [Swup](https://swup.js.org/) 實現流暢的動畫和頁面過渡
 - [x] 明暗主題切換，支援系統偏好檢測
-- [x] 可自定義主題色彩和動態橫幅輪播
-- [x] 全屏背景圖片，支援輪播、透明度和模糊效果
+- [x] 可自定義主題色彩、橫幅輪播和全屏桌布
+- [x] 可切換桌布模式，並調整透明度和模糊效果
+- [x] 可配置側邊欄元件、順序和響應式佈局
+- [x] 可選的寬螢幕自動頁面縮放
 - [x] 全裝置響應式設計
-- [x] 使用 JetBrains Mono 字體的優美排版
+- [x] 支援自訂或系統字體模式，包括 JetBrains Mono 和中日韓字體
 
 ### 🔍 內容與搜尋
 
 - [x] 基於 [Pagefind](https://pagefind.app/) 的高級搜尋功能
-- [x] [增強的 Markdown 功能](#-markdown-擴展語法)，支援語法高亮
+- [x] [Markdown 和 MDX 擴展](#-markdown-擴展語法)，支援語法高亮
 - [x] 互動式目錄，支援自動滾動
-- [x] RSS 訂閱生成
+- [x] RSS 和 Atom 全文訂閱，複用文章頁面的 Markdown/MDX 管線
 - [x] 閱讀時間估算
-- [x] 文章分類和標籤系統
+- [x] 文章分類、標籤、置頂、別名和自訂固定連結
+- [x] 可選的密碼保護文章，並明確說明靜態網站加密的安全邊界
 
 ### 📱 特色頁面
 
-- [x] **追番頁面** - 追蹤動畫觀看進度和評分
-- [x] **友鏈頁面** - 精美卡片展示朋友網站
-- [x] **日記頁面** - 分享生活瞬間，類似社交媒體
-- [x] **歸檔頁面** - 有序的文章時間線視圖
-- [x] **關於頁面** - 可自定義的個人介紹
+- [x] **追番頁面** - 使用本地資料、Bangumi 或 Bilibili 追蹤動畫
+- [x] **友鏈頁面** - 使用卡片和標籤展示友鏈
+- [x] **日記頁面** - 分享帶有文字、圖片、位置、心情和標籤的動態
+- [x] **相簿頁面** - 管理本地或外部相簿，並支援可選加密
+- [x] **專案、技能、裝置和時間線頁面** - 展示結構化個人資料
+- [x] **AI 工具頁面** - 維護可搜尋的工具目錄
+- [x] **歸檔和關於頁面** - 瀏覽文章或發布自訂介紹
 
 ### 🛠 技術特性
 
 - [x] **增強程式碼區塊**，基於 [Expressive Code](https://expressive-code.com/)
-- [x] **數學公式支援**，KaTeX 渲染
-- [x] **圖片優化**，PhotoSwipe 畫廊整合
-- [x] **SEO 優化**，包含網站地圖和元標籤
+- [x] **數學公式**，使用 KaTeX，並支援 Mermaid 和 PlantUML 圖表
+- [x] **圖片增強**，包括響應式尺寸、自動網格和 Fancybox 燈箱
+- [x] **SEO 優化**，包括網站地圖、robots.txt、RSS、Atom 和可選 Open Graph 圖片
 - [x] **效能優化**，懶加載和快取機制
-- [x] **評論系統**，支援 Twikoo 整合
+- [x] **評論系統**，支援 Twikoo 或 Giscus
+- [x] **音樂播放器**，支援本地和 Meting 模式
+- [x] **Live2D 看板娘**，透過 Pio 實現
 
 ## 🚀 快速開始
 
@@ -123,30 +93,34 @@
 2. **安裝依賴：**
 
    ```bash
-   # 如果沒有安裝 pnpm，先安裝
-   npm install -g pnpm
+   # 啟用專案宣告的套件管理器版本
+   corepack enable
 
    # 安裝專案依賴
    pnpm install
    ```
 
-3. **配置部落格：**
-   - 編輯 `src/config.ts` 自定義部落格設置
-   - 更新網站資訊、主題色彩、橫幅圖片和社交連結
-   - 配置翻譯設置和特色頁面功能
+3. **配置部落格（可選）：**
+   - 如果只使用本地內容，請在專案根目錄 `.env` 中設定 `ENABLE_CONTENT_SYNC=false`。
+   - 編輯 `src/config/siteConfig.ts` 和 `src/config/` 下的其他模組自訂網站。
+   - 至少將 `siteURL` 替換為部署後的公開網址。
 
 4. **啟動開發伺服器：**
    ```bash
    pnpm dev
    ```
-   部落格將在 `http://localhost:4321` 可用
+   部落格將在 `http://localhost:3000` 可用
 
 ### 📝 內容管理
 
-- **創建新文章：** `pnpm new-post <檔案名>`
-- **編輯文章：** 修改 `src/content/posts/` 中的檔案
-- **自定義頁面：** 編輯 `src/content/spec/` 中的特殊頁面
-- **添加圖片：** 將圖片放在 `src/assets/` 或 `public/` 中
+- **建立文章：** `pnpm new-post -- <檔案名>`，支援 `.md` 和 `.mdx`。
+- **編輯文章：** 修改 `src/content/posts/` 中的檔案。
+- **編輯關於頁或友鏈頁內容：** 修改 `src/content/spec/` 中對應的檔案。
+- **編輯結構化頁面資料：** 修改 `src/data/` 中對應的檔案。
+- **添加文章本地圖片：** 將圖片放在文章旁邊，並使用 `./cover.webp` 這樣的相對路徑。
+- **添加公共圖片：** 放在 `public/` 下，並使用 `/images/example.webp` 這樣的根路徑。
+
+> **發布前注意：** 儲存庫中包含示例文章、頁面資料、相簿和圖片。部署個人網站前請刪除或替換這些示例內容。
 
 ### 🚀 部署
 
@@ -157,183 +131,160 @@
 - **GitHub Pages：** 使用包含的 GitHub Actions 工作流
 - **Cloudflare Pages：** 連接您的儲存庫
 
-部署前，請在 `src/config.ts` 中更新 `siteURL`。
+部署前，請在 `src/config/siteConfig.ts` 中更新 `siteURL`。
+不要將 `.env` 或憑據提交到 Git；託管構建請在平台的環境變數設定中配置。
 
-- **環境變數配置（可選）：** 可參照 `.env.example` 來配置
-  **不建議**將 `.env` 檔案提交到 Git，`.env` 應該僅在本地調試或構建使用。若要將項目在雲平台部署，建議通過平台上的 `環境變數` 配置傳入。
+`.env.example` 中還包含 Bilibili 會話資料和 IndexNow 憑據等可選設定。只在需要時設定，並放在本地環境或託管平台 Secret 中，切勿提交真實值。
 
-## 📝 文章前言格式
+## 📝 內容編寫
 
-```yaml
----
-title: 我的第一篇部落格文章
-published: 2023-09-09
-description: 這是我新部落格的第一篇文章。
-image: ./cover.jpg
-tags: [標籤1, 標籤2]
-category: 前端
-draft: false
-pinned: false
-comment: true
-lang: zh-TW # 僅當文章語言與 config.ts 中的網站語言不同時設置
----
-```
+文章使用 `src/content/posts/` 下的 `.md` 或 `.mdx` 檔案，`title` 和 `published` 是必填的 frontmatter 欄位。可選欄位支援摘要、圖片、標籤、分類、草稿、置頂、評論、別名、固定連結、署名和瀏覽器端加密。
 
-### Frontmatter 欄位說明
+Markdown 和 MDX 支援提示框、KaTeX 數學公式、Expressive Code、Mermaid、PlantUML、GitHub 卡片、Wiki Link、劇透、響應式圖片、圖片網格、Fancybox 燈箱和 HTML 嵌入。加密文章不會進入 RSS 和 Atom，但瀏覽器端加密不是伺服器端存取控制。
 
-- **title**: 文章標題（必要）
-- **published**: 發布日期（必要）
-- **description**: 文章描述，用於 SEO 和預覽
-- **image**: 封面圖片路徑（相對於文章檔案）
-- **tags**: 標籤陣列，用於分類
-- **category**: 文章分類
-- **draft**: 設置為 `true` 在生產環境中隱藏文章
-- **pinned**: 設置為 `true` 將文章置頂
-- **comment**: 設置為 `true` 啟用文章評論區（需全域啟用評論功能）
-- **lang**: 文章語言（僅當與網站預設語言不同時設置）
+PlantUML 預設使用 `src/config/markdownConfig.ts` 中配置的公共伺服器，請勿在圖表中寫入密碼、Token 或隱私資料。
 
-### 置頂文章功能
-
-`pinned` 欄位允許您將重要文章置頂到部落格列表的頂部。置頂文章將始終顯示在普通文章之前，無論其發布日期如何。
-
-**使用方法：**
-
-```yaml
-pinned: true  # 將此文章置頂
-pinned: false # 普通文章（預設）
-```
-
-**排序規則：**
-
-1. 置頂文章優先顯示，按發布日期排序（最新在前）
-2. 普通文章隨後顯示，按發布日期排序（最新在前）
-
-### 文章級評論控制
-
-`comment` 欄位允許您單獨控制每篇文章評論區的開啟與關閉。
-
-**使用方法：**
-
-```yaml
-comment: true  # 啟用評論（預設）
-comment: false # 禁用評論
-```
-
-**注意：**
-此功能需要先在 `src/config.ts` 中啟用評論系統。
-
-## 🧩 Markdown 擴展語法
-
-Mizuki 支援超越標準 GitHub Flavored Markdown 的增強功能：
-
-### 📝 增強寫作
-
-- **提示框：** 使用 `> [!NOTE]`、`> [!TIP]`、`> [!WARNING]` 等創建精美的標註框
-- **數學公式：** 使用 `$行內$` 和 `$$塊級$$` 語法編寫 LaTeX 數學公式
-- **程式碼高亮：** 高級語法高亮，支援行號和複製按鈕
-- **GitHub 卡片：** 使用 `::github{repo="使用者/儲存庫"}` 嵌入儲存庫卡片
-
-### 🎨 視覺元素
-
-- **圖片畫廊：** 自動 PhotoSwipe 整合，支援圖片查看
-- **可折疊部分：** 創建可展開的內容區塊
-- **自定義元件：** 使用特殊指令增強內容
-
-### 📊 內容組織
-
-- **目錄：** 從標題自動生成，支援平滑滾動
-- **閱讀時間：** 自動計算和顯示
-- **文章元數據：** 豐富的前言支援，包含分類和標籤
+完整欄位表、寫作語法、圖片規則、圖表、影片嵌入、加密限制和發布清單請參閱[內容編寫指南](docs/CONTENT_AUTHORING.tw.md)。
 
 ## ⚡ 命令
 
 所有命令都在專案根目錄運行：
 
-| 命令                     | 操作                                   |
-| :----------------------- | :------------------------------------- |
-| `pnpm install`           | 安裝依賴                               |
-| `pnpm dev`               | 在 `localhost:4321` 啟動本地開發伺服器 |
-| `pnpm build`             | 構建生產網站到 `./dist/`               |
-| `pnpm preview`           | 在部署前本地預覽構建                   |
-| `pnpm check`             | 運行 Astro 錯誤檢查                    |
-| `pnpm format`            | 使用 Prettier 格式化程式碼             |
-| `pnpm lint`              | 檢查並修復程式碼問題                   |
-| `pnpm new-post <檔案名>` | 創建新部落格文章                       |
-| `pnpm astro ...`         | 運行 Astro CLI 命令                    |
+| 命令 | 操作 |
+| :--- | :--- |
+| `pnpm install` | 安裝依賴。 |
+| `pnpm dev` | 在 `http://localhost:3000` 啟動開發伺服器。 |
+| `pnpm build` | 構建 `./dist/`、生成搜尋資料並執行構建檢查。 |
+| `pnpm preview` | 在部署前預覽生產構建。 |
+| `pnpm run check` | 執行 Astro 診斷。 |
+| `pnpm run type-check` | 執行 TypeScript 類型檢查。 |
+| `pnpm test` | 執行 Markdown、佈局、圖片、音樂和加密測試。 |
+| `pnpm run format` | 使用 Biome 格式化源檔案。 |
+| `pnpm run lint` | 使用 Biome 檢查並自動修復源檔案。 |
+| `pnpm new-post -- <檔案名>` | 建立 Markdown 或 MDX 文章。 |
+| `pnpm run sync-content` | 同步可選的外部內容儲存庫。 |
+| `pnpm run init-content` | 互動式初始化外部內容同步。 |
+| `pnpm astro ...` | 執行 Astro CLI 命令。 |
 
 ## 🎯 配置指南
 
 ### 🔧 基礎配置
 
-編輯 `src/config.ts` 自定義您的部落格：
+配置已拆分到 `src/config/` 下的多個模組，`src/config/index.ts` 是統一導出入口。主要網站設定位於 `src/config/siteConfig.ts`：
 
 ```typescript
 export const siteConfig: SiteConfig = {
   title: "您的部落格名稱",
   subtitle: "您的部落格描述",
-  lang: "zh-TW", // 或 "zh-CN"、"en"、"ja" 等
-  timeZone: "Asia/Shanghai", // IANA 時區，例如 Asia/Tokyo 或 Europe/Berlin
+  siteURL: "https://example.com/", // 保留結尾斜線
+  lang: "zh_TW", // 例如 "en"、"zh_CN" 或 "ja"
+  timeZone: "Asia/Taipei", // 任意有效的 IANA 時區
   themeColor: {
-    hue: 210, // 0-360，主題色調
-    fixed: false, // 隱藏主題色選擇器
+    hue: 210, // 0–360
+    fixed: false, // 為 true 時隱藏訪客的主題色選擇器
   },
-  banner: {
-    enable: true,
-    src: ["assets/banner/1.webp"], // 橫幅圖片
-    carousel: {
-      enable: true,
-      interval: 0.8, // 秒
-    },
+  featurePages: {
+    anime: true,
+    diary: true,
+    friends: true,
+    projects: true,
+    skills: true,
+    timeline: true,
+    albums: true,
+    devices: true,
+    aiTools: true,
   },
+  // 其餘欄位請保留模板預設值。
 };
 ```
 
-### 📱 特色頁面配置
+其他常用配置檔案：
 
-- **追番頁面：** 在 `src/pages/anime.astro` 中編輯動畫列表
-- **友鏈頁面：** 在 `src/content/spec/friends.md` 中編輯朋友數據
-- **日記頁面：** 在 `src/pages/diary.astro` 中編輯動態
-- **關於頁面：** 在 `src/content/spec/about.md` 中編輯內容
+- `src/config/navBarConfig.ts` — 導航連結和選單。
+- `src/config/profileConfig.ts` — 頭像、名稱、簡介和社交連結。
+- `src/config/sidebarConfig.ts` — 側邊欄元件、順序、位置和響應式行為。
+- `src/config/backgroundWallpaper.ts` 與 `src/config/effectsConfig.ts` — 桌布和視覺特效。
+- `src/config/commentConfig.ts` — Twikoo 或 Giscus 全域設定。評論預設關閉；使用前請設定 `enable: true` 並配置對應服務。
+- `src/config/musicConfig.ts` — 音樂播放器模式和歌單來源。
+- `src/config/markdownConfig.ts` — Wiki Link、自動圖片網格和 PlantUML。
+- `src/config/permalinkConfig.ts` — 可選的全域固定連結格式。
+- `src/config/expressiveCodeConfig.ts` — 程式碼區塊主題和行為。
+
+### 📱 特色頁面內容
+
+頁面開關由 `siteConfig.featurePages` 控制。頁面內容與頁面模板分離：
+
+| 頁面 | 內容或資料來源 |
+| :--- | :--- |
+| 關於 | `src/content/spec/about.md` |
+| 友鏈 | `src/content/spec/friends.md` 和 `src/data/friends.ts` |
+| 追番 | `src/config/siteConfig.ts` 設定資料來源模式；本地資料在 `src/data/anime.ts` |
+| 日記 | `src/data/diary.ts`，或在 `diaryApiUrl` 中配置 Memos 地址 |
+| 相簿 | `public/images/albums/`；每個本地相簿使用 `info.json` |
+| 專案 | `src/data/projects.ts` |
+| 技能 | `src/data/skills.ts` |
+| 裝置 | `src/data/devices.ts` |
+| 時間線 | `src/data/timeline.ts` |
+| AI 工具 | `src/data/ai-tools.ts` |
+
+不要為了修改頁面內容而直接編輯 `src/pages/*.astro`；這些檔案負責佈局和渲染邏輯。
 
 ### 📦 代碼內容分離 (可選)
 
-Mizuki 支援將代碼和內容分成兩個獨立的倉庫管理，適合團隊協作和大型專案。
+Mizuki 可以將主題程式碼和部落格內容分成兩個儲存庫，適用於私有內容、獨立版本管理或團隊協作，但這是可選功能。
 
 **快速選擇**:
 
-| 使用場景               | 配置方式                        | 適合人群           |
-| ---------------------- | ------------------------------- | ------------------ |
-| 🆕 **本地模式** (預設) | 不配置，直接使用                | 新手、個人部落格   |
-| 🔧 **分離模式**        | 設置 `ENABLE_CONTENT_SYNC=true` | 團隊協作、私有內容 |
+| 使用場景 | 配置方式 | 內容位置 |
+| :--- | :--- | :--- |
+| **本地內容** | `ENABLE_CONTENT_SYNC=false` | `src/content/`、`src/data/` 和 `public/images/` |
+| **外部內容儲存庫** | `ENABLE_CONTENT_SYNC=true` 且設定 `CONTENT_REPO_URL=...` | 同步到上述路徑的獨立儲存庫 |
 
 **一鍵啟用/禁用**:
 
 ```bash
-# 方式 1: 本地模式 (推薦新手)
-# 不創建 .env 文件，直接運行
+# 本地內容模式（推薦入門使用）
+# 在 .env 中明確關閉同步
+ENABLE_CONTENT_SYNC=false
 pnpm dev
 
-# 方式 2: 內容分離模式
-# 1. 複製配置文件
+# 外部內容儲存庫模式
+# 1. 複製配置範例
 cp .env.example .env
 
-# 2. 編輯 .env，啟用內容分離
+# 2. 編輯 .env
 ENABLE_CONTENT_SYNC=true
 CONTENT_REPO_URL=https://github.com/your-username/Mizuki-Content.git
+# CONTENT_DIR=./content  # 可選，預設值即為此路徑
 
-# 3. 同步內容
+# 3. 同步內容並啟動網站
 pnpm run sync-content
+pnpm dev
 ```
 
-**功能特性**:
+外部內容儲存庫可以使用以下結構：
 
-- ✅ 支援公開和私有倉庫 🔐
-- ✅ 一鍵啟用/禁用，無需修改代碼
-- ✅ 自動同步，開發前自動拉取最新內容
+```text
+Mizuki-Content/
+├── posts/       # .md 和 .mdx 文章
+├── spec/        # 關於頁、友鏈頁等 Markdown 內容
+├── data/        # 專案、技能等結構化頁面資料
+└── images/      # 公共圖片，包括相簿和文章資源
+```
 
-📖 **詳細配置**: [內容分離完整指南](docs/CONTENT_SEPARATION.md)
-🔄 **遷移教程**: [從單倉庫遷移到分離模式](docs/MIGRATION_GUIDE.md)
-📚 **更多文檔**: [文檔索引](docs/README.md)
+同步腳本會將這些目錄映射到 `src/content/posts/`、`src/content/spec/`、`src/data/` 和 `public/images/`。`src/data/ai-tools.ts` 屬於程式碼儲存庫，會在同步時受到保護。
+
+> **同步警告：** 啟用 `ENABLE_CONTENT_SYNC` 後，`pnpm dev` 和 `pnpm build` 會自動執行同步鉤子。如果 `CONTENT_DIR` 已經是 Git 儲存庫，同步腳本會 fetch 並重置到遠端 `main` 或 `master` 分支；它還可能將現有執行時目錄備份為 `.backup`、建立目錄聯接或複製檔案，並在程式碼儲存庫中提交同步結果。執行前請提交或備份本地內容修改，不要直接編輯同步目標檔案。
+
+私有儲存庫可以使用 SSH URL，或透過部署平台配置憑據。不要將 Token 寫入 `.env` 並提交，也不要將 Token 放進公開儲存庫 URL。
+
+📖 **詳細配置：** [內容分離完整指南](docs/CONTENT_SEPARATION.md)
+
+🔄 **遷移教程：** [從單倉庫遷移到分離模式](docs/MIGRATION_GUIDE.md)
+
+🚀 **部署指南：** [部署指南](docs/DEPLOYMENT.md)
+
+📚 **更多文檔：** [文檔索引](docs/README.md)
 
 ## ✏️ 貢獻
 

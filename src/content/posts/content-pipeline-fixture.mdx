@@ -17,7 +17,7 @@ export const componentMessage = "This panel is rendered by an imported Astro com
 
 MDX lets you write familiar Markdown while adding components and JavaScript
 expressions where ordinary Markdown is not enough. This guide introduces the
-syntax that is most useful when authoring an article in Mizuki.
+syntax that is most useful when authoring an article in a content-driven Astro site.
 
 :::note[What is MDX?]
 An `.mdx` file is still a Markdown document. Headings, lists, links, images,
@@ -114,7 +114,7 @@ This content is emphasized as a tip.
 ## Wiki Links
 
 An inline Wiki Link points to another article while keeping the sentence
-readable. For example, continue with [[guide|the Mizuki guide]].
+readable. For example, continue with [[guide|the content guide]].
 
 A standalone Wiki Link becomes an article card with its available metadata and
 cover image:
@@ -122,7 +122,7 @@ cover image:
 [[guide]]
 
 ```markdown
-Read [[guide|the Mizuki guide]] for more details.
+Read [[guide|the content guide]] for more details.
 
 [[guide]]
 ```
@@ -199,11 +199,11 @@ Relative links and absolute URLs that use the configured site origin are
 classified as internal. Links to other origins receive the external-link
 attributes configured by the theme.
 
-- Visit the [About page using an absolute site URL](https://mizuki.mysqil.com/about/).
+- Visit the [About page using a relative site URL](/about/).
 - Compare it with an [external reference](https://example.com/reference).
 
-You can normally use a relative path for internal content; the absolute example
-above simply demonstrates that both forms receive the same classification.
+Use relative paths for internal content. External origins such as
+https://example.com/ are classified separately by the theme.
 
 ## Writing Portable MDX
 
