@@ -17,15 +17,21 @@ html[data-layout-variant="post"] #toc-wrapper {
   display: none;
 }
 
+/* The reading rail grows with the post card instead of staying at 48rem, so a
+ * wide viewport no longer leaves prose stranded next to full-width code and
+ * tables. Every step starts at the previous step's value, keeping the rail
+ * continuous across both breakpoints. */
 @media (width >= 1920px) {
   html[data-layout-variant="post"] {
     --layout-page-width: clamp(104rem, 82vw, 132rem);
     --layout-sidebar-width: clamp(17.5rem, 14vw, 19rem);
+    --post-reading-width: clamp(48rem, 40vw, 64rem);
   }
 }
 
 @media (width >= 3200px) {
   html[data-layout-variant="post"] {
     --layout-page-width: clamp(132rem, 64vw, 152rem);
+    --post-reading-width: clamp(64rem, 20vw + 24rem, 72rem);
   }
 }

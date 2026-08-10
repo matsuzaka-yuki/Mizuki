@@ -353,6 +353,36 @@ describe("Page layout variant regressions", () => {
 		assert.ok(uhdPageWidth / 3840 >= 0.63);
 	});
 
+	it("grows the post reading rail with the wide-screen post card", () => {
+		assert.match(
+			responsiveLayoutStyles,
+			/@media \(width >= 1920px\)[\s\S]*?--post-reading-width:\s*clamp\(48rem, 40vw, 64rem\)/,
+		);
+		assert.match(
+			responsiveLayoutStyles,
+			/@media \(width >= 3200px\)[\s\S]*?--post-reading-width:\s*clamp\(64rem, 20vw \+ 24rem, 72rem\)/,
+		);
+
+		const readingWidth = (viewport) =>
+			viewport >= 3200
+				? Math.min(72 * 16, Math.max(64 * 16, viewport * 0.2 + 24 * 16))
+				: viewport >= 1920
+					? Math.min(64 * 16, Math.max(48 * 16, viewport * 0.4))
+					: 48 * 16;
+
+		assert.equal(readingWidth(1920), 48 * 16, "no jump at the first step");
+		assert.equal(readingWidth(3200), 64 * 16, "no jump at the second step");
+		assert.equal(readingWidth(2560), 64 * 16);
+		assert.equal(readingWidth(3840), 72 * 16);
+
+		for (const viewport of [1920, 2560, 3200, 3840]) {
+			assert.ok(
+				readingWidth(viewport) >= readingWidth(viewport - 320),
+				`the rail must not shrink as the viewport grows at ${viewport}px`,
+			);
+		}
+	});
+
 	it("keeps the global grid preference effective on article pages", () => {
 		assert.doesNotMatch(
 			gridScriptsSource,
