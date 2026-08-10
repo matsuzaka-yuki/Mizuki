@@ -9,6 +9,13 @@
   --layout-sidebar-width: 17.5rem;
 }
 
+/* A post keeps CardTOC as its sole persistent directory. FloatingTOC remains
+ * available on demand, while the external desktop directory stays available
+ * to other page variants. */
+html[data-layout-variant="post"] #toc-wrapper {
+  display: none;
+}
+
 @media (width >= 1920px) {
   html[data-layout-variant="post"] {
     --layout-page-width: 104rem;

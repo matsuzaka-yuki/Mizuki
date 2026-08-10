@@ -42,6 +42,14 @@ const gridLayoutUtilsSource = await readFile(
 	new URL("../src/utils/grid-layout-utils.ts", import.meta.url),
 	"utf8",
 );
+const cardTocSource = await readFile(
+	new URL("../src/components/widgets/card-toc/CardTOC.astro", import.meta.url),
+	"utf8",
+);
+const variablesSource = await readFile(
+	new URL("../src/styles/variables.styl", import.meta.url),
+	"utf8",
+);
 const markdownSource = await readFile(
 	new URL("../src/components/misc/Markdown.astro", import.meta.url),
 	"utf8",
@@ -263,6 +271,20 @@ describe("Page layout variant regressions", () => {
 		assert.match(
 			rightSidebarLayoutSource,
 			/if \(isPostPage\(\)\) \{\s*return "list"/,
+		);
+	});
+
+	it("keeps one persistent post TOC and shares the configured depth", () => {
+		assert.match(
+			responsiveLayoutStyles,
+			/html\[data-layout-variant="post"\] #toc-wrapper\s*\{\s*display:\s*none/,
+		);
+		assert.match(cardTocSource, /const tocDepth = siteConfig\.toc\.depth/);
+		assert.match(cardTocSource, /maxLevel,/);
+		assert.doesNotMatch(cardTocSource, /maxLevel:\s*3/);
+		assert.match(
+			variablesSource,
+			/--toc-width:\s*clamp\(0rem,[\s\S]*?var\(--layout-page-width\)[\s\S]*?22rem\)/,
 		);
 	});
 });

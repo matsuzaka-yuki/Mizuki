@@ -286,12 +286,12 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 	<!-- 侧边栏TOC模式 -->
 	{
 		siteConfig.toc.enable && siteConfig.toc.desktopSidebar && (
-			<div class="absolute w-full z-0 hidden 2xl:block">
+			<div class="absolute w-full z-0 hidden xl:block">
 				<div class="relative max-w-(--layout-page-width) mx-auto">
 					<div
 						id="toc-wrapper"
 						class:list={[
-							"hidden lg:block transition absolute top-0 w-(--toc-width) items-center",
+							"hidden xl:block transition absolute top-0 w-(--toc-width) items-center",
 							"-right-(--toc-width)",
 							{
 								"toc-hide":
