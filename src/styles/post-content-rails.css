@@ -2,46 +2,67 @@
  * Post reading and wide-content rails.
  *
  * Prose remains comfortable to read while intrinsically wide Markdown blocks
- * can use the rest of the post card without causing body-level overflow.
+ * extend from the reading edge to the post card's right content edge.
  */
-html[data-layout-variant="post"] #post-container {
-  container-type: inline-size;
-}
-
 html[data-layout-variant="post"] #post-container .markdown-content {
+  --post-reading-gutter: max(
+    0rem,
+    calc((100% - var(--post-reading-width)) / 2)
+  );
+
   width: 100%;
-  max-width: var(--post-reading-width) !important;
-  margin-inline: auto;
+  max-width: none !important;
+  margin-inline: 0;
 }
 
-@supports (width: 100cqi) {
-  html[data-layout-variant="post"] #post-container .markdown-content {
-    --post-reading-rail: min(var(--post-reading-width), 100cqi);
-    --post-wide-available-from-reading-start: calc(
-      (100cqi + var(--post-reading-rail)) / 2
-    );
-  }
+html[data-layout-variant="post"] #post-container .markdown-content > *,
+html[data-layout-variant="post"]
+  #post-container
+  .markdown-content
+  section
+  > * {
+  max-width: min(100%, var(--post-reading-width));
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
 
-  html[data-layout-variant="post"]
-    #post-container
-    .markdown-content
-    :is(
-      .table-wrapper,
-      .expressive-code:not(.rehype-code-group .expressive-code),
-      .rehype-code-group,
-      .katex-display,
-      .mermaid-diagram-container,
-      .image-grid
-    ) {
-    --post-wide-rail: min(
-      var(--post-wide-content-width),
-      var(--post-wide-available-from-reading-start)
-    );
+html[data-layout-variant="post"]
+  #post-container
+  .markdown-content
+  section {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
 
-    box-sizing: border-box;
-    width: var(--post-wide-rail);
-    max-width: none;
-    margin-inline-start: 0;
-    margin-inline-end: calc(100% - var(--post-wide-rail));
-  }
+html[data-layout-variant="post"]
+  #post-container
+  .markdown-content
+  > :is(
+    .table-wrapper,
+    .expressive-code,
+    .rehype-code-group,
+    .katex-display,
+    .mermaid-diagram-container,
+    .image-grid,
+    p:has(> .katex-display)
+  ),
+html[data-layout-variant="post"]
+  #post-container
+  .markdown-content
+  section
+  > :is(
+    .table-wrapper,
+    .expressive-code,
+    .rehype-code-group,
+    .katex-display,
+    .mermaid-diagram-container,
+    .image-grid,
+    p:has(> .katex-display)
+  ) {
+  box-sizing: border-box;
+  width: calc(100% - var(--post-reading-gutter));
+  max-width: none;
+  margin-inline-start: var(--post-reading-gutter);
+  margin-inline-end: 0;
 }

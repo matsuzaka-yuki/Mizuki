@@ -156,10 +156,19 @@ describe("Markdown layout regressions", () => {
 			"post rail styles must follow every Markdown rendering path",
 		);
 		assert.match(responsiveLayoutStyles, /--post-reading-width:\s*48rem/);
-		assert.match(responsiveLayoutStyles, /--post-wide-content-width:\s*72rem/);
 		assert.match(
 			postContentRailStyles,
-			/\.markdown-content\s*\{[\s\S]*?max-width:\s*var\(--post-reading-width\)\s*!important/,
+			/\.markdown-content\s*\{[\s\S]*?width:\s*100%;[\s\S]*?max-width:\s*none\s*!important/,
+			"the Markdown root must expose the whole post card to both rails",
+		);
+		assert.match(
+			postContentRailStyles,
+			/--post-reading-gutter:\s*max\([\s\S]*?calc\(\(100% - var\(--post-reading-width\)\) \/ 2\)[\s\S]*?\)/,
+		);
+		assert.match(
+			postContentRailStyles,
+			/\.markdown-content\s*>\s*\*,[\s\S]*?section[\s\S]*?>\s*\*\s*\{[\s\S]*?max-width:\s*min\(100%, var\(--post-reading-width\)\)/,
+			"ordinary Markdown blocks must remain on the bounded reading rail",
 		);
 
 		for (const wideContentClass of [
@@ -178,19 +187,13 @@ describe("Markdown layout regressions", () => {
 
 		assert.match(
 			postContentRailStyles,
-			/--post-wide-available-from-reading-start:\s*calc\([\s\S]*?100cqi \+ var\(--post-reading-rail\)[\s\S]*?\/ 2[\s\S]*?\)/,
-		);
-		assert.match(
-			postContentRailStyles,
-			/--post-wide-rail:\s*min\([\s\S]*?var\(--post-wide-content-width\),[\s\S]*?var\(--post-wide-available-from-reading-start\)[\s\S]*?\)/,
-		);
-		assert.match(
-			postContentRailStyles,
-			/margin-inline-start:\s*0;[\s\S]*?margin-inline-end:\s*calc\(100% - var\(--post-wide-rail\)\)/,
+			/width:\s*calc\(100% - var\(--post-reading-gutter\)\);[\s\S]*?margin-inline-start:\s*var\(--post-reading-gutter\);[\s\S]*?margin-inline-end:\s*0/,
+			"wide blocks must finish at the post card's right content edge",
 		);
 		assert.doesNotMatch(
 			postContentRailStyles,
-			/margin-inline:\s*calc\(\(100% - var\(--post-wide-rail\)\) \/ 2\)/,
+			/100cqi|--post-wide-content-width|--post-wide-rail/,
+			"wide rails must not depend on container-unit overflow from a narrow parent",
 		);
 	});
 });
