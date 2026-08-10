@@ -121,16 +121,18 @@ export function calculateGridLayout(
 	let desktopGridCols = "lg:grid-cols-1";
 	if (desktopShowLeftSidebar && desktopShowRightSidebar) {
 		desktopGridCols =
-			"lg:grid-cols-[var(--layout-sidebar-width)_1fr_var(--layout-sidebar-width)]";
+			"lg:grid-cols-[var(--layout-sidebar-width)_minmax(0,1fr)_var(--layout-sidebar-width)]";
 	} else if (desktopShowLeftSidebar) {
-		desktopGridCols = "lg:grid-cols-[var(--layout-sidebar-width)_1fr]";
+		desktopGridCols =
+			"lg:grid-cols-[var(--layout-sidebar-width)_minmax(0,1fr)]";
 	} else if (desktopShowRightSidebar) {
-		desktopGridCols = "lg:grid-cols-[1fr_var(--layout-sidebar-width)]";
+		desktopGridCols =
+			"lg:grid-cols-[minmax(0,1fr)_var(--layout-sidebar-width)]";
 	}
 
 	const gridCols = `
 		${mobileShowSidebar ? "grid-cols-1" : "grid-cols-1"}
-		${tabletAnySidebar ? "md:grid-cols-[var(--layout-sidebar-width)_1fr]" : "md:grid-cols-1"}
+		${tabletAnySidebar ? "md:grid-cols-[var(--layout-sidebar-width)_minmax(0,1fr)]" : "md:grid-cols-1"}
 		${desktopGridCols}
 	`
 		.trim()
@@ -168,7 +170,7 @@ export function calculateGridLayout(
 	}
 
 	const mainContentClass = `
-		transition-swup-fade overflow-hidden w-full
+		transition-swup-fade overflow-hidden min-w-0 w-full
 		col-span-1 row-start-1 row-end-2
 		${tabletAnySidebar ? "md:col-start-2 md:col-end-3" : "md:col-start-1 md:col-end-2"}
 		${desktopShowSidebar ? desktopMainPos : "lg:col-span-1"}

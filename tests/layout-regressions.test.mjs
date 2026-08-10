@@ -297,6 +297,14 @@ describe("Page layout variant regressions", () => {
 			/--layout-sidebar-width:\s*clamp\(17\.5rem, 14vw, 19rem\)/,
 		);
 		assert.match(gridLayoutUtilsSource, /var\(--layout-sidebar-width\)/);
+		assert.match(
+			gridLayoutUtilsSource,
+			/grid-cols-\[var\(--layout-sidebar-width\)_minmax\(0,1fr\)_var\(--layout-sidebar-width\)\]/,
+		);
+		assert.match(
+			gridLayoutUtilsSource,
+			/transition-swup-fade overflow-hidden min-w-0 w-full/,
+		);
 	});
 
 	it("does not let the post-list grid preference override article pages", () => {
