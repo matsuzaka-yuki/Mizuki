@@ -10,6 +10,18 @@ const headTagsSource = await readFile(
 	new URL("../src/layouts/partials/HeadTags.astro", import.meta.url),
 	"utf8",
 );
+const gridScriptsSource = await readFile(
+	new URL("../src/layouts/partials/GridScripts.astro", import.meta.url),
+	"utf8",
+);
+const mainGridLayoutSource = await readFile(
+	new URL("../src/layouts/MainGridLayout.astro", import.meta.url),
+	"utf8",
+);
+const rightSidebarLayoutSource = await readFile(
+	new URL("../src/scripts/right-sidebar-layout.js", import.meta.url),
+	"utf8",
+);
 const siteConfigSource = await readFile(
 	new URL("../src/config/siteConfig.ts", import.meta.url),
 	"utf8",
@@ -198,6 +210,31 @@ describe("Page scaling regressions", () => {
 			headTagsSource,
 			/Math\.max\(0\.85, currentWidth \/ targetWidth\)/,
 			"opt-in legacy scaling must use one continuous clamp",
+		);
+	});
+});
+
+describe("Page layout variant regressions", () => {
+	it("keeps the post layout variant synchronized across Swup navigation", () => {
+		assert.match(layoutSource, /data-layout-variant=\{layoutVariant\}/);
+		assert.match(
+			mainGridLayoutSource,
+			/const layoutVariant = postSlug \? "post" : isHomePage \? "home" : "default"/,
+		);
+		assert.match(
+			gridScriptsSource,
+			/document\.addEventListener\("swup:page:view", function \(\) \{\s*syncLayoutVariant\(\)/,
+		);
+	});
+
+	it("does not let the post-list grid preference override article pages", () => {
+		assert.match(
+			gridScriptsSource,
+			/document\.documentElement\.dataset\.layoutVariant === "post"/,
+		);
+		assert.match(
+			rightSidebarLayoutSource,
+			/if \(isPostPage\(\)\) \{\s*return "list"/,
 		);
 	});
 });

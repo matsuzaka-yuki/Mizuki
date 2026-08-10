@@ -9,7 +9,19 @@ function isLayoutSwitchEnabled() {
 	return document.documentElement.getAttribute("data-post-list-layout-enabled") !== "false";
 }
 
+function isPostPage() {
+	return (
+		document.getElementById("post-container") !== null ||
+		document.documentElement.dataset.layoutVariant === "post"
+	);
+}
+
 function getPostListLayout() {
+	// 文章页使用独立网格，不能继承首页文章列表的卡片模式。
+	if (isPostPage()) {
+		return "list";
+	}
+
 	return isLayoutSwitchEnabled() ? (localStorage.getItem("postListLayout") || "list") : "list";
 }
 

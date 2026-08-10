@@ -65,6 +65,7 @@ const hasBannerLink = !!siteConfig.banner.credit.url;
 
 // 检查是否为首页
 const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
+const layoutVariant = postSlug ? "post" : isHomePage ? "home" : "default";
 // 手机端非首页不显示banner的CSS类
 const mobileNonHomeBannerClass = !isHomePage ? "mobile-hide-banner" : "";
 
@@ -111,6 +112,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 	setOGTypeArticle={setOGTypeArticle}
 	postSlug={postSlug}
 	coverImage={coverImage}
+	layoutVariant={layoutVariant}
 >
 	<GridScripts
 		navbarTransparentMode={siteConfig.banner?.navbar?.transparentMode ||
@@ -165,6 +167,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 				id="main-grid"
 				class={`transition duration-700 w-full left-0 right-0 grid ${gridCols} grid-rows-none md:grid-rows-[auto] mx-auto gap-4 px-2 md:px-4 ${!mobileShowSidebar || !hasMobileDrawerComponents ? "mobile-no-sidebar" : ""} ${hasRightSidebarComponents ? "mobile-both-sidebar" : ""}`}
 				data-layout-mode={defaultPostListLayout}
+				data-layout-variant={layoutVariant}
 			>
 				<!-- Banner image credit -->
 				{
