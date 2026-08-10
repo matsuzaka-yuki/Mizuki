@@ -20,13 +20,13 @@ html[data-layout-variant="post"] #toc-wrapper {
 
 @media (width >= 1920px) {
   html[data-layout-variant="post"] {
-    --layout-page-width: 104rem;
+    --layout-page-width: clamp(104rem, 82vw, 132rem);
     --layout-sidebar-width: clamp(17.5rem, 14vw, 19rem);
   }
 }
 
-@media (width >= 2560px) {
+@media (width >= 3200px) {
   html[data-layout-variant="post"] {
-    --layout-page-width: 112rem;
+    --layout-page-width: clamp(132rem, 64vw, 152rem);
   }
 }

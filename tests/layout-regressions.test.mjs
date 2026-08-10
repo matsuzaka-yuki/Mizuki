@@ -286,11 +286,11 @@ describe("Page layout variant regressions", () => {
 		);
 		assert.match(
 			responsiveLayoutStyles,
-			/@media \(width >= 1920px\)[\s\S]*?html\[data-layout-variant="post"\][\s\S]*?--layout-page-width:\s*104rem/,
+			/@media \(width >= 1920px\)[\s\S]*?html\[data-layout-variant="post"\][\s\S]*?--layout-page-width:\s*clamp\(104rem, 82vw, 132rem\)/,
 		);
 		assert.match(
 			responsiveLayoutStyles,
-			/@media \(width >= 2560px\)[\s\S]*?--layout-page-width:\s*112rem/,
+			/@media \(width >= 3200px\)[\s\S]*?--layout-page-width:\s*clamp\(132rem, 64vw, 152rem\)/,
 		);
 		assert.match(
 			responsiveLayoutStyles,
@@ -305,6 +305,11 @@ describe("Page layout variant regressions", () => {
 			gridLayoutUtilsSource,
 			/transition-swup-fade overflow-hidden min-w-0 w-full/,
 		);
+
+		const qhdPageWidth = Math.min(132 * 16, Math.max(104 * 16, 2560 * 0.82));
+		const uhdPageWidth = Math.min(152 * 16, Math.max(132 * 16, 3840 * 0.64));
+		assert.ok(qhdPageWidth / 2560 >= 0.8);
+		assert.ok(uhdPageWidth / 3840 >= 0.63);
 	});
 
 	it("keeps the global grid preference effective on article pages", () => {
