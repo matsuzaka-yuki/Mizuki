@@ -59,7 +59,8 @@ export function initAnimeLayoutHandler(options: LayoutHandlerOptions) {
 				"main-grid",
 			) as HTMLElement | null;
 			if (mainGrid) {
-				mainGrid.style.gridTemplateColumns = "17.5rem 1fr";
+				mainGrid.style.gridTemplateColumns =
+					"var(--layout-sidebar-width) minmax(0, 1fr)";
 				mainGrid.classList.add("two-column-layout");
 			}
 		} else {

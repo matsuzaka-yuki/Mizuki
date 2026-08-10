@@ -120,16 +120,17 @@ export function calculateGridLayout(
 	// 动态网格布局类名 - 根据侧边栏模式和是否有组件调整列宽
 	let desktopGridCols = "lg:grid-cols-1";
 	if (desktopShowLeftSidebar && desktopShowRightSidebar) {
-		desktopGridCols = "lg:grid-cols-[17.5rem_1fr_17.5rem]";
+		desktopGridCols =
+			"lg:grid-cols-[var(--layout-sidebar-width)_1fr_var(--layout-sidebar-width)]";
 	} else if (desktopShowLeftSidebar) {
-		desktopGridCols = "lg:grid-cols-[17.5rem_1fr]";
+		desktopGridCols = "lg:grid-cols-[var(--layout-sidebar-width)_1fr]";
 	} else if (desktopShowRightSidebar) {
-		desktopGridCols = "lg:grid-cols-[1fr_17.5rem]";
+		desktopGridCols = "lg:grid-cols-[1fr_var(--layout-sidebar-width)]";
 	}
 
 	const gridCols = `
 		${mobileShowSidebar ? "grid-cols-1" : "grid-cols-1"}
-		${tabletAnySidebar ? "md:grid-cols-[17.5rem_1fr]" : "md:grid-cols-1"}
+		${tabletAnySidebar ? "md:grid-cols-[var(--layout-sidebar-width)_1fr]" : "md:grid-cols-1"}
 		${desktopGridCols}
 	`
 		.trim()
@@ -139,8 +140,8 @@ export function calculateGridLayout(
 	const sidebarClass = `
 		onload-animation
 		${mobileShowSidebar && hasMobileDrawerComponents ? "block" : "hidden"}
-		${tabletShowLeftSidebar ? "md:block md:mb-4 md:max-w-[17.5rem]" : "md:hidden"}
-		${desktopShowLeftSidebar ? "lg:block lg:mb-4 lg:row-start-1 lg:row-end-2 lg:max-w-[17.5rem] lg:col-start-1 lg:col-end-2" : "lg:hidden"}
+		${tabletShowLeftSidebar ? "md:block md:mb-4 md:max-w-(--layout-sidebar-width)" : "md:hidden"}
+		${desktopShowLeftSidebar ? "lg:block lg:mb-4 lg:row-start-1 lg:row-end-2 lg:max-w-(--layout-sidebar-width) lg:col-start-1 lg:col-end-2" : "lg:hidden"}
 	`
 		.trim()
 		.replace(/\s+/g, " ");
@@ -149,8 +150,8 @@ export function calculateGridLayout(
 	const rightSidebarClass = `
 		onload-animation
 		hidden
-		${tabletShowRightSidebar ? "md:block md:mb-4 md:max-w-[17.5rem]" : "md:hidden"}
-		${desktopShowRightSidebar ? `lg:block lg:self-start lg:h-fit lg:mb-4 lg:max-w-[17.5rem] ${desktopShowLeftSidebar ? "lg:col-start-3 lg:col-end-4" : "lg:col-start-2 lg:col-end-3"} lg:col-span-1` : "lg:hidden"}
+		${tabletShowRightSidebar ? "md:block md:mb-4 md:max-w-(--layout-sidebar-width)" : "md:hidden"}
+		${desktopShowRightSidebar ? `lg:block lg:self-start lg:h-fit lg:mb-4 lg:max-w-(--layout-sidebar-width) ${desktopShowLeftSidebar ? "lg:col-start-3 lg:col-end-4" : "lg:col-start-2 lg:col-end-3"} lg:col-span-1` : "lg:hidden"}
 		${initialRightSidebarHidden ? "hidden-in-grid-mode" : ""}
 	`
 		.trim()

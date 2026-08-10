@@ -177,7 +177,8 @@ const emptyMessage = i18n(I18nKey.animeEmpty);
 					}
 					const mainGrid = document.getElementById("main-grid");
 					if (mainGrid) {
-						mainGrid.style.gridTemplateColumns = "17.5rem 1fr";
+						mainGrid.style.gridTemplateColumns =
+							"var(--layout-sidebar-width) minmax(0, 1fr)";
 						mainGrid.classList.add("two-column-layout");
 					}
 				} else {

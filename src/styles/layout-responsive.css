@@ -1,0 +1,23 @@
+/**
+ * Shared layout rails.
+ *
+ * The home and other index pages retain the original 90rem composition. Post
+ * pages opt into additional room only when the CSS viewport is genuinely wide.
+ */
+:root {
+  --layout-page-width: var(--page-width);
+  --layout-sidebar-width: 17.5rem;
+}
+
+@media (width >= 1920px) {
+  html[data-layout-variant="post"] {
+    --layout-page-width: 104rem;
+    --layout-sidebar-width: clamp(17.5rem, 14vw, 19rem);
+  }
+}
+
+@media (width >= 2560px) {
+  html[data-layout-variant="post"] {
+    --layout-page-width: 112rem;
+  }
+}

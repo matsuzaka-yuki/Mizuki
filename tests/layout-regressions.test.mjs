@@ -34,6 +34,14 @@ const mainStyles = await readFile(
 	new URL("../src/styles/main.css", import.meta.url),
 	"utf8",
 );
+const responsiveLayoutStyles = await readFile(
+	new URL("../src/styles/layout-responsive.css", import.meta.url),
+	"utf8",
+);
+const gridLayoutUtilsSource = await readFile(
+	new URL("../src/utils/grid-layout-utils.ts", import.meta.url),
+	"utf8",
+);
 const markdownSource = await readFile(
 	new URL("../src/components/misc/Markdown.astro", import.meta.url),
 	"utf8",
@@ -225,6 +233,26 @@ describe("Page layout variant regressions", () => {
 			gridScriptsSource,
 			/document\.addEventListener\("swup:page:view", function \(\) \{\s*syncLayoutVariant\(\)/,
 		);
+	});
+
+	it("expands only post pages with bounded wide-screen dimensions", () => {
+		assert.match(
+			responsiveLayoutStyles,
+			/:root\s*\{[\s\S]*?--layout-page-width:\s*var\(--page-width\)/,
+		);
+		assert.match(
+			responsiveLayoutStyles,
+			/@media \(width >= 1920px\)[\s\S]*?html\[data-layout-variant="post"\][\s\S]*?--layout-page-width:\s*104rem/,
+		);
+		assert.match(
+			responsiveLayoutStyles,
+			/@media \(width >= 2560px\)[\s\S]*?--layout-page-width:\s*112rem/,
+		);
+		assert.match(
+			responsiveLayoutStyles,
+			/--layout-sidebar-width:\s*clamp\(17\.5rem, 14vw, 19rem\)/,
+		);
+		assert.match(gridLayoutUtilsSource, /var\(--layout-sidebar-width\)/);
 	});
 
 	it("does not let the post-list grid preference override article pages", () => {
