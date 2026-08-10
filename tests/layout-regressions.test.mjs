@@ -307,14 +307,15 @@ describe("Page layout variant regressions", () => {
 		);
 	});
 
-	it("does not let the post-list grid preference override article pages", () => {
-		assert.match(
+	it("keeps the global grid preference effective on article pages", () => {
+		assert.doesNotMatch(
 			gridScriptsSource,
-			/document\.documentElement\.dataset\.layoutVariant === "post"/,
+			/function getCurrentPostListLayout\(\) \{[\s\S]*?layoutVariant === "post"[\s\S]*?\n\t\}/,
 		);
+		assert.doesNotMatch(rightSidebarLayoutSource, /function isPostPage\(/);
 		assert.match(
 			rightSidebarLayoutSource,
-			/if \(isPostPage\(\)\) \{\s*return "list"/,
+			/function getPostListLayout\(\) \{\s*return isLayoutSwitchEnabled\(\)/,
 		);
 		assert.match(
 			rightSidebarLayoutSource,

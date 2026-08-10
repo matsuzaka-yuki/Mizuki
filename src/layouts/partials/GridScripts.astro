@@ -78,10 +78,6 @@ const {
 	}
 
 	function getCurrentPostListLayout() {
-		if (document.documentElement.dataset.layoutVariant === "post") {
-			return "list";
-		}
-
 		const savedLayout = postListLayoutEnabled
 			? localStorage.getItem("postListLayout")
 			: null;
