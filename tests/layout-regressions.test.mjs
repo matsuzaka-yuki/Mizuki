@@ -6,6 +6,14 @@ const layoutSource = await readFile(
 	new URL("../src/layouts/Layout.astro", import.meta.url),
 	"utf8",
 );
+const headTagsSource = await readFile(
+	new URL("../src/layouts/partials/HeadTags.astro", import.meta.url),
+	"utf8",
+);
+const siteConfigSource = await readFile(
+	new URL("../src/config/siteConfig.ts", import.meta.url),
+	"utf8",
+);
 const bannerStyles = await readFile(
 	new URL("../src/styles/banner.css", import.meta.url),
 	"utf8",
@@ -171,5 +179,25 @@ describe("Fullscreen banner layout regressions", () => {
 				`${stickyId} must not use the unscoped banner offset compensation`,
 			);
 		}
+	});
+});
+
+describe("Page scaling regressions", () => {
+	it("keeps root-font scaling opt-in and continuous across desktop widths", () => {
+		assert.match(
+			siteConfigSource,
+			/pageScaling:\s*\{[\s\S]*?enable:\s*false/,
+			"responsive layout must not depend on root-font scaling by default",
+		);
+		assert.doesNotMatch(
+			headTagsSource,
+			/window\.innerWidth\s*<=\s*1280/,
+			"legacy scaling must not jump between 1280px and 1281px",
+		);
+		assert.match(
+			headTagsSource,
+			/Math\.max\(0\.85, currentWidth \/ targetWidth\)/,
+			"opt-in legacy scaling must use one continuous clamp",
+		);
 	});
 });

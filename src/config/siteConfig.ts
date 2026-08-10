@@ -42,9 +42,9 @@ export const siteConfig: SiteConfig = {
 		logo: "assets/home/default-logo.webp",
 	},
 
-	// 页面自动缩放配置
+	// 旧版页面自动缩放配置。默认关闭，页面尺寸优先交由响应式布局处理。
 	pageScaling: {
-		enable: true, // 是否开启自动缩放
+		enable: false, // 兼容旧站点的可选缩放；不建议通过根字号控制整体布局
 		targetWidth: 2000, // 目标宽度，低于此宽度时开始缩放
 	},
 

@@ -10,7 +10,6 @@ interface Props {
 	defaultPostListLayout?: string;
 	BANNER_HEIGHT?: number;
 	BANNER_HEIGHT_FULLSCREEN?: number;
-	pageScaling?: { enable: boolean; targetWidth?: number };
 	wavesEnabled?: boolean;
 	bannerTitleEnabled?: boolean;
 	wallpaperEnabled?: boolean;
@@ -23,7 +22,6 @@ const {
 	defaultPostListLayout = "list",
 	BANNER_HEIGHT = 35,
 	BANNER_HEIGHT_FULLSCREEN = 100,
-	pageScaling = { enable: false },
 	wavesEnabled = true,
 	bannerTitleEnabled = true,
 	wallpaperEnabled = true,
@@ -40,7 +38,6 @@ const {
 		defaultPostListLayout,
 		BANNER_HEIGHT,
 		BANNER_HEIGHT_FULLSCREEN,
-		pageScaling,
 		wavesEnabled,
 		bannerTitleEnabled,
 		wallpaperEnabled,
