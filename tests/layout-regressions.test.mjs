@@ -308,6 +308,18 @@ describe("Page layout variant regressions", () => {
 			rightSidebarLayoutSource,
 			/if \(isPostPage\(\)\) \{\s*return "list"/,
 		);
+		assert.match(
+			rightSidebarLayoutSource,
+			/window\.addEventListener\("layoutChange", \(\) => \{\s*applyCurrentPageLayout\(\)/,
+		);
+		assert.match(
+			rightSidebarLayoutSource,
+			/event\.key === "postListLayout"\) \{\s*applyCurrentPageLayout\(\)/,
+		);
+		assert.doesNotMatch(
+			rightSidebarLayoutSource,
+			/const layout = event\.detail\.layout/,
+		);
 	});
 
 	it("keeps one persistent post TOC and shares the configured depth", () => {
