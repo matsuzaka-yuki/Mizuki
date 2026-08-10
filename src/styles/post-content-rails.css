@@ -1,35 +1,28 @@
 /**
  * Post reading and wide-content rails.
  *
- * Prose remains comfortable to read while intrinsically wide Markdown blocks
- * extend from the reading edge to the post card's right content edge.
+ * Prose and wide blocks share the post card's left content edge. Only direct
+ * children of the document root or generated Markdown sections opt into these
+ * rails, so nested lists, blockquotes, and components keep their indentation.
  */
 html[data-layout-variant="post"] #post-container .markdown-content {
-  --post-reading-gutter: max(
-    0rem,
-    calc((100% - var(--post-reading-width)) / 2)
-  );
-
   width: 100%;
   max-width: none !important;
   margin-inline: 0;
 }
 
-html[data-layout-variant="post"] #post-container .markdown-content > *,
 html[data-layout-variant="post"]
   #post-container
-  .markdown-content
-  section
+  :where(.markdown-content, .markdown-section)
   > * {
   max-width: min(100%, var(--post-reading-width));
-  margin-inline-start: auto;
+  margin-inline-start: 0;
   margin-inline-end: auto;
 }
 
 html[data-layout-variant="post"]
   #post-container
-  .markdown-content
-  section {
+  .markdown-section {
   width: 100%;
   max-width: none;
   margin-inline: 0;
@@ -37,20 +30,7 @@ html[data-layout-variant="post"]
 
 html[data-layout-variant="post"]
   #post-container
-  .markdown-content
-  > :is(
-    .table-wrapper,
-    .expressive-code,
-    .rehype-code-group,
-    .katex-display,
-    .mermaid-diagram-container,
-    .image-grid,
-    p:has(> .katex-display)
-  ),
-html[data-layout-variant="post"]
-  #post-container
-  .markdown-content
-  section
+  :where(.markdown-content, .markdown-section)
   > :is(
     .table-wrapper,
     .expressive-code,
@@ -61,8 +41,8 @@ html[data-layout-variant="post"]
     p:has(> .katex-display)
   ) {
   box-sizing: border-box;
-  width: calc(100% - var(--post-reading-gutter));
+  width: 100%;
   max-width: none;
-  margin-inline-start: var(--post-reading-gutter);
+  margin-inline-start: 0;
   margin-inline-end: 0;
 }

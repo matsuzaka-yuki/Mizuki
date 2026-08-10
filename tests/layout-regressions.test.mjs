@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { describe, it } from "node:test";
+import { remarkMarkSectionized } from "../src/plugins/remark-mark-sectionized.mjs";
 
 const layoutSource = await readFile(
 	new URL("../src/layouts/Layout.astro", import.meta.url),
@@ -163,12 +164,13 @@ describe("Markdown layout regressions", () => {
 		);
 		assert.match(
 			postContentRailStyles,
-			/--post-reading-gutter:\s*max\([\s\S]*?calc\(\(100% - var\(--post-reading-width\)\) \/ 2\)[\s\S]*?\)/,
+			/:where\(\.markdown-content, \.markdown-section\)[\s\S]*?>\s*\*\s*\{[\s\S]*?max-width:\s*min\(100%, var\(--post-reading-width\)\)[\s\S]*?margin-inline-start:\s*0;[\s\S]*?margin-inline-end:\s*auto/,
+			"ordinary Markdown blocks must stay on a left-aligned reading rail",
 		);
 		assert.match(
 			postContentRailStyles,
-			/\.markdown-content\s*>\s*\*,[\s\S]*?section[\s\S]*?>\s*\*\s*\{[\s\S]*?max-width:\s*min\(100%, var\(--post-reading-width\)\)/,
-			"ordinary Markdown blocks must remain on the bounded reading rail",
+			/\.markdown-section\s*\{[\s\S]*?width:\s*100%;[\s\S]*?max-width:\s*none;[\s\S]*?margin-inline:\s*0/,
+			"generated section wrappers must not add another reading-rail indent",
 		);
 
 		for (const wideContentClass of [
@@ -187,14 +189,38 @@ describe("Markdown layout regressions", () => {
 
 		assert.match(
 			postContentRailStyles,
-			/width:\s*calc\(100% - var\(--post-reading-gutter\)\);[\s\S]*?margin-inline-start:\s*var\(--post-reading-gutter\);[\s\S]*?margin-inline-end:\s*0/,
-			"wide blocks must finish at the post card's right content edge",
+			/:where\(\.markdown-content, \.markdown-section\)[\s\S]*?>\s*:is\([\s\S]*?\)\s*\{[\s\S]*?width:\s*100%;[\s\S]*?margin-inline-start:\s*0;[\s\S]*?margin-inline-end:\s*0/,
+			"only direct document-flow blocks may occupy the full wide rail",
 		);
 		assert.doesNotMatch(
 			postContentRailStyles,
-			/100cqi|--post-wide-content-width|--post-wide-rail/,
-			"wide rails must not depend on container-unit overflow from a narrow parent",
+			/\.markdown-content\s+section|section\s*>\s*:is/,
+			"raw or nested section elements must not opt into document rails",
 		);
+	});
+
+	it("marks only remark-sectionize document sections", () => {
+		const sectionized = {
+			type: "section",
+			data: {
+				hName: "section",
+				hProperties: { className: ["existing-section-class"] },
+			},
+			children: [],
+		};
+		const authoredHtml = {
+			type: "html",
+			value: "<section><pre>keep local indentation</pre></section>",
+		};
+		const tree = { type: "root", children: [sectionized, authoredHtml] };
+
+		remarkMarkSectionized()(tree);
+
+		assert.deepEqual(sectionized.data.hProperties.className, [
+			"existing-section-class",
+			"markdown-section",
+		]);
+		assert.equal(authoredHtml.data, undefined);
 	});
 });
 
