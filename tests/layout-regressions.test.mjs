@@ -58,6 +58,10 @@ const markdownExtendStyles = await readFile(
 	new URL("../src/styles/markdown-extend.styl", import.meta.url),
 	"utf8",
 );
+const postContentRailStyles = await readFile(
+	new URL("../src/styles/post-content-rails.css", import.meta.url),
+	"utf8",
+);
 const encryptorSource = await readFile(
 	new URL("../src/components/features/auth/Encryptor.astro", import.meta.url),
 	"utf8",
@@ -143,6 +147,38 @@ describe("Markdown layout regressions", () => {
 			markdownExtendStyles,
 			/\.bdm-title\s+[\s\S]*?margin-bottom:\s*-/,
 			"negative title margins pull marginless content such as tables into the title",
+		);
+	});
+
+	it("separates the post reading rail from intrinsically wide content", () => {
+		assert.ok(
+			markdownSource.includes('import "@/styles/post-content-rails.css";'),
+			"post rail styles must follow every Markdown rendering path",
+		);
+		assert.match(responsiveLayoutStyles, /--post-reading-width:\s*48rem/);
+		assert.match(responsiveLayoutStyles, /--post-wide-content-width:\s*72rem/);
+		assert.match(
+			postContentRailStyles,
+			/\.markdown-content\s*\{[\s\S]*?max-width:\s*var\(--post-reading-width\)\s*!important/,
+		);
+
+		for (const wideContentClass of [
+			"table-wrapper",
+			"expressive-code",
+			"rehype-code-group",
+			"katex-display",
+			"mermaid-diagram-container",
+			"image-grid",
+		]) {
+			assert.ok(
+				postContentRailStyles.includes(`.${wideContentClass}`),
+				`${wideContentClass} must opt into the wide-content rail`,
+			);
+		}
+
+		assert.match(
+			postContentRailStyles,
+			/--post-wide-rail:\s*min\(var\(--post-wide-content-width\), 100cqi\)/,
 		);
 	});
 });
