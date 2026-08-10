@@ -55,6 +55,12 @@ export interface SiteConfig {
 		};
 	};
 
+	// 文章页超宽屏布局配置
+	ultrawidePostLayout?: {
+		enable: boolean; // 访客未手动切换时的初始状态
+		allowSwitch?: boolean; // 是否在设置面板中显示开关
+	};
+
 	// 顶栏标题配置
 	navbarTitle?: {
 		mode?: "text-icon" | "logo"; // 显示模式："text-icon" 显示图标+文本，"logo" 仅显示Logo
@@ -63,9 +69,9 @@ export interface SiteConfig {
 		logo?: string; // 网站Logo图片路径
 	};
 
-	// 页面自动缩放配置
+	// 旧版页面自动缩放配置
 	pageScaling?: {
-		enable: boolean; // 是否开启自动缩放
+		enable: boolean; // 默认关闭；启用时保留旧版根字号缩放行为
 		targetWidth?: number; // 目标宽度，低于此宽度时开始缩放
 	};
 

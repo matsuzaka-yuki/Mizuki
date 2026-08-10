@@ -15,6 +15,7 @@ import {
 	getDefaultOverlayCardOpacity,
 	getDefaultOverlayOpacity,
 	getDefaultSakuraEnabled,
+	getDefaultUltrawidePostLayout,
 	getDefaultWavesEnabled,
 	getHue,
 	getStoredBannerTitleEnabled,
@@ -22,6 +23,7 @@ import {
 	getStoredOverlayCardOpacity,
 	getStoredOverlayOpacity,
 	getStoredSakuraEnabled,
+	getStoredUltrawidePostLayout,
 	getStoredWallpaperMode,
 	getStoredWavesEnabled,
 	setBannerTitleEnabled,
@@ -30,6 +32,7 @@ import {
 	setOverlayCardOpacity,
 	setOverlayOpacity,
 	setSakuraEnabled,
+	setUltrawidePostLayout,
 	setWallpaperMode,
 	setWavesEnabled,
 } from "@utils/setting-utils";
@@ -80,6 +83,9 @@ const hasBannerSettings = isWavesSwitchable || isBannerTitleSwitchable;
 const isSakuraSwitchable =
 	sakuraConfig.enable && (sakuraConfig.switchable ?? false);
 
+const isUltrawidePostLayoutSwitchable =
+	siteConfig.ultrawidePostLayout?.allowSwitch ?? true;
+
 const showModeValue = siteConfig.wallpaperMode.showModeSwitchOnMobile;
 let isMobile = $state(false);
 
@@ -97,7 +103,8 @@ const hasAnyContent = $derived(
 		allowLayoutSwitch ||
 		hasOverlaySettings ||
 		hasBannerSettings ||
-		isSakuraSwitchable,
+		isSakuraSwitchable ||
+		isUltrawidePostLayoutSwitchable,
 );
 
 let hue = $state(getHue());
@@ -116,6 +123,7 @@ let bannerTitleEnabled = $state(getDefaultBannerTitleEnabled());
 const defaultBannerTitleEnabled = getDefaultBannerTitleEnabled();
 let sakuraEnabled = $state(getDefaultSakuraEnabled());
 const defaultSakuraEnabled = getDefaultSakuraEnabled();
+let ultrawidePostLayout = $state(getDefaultUltrawidePostLayout());
 
 let overlaySettingsIsDefault = $derived(
 	(!isOverlayOpacitySwitchable || overlayOpacity === defaultOverlayOpacity) &&
@@ -198,6 +206,11 @@ function toggleSakuraEnabled() {
 	setSakuraEnabled(sakuraEnabled);
 }
 
+function toggleUltrawidePostLayout() {
+	ultrawidePostLayout = !ultrawidePostLayout;
+	setUltrawidePostLayout(ultrawidePostLayout);
+}
+
 function switchWallpaperMode(newMode: WALLPAPER_MODE) {
 	wallpaperMode = newMode;
 	setWallpaperMode(newMode);
@@ -248,6 +261,7 @@ onMount(() => {
 	wavesEnabled = getStoredWavesEnabled();
 	bannerTitleEnabled = getStoredBannerTitleEnabled();
 	sakuraEnabled = getStoredSakuraEnabled();
+	ultrawidePostLayout = getStoredUltrawidePostLayout();
 
 	const savedLayout = siteConfig.postListLayout?.enable
 		? sessionStorage.getItem("postListLayout") ||
@@ -638,6 +652,38 @@ $effect(() => {
 					{#if currentLayout === "grid"}
 						<Icon icon="material-symbols:check-circle" class="text-[1rem] shrink-0 text-(--primary)" />
 					{/if}
+				</button>
+			</div>
+		</div>
+	{/if}
+
+	{#if isUltrawidePostLayoutSwitchable}
+		<div class="mt-2 mb-2">
+			<div
+				class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+				before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+				before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+			>
+				{i18n(I18nKey.settingsFeatures)}
+			</div>
+			<div class="space-y-1">
+				<button
+					class="w-full btn-regular rounded-md py-2 px-3 flex items-center gap-3 text-left active:scale-95 transition-all relative overflow-hidden"
+					class:bg-(--btn-regular-bg-hover)={ultrawidePostLayout}
+					onclick={toggleUltrawidePostLayout}
+				>
+					<Icon icon="material-symbols:width-wide-outline" class="text-[1.25rem] shrink-0" />
+					<span class="flex-1">
+						<span class="block text-sm">{i18n(I18nKey.ultrawidePostLayout)}</span>
+						<span class="block text-xs opacity-60">{i18n(I18nKey.ultrawidePostLayoutHint)}</span>
+					</span>
+					<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
+						class:bg-(--primary)={ultrawidePostLayout}
+						class:bg-(--btn-regular-bg-active)={!ultrawidePostLayout}>
+						<div class="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200"
+							class:left-0.5={!ultrawidePostLayout}
+							class:left-5={ultrawidePostLayout}></div>
+					</div>
 				</button>
 			</div>
 		</div>

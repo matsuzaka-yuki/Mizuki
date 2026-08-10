@@ -325,6 +325,8 @@ export const zh_CN: Translation = {
 	[Key.postListLayout]: "文章布局",
 	[Key.postListLayoutList]: "列表",
 	[Key.postListLayoutGrid]: "网格",
+	[Key.ultrawidePostLayout]: "宽屏文章布局",
+	[Key.ultrawidePostLayoutHint]: "在 2K 及以上视口加宽文章页",
 	[Key.resetAll]: "全部重置",
 	[Key.settingsThemeColor]: "主题色",
 	[Key.settingsWallpaper]: "壁纸",
@@ -332,6 +334,7 @@ export const zh_CN: Translation = {
 	[Key.settingsBanner]: "横幅选项",
 	[Key.settingsEffects]: "特效",
 	[Key.settingsLayout]: "布局",
+	[Key.settingsFeatures]: "功能",
 
 	// 站点统计
 	[Key.siteStats]: "站点统计",

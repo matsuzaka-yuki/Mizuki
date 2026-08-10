@@ -10,7 +10,6 @@ interface Props {
 	defaultPostListLayout?: string;
 	BANNER_HEIGHT?: number;
 	BANNER_HEIGHT_FULLSCREEN?: number;
-	pageScaling?: { enable: boolean; targetWidth?: number };
 	wavesEnabled?: boolean;
 	bannerTitleEnabled?: boolean;
 	wallpaperEnabled?: boolean;
@@ -23,7 +22,6 @@ const {
 	defaultPostListLayout = "list",
 	BANNER_HEIGHT = 35,
 	BANNER_HEIGHT_FULLSCREEN = 100,
-	pageScaling = { enable: false },
 	wavesEnabled = true,
 	bannerTitleEnabled = true,
 	wallpaperEnabled = true,
@@ -40,7 +38,6 @@ const {
 		defaultPostListLayout,
 		BANNER_HEIGHT,
 		BANNER_HEIGHT_FULLSCREEN,
-		pageScaling,
 		wavesEnabled,
 		bannerTitleEnabled,
 		wallpaperEnabled,
@@ -58,6 +55,33 @@ const {
 		const value = localStorage.getItem(key);
 		const parsed = Number(value ?? fallback);
 		return Number.isFinite(parsed) ? parsed : fallback;
+	}
+
+	function syncLayoutVariant() {
+		const pageData = document.getElementById("page-overlay-data");
+		let layoutVariant = "default";
+
+		if (pageData?.dataset.isPost === "true") {
+			layoutVariant = "post";
+		} else if (pageData?.dataset.isHome === "true") {
+			layoutVariant = "home";
+		}
+
+		document.documentElement.dataset.layoutVariant = layoutVariant;
+
+		const mainGrid = document.getElementById("main-grid");
+		if (mainGrid) {
+			mainGrid.dataset.layoutVariant = layoutVariant;
+		}
+
+		return layoutVariant;
+	}
+
+	function getCurrentPostListLayout() {
+		const savedLayout = postListLayoutEnabled
+			? localStorage.getItem("postListLayout")
+			: null;
+		return savedLayout || defaultPostListLayout;
 	}
 
 	function syncMainContentPosition(mode) {
@@ -206,6 +230,7 @@ const {
 		// 立即调整主内容区域位置和布局模式（避免闪烁和位置错误）
 		// 使用 requestAnimationFrame 确保 DOM 准备好
 		requestAnimationFrame(function () {
+			syncLayoutVariant();
 			const mainContent = document.querySelector(
 				".absolute.w-full.z-30.pointer-events-none",
 			);
@@ -216,8 +241,7 @@ const {
 			// 立即应用布局模式，避免闪烁
 			const mainGrid = document.getElementById("main-grid");
 			if (mainGrid) {
-				const savedLayout = postListLayoutEnabled ? localStorage.getItem("postListLayout") : null;
-				const currentLayout = savedLayout || defaultPostListLayout;
+				const currentLayout = getCurrentPostListLayout();
 				mainGrid.setAttribute("data-layout-mode", currentLayout);
 
 				// 根据布局模式显示或隐藏右侧边栏
@@ -475,16 +499,17 @@ const {
 	// 支持 Swup 页面过渡 - 在内容替换之前就应用布局，避免闪烁
 	// 支持 Swup 页面过渡
 	document.addEventListener("swup:page:view", function () {
+		syncLayoutVariant();
 		applyWallpaperMode();
 	});
 
 	// 在页面完全加载后，再次确认布局模式是否正确
 	if (document.readyState === "loading") {
 		document.addEventListener("DOMContentLoaded", function () {
+			syncLayoutVariant();
 			const mainGrid = document.getElementById("main-grid");
 			if (mainGrid) {
-				const savedLayout = postListLayoutEnabled ? localStorage.getItem("postListLayout") : null;
-				const currentLayout = savedLayout || defaultPostListLayout;
+				const currentLayout = getCurrentPostListLayout();
 				mainGrid.setAttribute("data-layout-mode", currentLayout);
 
 				if (currentLayout === "grid") {

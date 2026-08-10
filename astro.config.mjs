@@ -43,6 +43,7 @@ import { remarkContent } from "./src/plugins/remark-content.mjs";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkEscapeNumericColons } from "./src/plugins/remark-escape-numeric-colons.mjs";
 import { remarkFixGithubAdmonitions } from "./src/plugins/remark-fix-github-admonitions.js";
+import { remarkMarkSectionized } from "./src/plugins/remark-mark-sectionized.mjs";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkPlantuml } from "./src/plugins/remark-plantuml.mjs";
 import { remarkWikiLink } from "./src/plugins/remark-wiki-link.mjs";
@@ -236,6 +237,7 @@ export default defineConfig({
 				remarkMermaid,
 				[remarkPlantuml, markdownConfig.plantuml],
 				remarkSectionize,
+				remarkMarkSectionized,
 			],
 			rehypePlugins: [
 				rehypeKatex,

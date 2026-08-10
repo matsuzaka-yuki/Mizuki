@@ -111,6 +111,10 @@ const favicons: Favicon[] =
 		configHue,
 		themeColorFixed: siteConfig.themeColor.fixed ?? false,
 		pageScaling: siteConfig.pageScaling,
+		ultrawidePostLayout: {
+			enable: siteConfig.ultrawidePostLayout?.enable ?? false,
+			allowSwitch: siteConfig.ultrawidePostLayout?.allowSwitch ?? true,
+		},
 	}}
 >
 	// Load the theme from local storage
@@ -147,45 +151,51 @@ const favicons: Favicon[] =
 		`${offset}px`,
 	);
 
-	// 自动缩放逻辑 (Moved from MainGridLayout to here for earlier execution)
+	// 超宽屏文章布局。在首帧前落到 <html> 上，避免布局闪烁。
 	(function () {
-		if (pageScaling && pageScaling.enable) {
-			function adjustPageScale() {
-				const isTouch =
-					(window.matchMedia &&
-						(window.matchMedia("(pointer:coarse)").matches ||
-							window.matchMedia("(hover: none)").matches)) ||
-					"ontouchstart" in window;
-				const isPortrait =
-					window.matchMedia &&
-					window.matchMedia("(orientation: portrait)").matches;
-				const isTabletLike = isTouch || window.innerWidth <= 1280;
-				if (isTabletLike || isPortrait) {
-					document.documentElement.style.fontSize = "";
-					return;
-				}
-				const targetWidth = pageScaling.targetWidth || 2000;
-				const currentWidth = document.documentElement.clientWidth;
-				let scale = currentWidth / targetWidth;
-				if (scale > 1) {
-					scale = 1;
-				}
-				if (scale < 0.85) {
-					scale = 0.85;
-				}
-				document.documentElement.style.fontSize = `${scale * 100}%`;
+		const stored = ultrawidePostLayout.allowSwitch
+			? localStorage.getItem("ultrawidePostLayout")
+			: null;
+		document.documentElement.dataset.ultrawidePost = String(
+			stored !== null ? stored === "true" : ultrawidePostLayout.enable,
+		);
+	})();
+
+	// 兼容旧配置的可选页面缩放。默认布局不再依赖根字号缩放。
+	(function () {
+		const root = document.documentElement;
+		if (!pageScaling || !pageScaling.enable) {
+			root.style.removeProperty("font-size");
+			return;
+		}
+
+		function adjustPageScale() {
+			const isTouch =
+				(window.matchMedia &&
+					(window.matchMedia("(pointer:coarse)").matches ||
+						window.matchMedia("(hover: none)").matches)) ||
+				"ontouchstart" in window;
+			const isPortrait =
+				window.matchMedia &&
+				window.matchMedia("(orientation: portrait)").matches;
+			if (isTouch || isPortrait) {
+				root.style.removeProperty("font-size");
+				return;
 			}
 
-			// 立即执行一次
-			adjustPageScale();
-
-			// 监听窗口大小变化
-			window.addEventListener("resize", adjustPageScale);
-
-			// Swup 页面切换后也需要检查
-			document.addEventListener("swup:page:view", adjustPageScale);
-			window.addEventListener("orientationchange", adjustPageScale);
+			const targetWidth = pageScaling.targetWidth || 2000;
+			const currentWidth = root.clientWidth;
+			const scale = Math.min(
+				1,
+				Math.max(0.85, currentWidth / targetWidth),
+			);
+			root.style.fontSize = `${scale * 100}%`;
 		}
+
+		adjustPageScale();
+		window.addEventListener("resize", adjustPageScale);
+		document.addEventListener("swup:page:view", adjustPageScale);
+		window.addEventListener("orientationchange", adjustPageScale);
 	})();
 </script>
 

@@ -65,6 +65,7 @@ const hasBannerLink = !!siteConfig.banner.credit.url;
 
 // 检查是否为首页
 const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
+const layoutVariant = postSlug ? "post" : isHomePage ? "home" : "default";
 // 手机端非首页不显示banner的CSS类
 const mobileNonHomeBannerClass = !isHomePage ? "mobile-hide-banner" : "";
 
@@ -111,6 +112,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 	setOGTypeArticle={setOGTypeArticle}
 	postSlug={postSlug}
 	coverImage={coverImage}
+	layoutVariant={layoutVariant}
 >
 	<GridScripts
 		navbarTransparentMode={siteConfig.banner?.navbar?.transparentMode ||
@@ -119,7 +121,6 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 		defaultPostListLayout={siteConfig.postListLayout?.defaultMode || "list"}
 		BANNER_HEIGHT={BANNER_HEIGHT}
 		BANNER_HEIGHT_FULLSCREEN={BANNER_HEIGHT_FULLSCREEN}
-		pageScaling={siteConfig.pageScaling}
 		wavesEnabled={siteConfig.banner?.waves?.enable ?? true}
 		bannerTitleEnabled={siteConfig.banner?.homeText?.enable ?? true}
 		wallpaperEnabled={fullscreenWallpaperConfig.enable ?? true}
@@ -136,7 +137,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 	<slot slot="head" name="head" />
 	<div
 		id="top-row"
-		class="z-50 pointer-events-none relative transition-all duration-700 max-w-(--page-width) px-0 md:px-4 mx-auto"
+		class="z-50 pointer-events-none relative transition-all duration-700 max-w-(--layout-page-width) px-0 md:px-4 mx-auto"
 		class:list={[""]}
 	>
 		<div
@@ -161,11 +162,12 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 		style={`top: ${finalMainPanelTop}`}
 	>
 		<!-- The pointer-events-none here prevent blocking the click event of the TOC -->
-		<div class="relative max-w-(--page-width) mx-auto pointer-events-auto">
+		<div class="relative max-w-(--layout-page-width) mx-auto pointer-events-auto">
 			<div
 				id="main-grid"
 				class={`transition duration-700 w-full left-0 right-0 grid ${gridCols} grid-rows-none md:grid-rows-[auto] mx-auto gap-4 px-2 md:px-4 ${!mobileShowSidebar || !hasMobileDrawerComponents ? "mobile-no-sidebar" : ""} ${hasRightSidebarComponents ? "mobile-both-sidebar" : ""}`}
 				data-layout-mode={defaultPostListLayout}
+				data-layout-variant={layoutVariant}
 			>
 				<!-- Banner image credit -->
 				{
@@ -284,12 +286,12 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 	<!-- 侧边栏TOC模式 -->
 	{
 		siteConfig.toc.enable && siteConfig.toc.desktopSidebar && (
-			<div class="absolute w-full z-0 hidden 2xl:block">
-				<div class="relative max-w-(--page-width) mx-auto">
+			<div class="absolute w-full z-0 hidden xl:block">
+				<div class="relative max-w-(--layout-page-width) mx-auto">
 					<div
 						id="toc-wrapper"
 						class:list={[
-							"hidden lg:block transition absolute top-0 w-(--toc-width) items-center",
+							"hidden xl:block transition absolute top-0 w-(--toc-width) items-center",
 							"-right-(--toc-width)",
 							{
 								"toc-hide":

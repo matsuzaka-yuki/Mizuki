@@ -237,6 +237,8 @@ export const ja: Translation = {
 	[Key.postListLayout]: "投稿レイアウト",
 	[Key.postListLayoutList]: "リスト",
 	[Key.postListLayoutGrid]: "グリッド",
+	[Key.ultrawidePostLayout]: "ワイド記事レイアウト",
+	[Key.ultrawidePostLayoutHint]: "2K 以上の画面で記事を広げます",
 	[Key.resetAll]: "すべてリセット",
 	[Key.settingsThemeColor]: "テーマカラー",
 	[Key.settingsWallpaper]: "壁紙",
@@ -244,6 +246,7 @@ export const ja: Translation = {
 	[Key.settingsBanner]: "バナーオプション",
 	[Key.settingsEffects]: "エフェクト",
 	[Key.settingsLayout]: "レイアウト",
+	[Key.settingsFeatures]: "機能",
 
 	// スキルページ
 	[Key.skills]: "スキル",

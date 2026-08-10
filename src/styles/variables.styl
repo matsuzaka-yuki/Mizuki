@@ -98,7 +98,7 @@ define({
   --toc-badge-bg: oklch(0.9 0.045 var(--hue)) var(--btn-regular-bg)
   --toc-btn-hover: oklch(0.92 0.015 var(--hue)) oklch(0.22 0.02 var(--hue))
   --toc-btn-active: oklch(0.90 0.015 var(--hue)) oklch(0.25 0.02 var(--hue))
-  --toc-width: calc((100vw - var(--page-width)) / 2 - 1rem)
+  --toc-width: clamp(0rem, calc((100vw - var(--layout-page-width)) / 2 - 1rem), 22rem)
   --toc-item-active: oklch(0.70 0.13 var(--hue)) oklch(0.35 0.07 var(--hue))
 })
 

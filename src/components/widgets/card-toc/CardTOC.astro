@@ -22,6 +22,7 @@ interface Props {
 
 const { class: className, style } = Astro.props;
 const useJapaneseBadge = siteConfig.toc.useJapaneseBadge;
+const tocDepth = siteConfig.toc.depth;
 ---
 
 <WidgetLayout
@@ -30,7 +31,11 @@ const useJapaneseBadge = siteConfig.toc.useJapaneseBadge;
 	class={"group " + (className || "")}
 	style={style}
 >
-	<div data-card-toc-root data-japanese-badge={String(useJapaneseBadge)}>
+	<div
+		data-card-toc-root
+		data-depth={String(tocDepth)}
+		data-japanese-badge={String(useJapaneseBadge)}
+	>
 		<div class="toc-scroll-container">
 			<div class="toc-content" data-card-toc-content></div>
 		</div>
@@ -81,10 +86,14 @@ const useJapaneseBadge = siteConfig.toc.useJapaneseBadge;
 			}
 
 			const useJapaneseBadge = root.dataset.japaneseBadge === "true";
+			const configuredDepth = Number.parseInt(root.dataset.depth || "", 10);
+			const maxLevel = Number.isFinite(configuredDepth)
+				? configuredDepth
+				: 3;
 
 			const manager = new TOCManager({
 				contentElement: tocContent,
-				maxLevel: 3,
+				maxLevel,
 				useJapaneseBadge,
 				scrollOffset: 80,
 			});

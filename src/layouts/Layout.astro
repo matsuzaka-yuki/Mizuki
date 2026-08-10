@@ -20,6 +20,7 @@ import "../styles/main.css";
 import "../styles/banner.css";
 import "../styles/transition.css";
 import "../styles/widget-responsive.css";
+import "../styles/layout-responsive.css";
 import "../styles/mobile-navbar.css";
 import "../styles/wallpaper-navbar-transparent.css";
 import "../styles/fancybox-custom.css";
@@ -38,6 +39,7 @@ interface Props {
 	setOGTypeArticle?: boolean;
 	postSlug?: string;
 	coverImage?: string;
+	layoutVariant?: "default" | "home" | "post";
 }
 
 let {
@@ -48,6 +50,7 @@ let {
 	setOGTypeArticle,
 	postSlug,
 	coverImage,
+	layoutVariant = "default",
 } = Astro.props;
 
 // defines global css variables
@@ -150,6 +153,8 @@ const bannerOffset =
 	data-waves-config-enabled={siteConfig.banner?.waves?.enable ? "true" : "false"}
 	data-banner-title-config-enabled={siteConfig.banner?.homeText?.enable ? "true" : "false"}
 	data-post-list-layout-enabled={siteConfig.postListLayout?.enable ? "true" : "false"}
+	data-layout-variant={layoutVariant}
+	data-ultrawide-post={siteConfig.ultrawidePostLayout?.enable ? "true" : "false"}
 >
 	<head>
 		<meta charset="UTF-8" />

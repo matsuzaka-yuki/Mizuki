@@ -628,7 +628,7 @@ html.is-page-transitioning #header-waves {
    ========================================================================== */
 @media (width >= 1280px) {
   #main-grid[data-layout-mode="grid"] {
-    grid-template-columns: 17.5rem 1fr !important;
+    grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr) !important;
   }
 
   #main-grid[data-layout-mode="grid"] #swup-container {
@@ -639,7 +639,7 @@ html.is-page-transitioning #header-waves {
 /* 确保大屏桌面设备 Grid 模式配置 */
 @media (width >= 1280px) {
   #main-grid[data-layout-mode="grid"] {
-    grid-template-columns: 17.5rem 1fr !important;
+    grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr) !important;
   }
 
   #main-grid[data-layout-mode="grid"] #swup-container {
