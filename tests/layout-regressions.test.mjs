@@ -178,7 +178,19 @@ describe("Markdown layout regressions", () => {
 
 		assert.match(
 			postContentRailStyles,
-			/--post-wide-rail:\s*min\(var\(--post-wide-content-width\), 100cqi\)/,
+			/--post-wide-available-from-reading-start:\s*calc\([\s\S]*?100cqi \+ var\(--post-reading-rail\)[\s\S]*?\/ 2[\s\S]*?\)/,
+		);
+		assert.match(
+			postContentRailStyles,
+			/--post-wide-rail:\s*min\([\s\S]*?var\(--post-wide-content-width\),[\s\S]*?var\(--post-wide-available-from-reading-start\)[\s\S]*?\)/,
+		);
+		assert.match(
+			postContentRailStyles,
+			/margin-inline-start:\s*0;[\s\S]*?margin-inline-end:\s*calc\(100% - var\(--post-wide-rail\)\)/,
+		);
+		assert.doesNotMatch(
+			postContentRailStyles,
+			/margin-inline:\s*calc\(\(100% - var\(--post-wide-rail\)\) \/ 2\)/,
 		);
 	});
 });

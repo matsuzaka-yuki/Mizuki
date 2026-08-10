@@ -15,6 +15,13 @@ html[data-layout-variant="post"] #post-container .markdown-content {
 }
 
 @supports (width: 100cqi) {
+  html[data-layout-variant="post"] #post-container .markdown-content {
+    --post-reading-rail: min(var(--post-reading-width), 100cqi);
+    --post-wide-available-from-reading-start: calc(
+      (100cqi + var(--post-reading-rail)) / 2
+    );
+  }
+
   html[data-layout-variant="post"]
     #post-container
     .markdown-content
@@ -26,11 +33,15 @@ html[data-layout-variant="post"] #post-container .markdown-content {
       .mermaid-diagram-container,
       .image-grid
     ) {
-    --post-wide-rail: min(var(--post-wide-content-width), 100cqi);
+    --post-wide-rail: min(
+      var(--post-wide-content-width),
+      var(--post-wide-available-from-reading-start)
+    );
 
     box-sizing: border-box;
     width: var(--post-wide-rail);
     max-width: none;
-    margin-inline: calc((100% - var(--post-wide-rail)) / 2);
+    margin-inline-start: 0;
+    margin-inline-end: calc(100% - var(--post-wide-rail));
   }
 }
