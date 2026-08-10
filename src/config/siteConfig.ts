@@ -93,6 +93,14 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 
+	// 文章页超宽屏布局配置
+	// 在 2K/4K 视口下扩展文章容器、侧栏与正文阅读轨道；1920px 以下不生效。
+	// 与 pageScaling 互不影响：断点按 CSS 视口判断，且 pageScaling 在 2000px 以上是空操作。
+	ultrawidePostLayout: {
+		enable: true, // 访客未手动切换时的初始状态
+		allowSwitch: true, // 是否在设置面板中显示开关
+	},
+
 	// 标签样式配置
 	tagStyle: {
 		// 是否使用新样式（悬停高亮样式）还是旧样式（外框常亮样式）

@@ -235,6 +235,8 @@ export const en: Translation = {
 	[Key.postListLayout]: "Post Layout",
 	[Key.postListLayoutList]: "List",
 	[Key.postListLayoutGrid]: "Grid",
+	[Key.ultrawidePostLayout]: "Wide Screen Layout",
+	[Key.ultrawidePostLayoutHint]: "Widens articles on 2K and larger screens",
 	[Key.resetAll]: "Reset All",
 	[Key.settingsThemeColor]: "Theme Color",
 	[Key.settingsWallpaper]: "Wallpaper",
@@ -242,6 +244,7 @@ export const en: Translation = {
 	[Key.settingsBanner]: "Banner Options",
 	[Key.settingsEffects]: "Effects",
 	[Key.settingsLayout]: "Layout",
+	[Key.settingsFeatures]: "Features",
 
 	// Skills Page
 	[Key.skills]: "Skills",

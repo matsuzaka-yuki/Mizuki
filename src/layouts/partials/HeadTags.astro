@@ -111,6 +111,10 @@ const favicons: Favicon[] =
 		configHue,
 		themeColorFixed: siteConfig.themeColor.fixed ?? false,
 		pageScaling: siteConfig.pageScaling,
+		ultrawidePostLayout: {
+			enable: siteConfig.ultrawidePostLayout?.enable ?? false,
+			allowSwitch: siteConfig.ultrawidePostLayout?.allowSwitch ?? true,
+		},
 	}}
 >
 	// Load the theme from local storage
@@ -146,6 +150,16 @@ const favicons: Favicon[] =
 		"--banner-height-extend",
 		`${offset}px`,
 	);
+
+	// 超宽屏文章布局。在首帧前落到 <html> 上，避免布局闪烁。
+	(function () {
+		const stored = ultrawidePostLayout.allowSwitch
+			? localStorage.getItem("ultrawidePostLayout")
+			: null;
+		document.documentElement.dataset.ultrawidePost = String(
+			stored !== null ? stored === "true" : ultrawidePostLayout.enable,
+		);
+	})();
 
 	// 兼容旧配置的可选页面缩放。默认布局不再依赖根字号缩放。
 	(function () {

@@ -415,3 +415,22 @@ export function setSakuraEnabled(enabled: boolean): void {
 		new CustomEvent("sakura-toggle", { detail: { enabled } }),
 	);
 }
+
+// ─── Ultrawide post layout ───────────────────────────────────
+
+export function getDefaultUltrawidePostLayout(): boolean {
+	return siteConfig.ultrawidePostLayout?.enable ?? false;
+}
+
+export function getStoredUltrawidePostLayout(): boolean {
+	if (!(siteConfig.ultrawidePostLayout?.allowSwitch ?? true)) {
+		return getDefaultUltrawidePostLayout();
+	}
+	const stored = localStorage.getItem("ultrawidePostLayout");
+	return stored !== null ? stored === "true" : getDefaultUltrawidePostLayout();
+}
+
+export function setUltrawidePostLayout(enabled: boolean): void {
+	localStorage.setItem("ultrawidePostLayout", String(enabled));
+	document.documentElement.dataset.ultrawidePost = String(enabled);
+}

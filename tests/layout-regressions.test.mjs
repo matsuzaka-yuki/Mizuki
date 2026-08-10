@@ -78,6 +78,18 @@ const globalStyleCheckSource = await readFile(
 	new URL("../scripts/check-global-style-loading.mjs", import.meta.url),
 	"utf8",
 );
+const settingsPanelSource = await readFile(
+	new URL(
+		"../src/components/features/settings/SettingsPanel.svelte",
+		import.meta.url,
+	),
+	"utf8",
+);
+const translationSources = await Promise.all(
+	["en", "zh_CN", "zh_TW", "ja"].map((lang) =>
+		readFile(new URL(`../src/i18n/languages/${lang}.ts`, import.meta.url), "utf8"),
+	),
+);
 const packageConfig = JSON.parse(
 	await readFile(new URL("../package.json", import.meta.url), "utf8"),
 );
@@ -327,7 +339,7 @@ describe("Page layout variant regressions", () => {
 		);
 		assert.match(
 			responsiveLayoutStyles,
-			/@media \(width >= 1920px\)[\s\S]*?html\[data-layout-variant="post"\][\s\S]*?--layout-page-width:\s*clamp\(104rem, 82vw, 132rem\)/,
+			/@media \(width >= 1920px\)[\s\S]*?html\[data-ultrawide-post="true"\]\[data-layout-variant="post"\][\s\S]*?--layout-page-width:\s*clamp\(104rem, 82vw, 132rem\)/,
 		);
 		assert.match(
 			responsiveLayoutStyles,
@@ -380,6 +392,58 @@ describe("Page layout variant regressions", () => {
 				readingWidth(viewport) >= readingWidth(viewport - 320),
 				`the rail must not shrink as the viewport grows at ${viewport}px`,
 			);
+		}
+	});
+
+	it("keeps the wide-screen post layout switchable and pre-painted", () => {
+		assert.match(
+			siteConfigSource,
+			/ultrawidePostLayout:\s*\{[\s\S]*?enable:\s*true[\s\S]*?allowSwitch:\s*true/,
+			"the wide-screen layout ships enabled and visitor-switchable",
+		);
+		assert.match(
+			layoutSource,
+			/data-ultrawide-post=\{siteConfig\.ultrawidePostLayout\?\.enable \? "true" : "false"\}/,
+			"the configured default must render into the static HTML",
+		);
+		assert.match(
+			headTagsSource,
+			/localStorage\.getItem\("ultrawidePostLayout"\)/,
+			"the stored preference must be applied before the first paint",
+		);
+		assert.match(
+			headTagsSource,
+			/document\.documentElement\.dataset\.ultrawidePost = String\(/,
+		);
+
+		for (const gatedRule of [
+			/--layout-page-width:\s*clamp\(104rem/,
+			/--layout-page-width:\s*clamp\(132rem/,
+		]) {
+			const block = responsiveLayoutStyles
+				.split("@media")
+				.find((chunk) => gatedRule.test(chunk));
+			assert.ok(
+				block?.includes('html[data-ultrawide-post="true"]'),
+				"every wide-screen override must sit behind the opt-out attribute",
+			);
+		}
+
+		assert.match(
+			settingsPanelSource,
+			/getStoredUltrawidePostLayout\(\)/,
+			"the panel must restore the stored preference on mount",
+		);
+		assert.match(
+			settingsPanelSource,
+			/\{#if isUltrawidePostLayoutSwitchable\}[\s\S]*?i18n\(I18nKey\.settingsFeatures\)[\s\S]*?i18n\(I18nKey\.ultrawidePostLayout\)/,
+			"the toggle must live in its own Features group",
+		);
+
+		for (const translation of translationSources) {
+			assert.match(translation, /\[Key\.ultrawidePostLayout\]:/);
+			assert.match(translation, /\[Key\.ultrawidePostLayoutHint\]:/);
+			assert.match(translation, /\[Key\.settingsFeatures\]:/);
 		}
 	});
 

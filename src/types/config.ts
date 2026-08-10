@@ -55,6 +55,12 @@ export interface SiteConfig {
 		};
 	};
 
+	// 文章页超宽屏布局配置
+	ultrawidePostLayout?: {
+		enable: boolean; // 访客未手动切换时的初始状态
+		allowSwitch?: boolean; // 是否在设置面板中显示开关
+	};
+
 	// 顶栏标题配置
 	navbarTitle?: {
 		mode?: "text-icon" | "logo"; // 显示模式："text-icon" 显示图标+文本，"logo" 仅显示Logo
